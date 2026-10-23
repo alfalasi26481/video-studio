@@ -1,0 +1,8 @@
+# video-studio — خط إنتاج فيديوهات السلامة الجوية بالعربية
+
+- اللغة الافتراضية للردود: العربية المبسطة. الروابط مباشرة، والنصوص القابلة للنسخ في كتل.
+- السكلز في `.claude/skills/` — ابدأ بـ `aviation-safety-video` لأي طلب فيديو توعوي.
+- الفيديو المبرمج: استخدم سكلز `remotion-*`. الترجمة السفلية: `remotion-captions`.
+- المستندات: `docx` / `pptx` / `xlsx` / `pdf`.
+- المنهجية: `brainstorming` → `writing-plans` → `executing-plans` → `verification-before-completion`.
+- Higgsfield عبر MCP: الصور مجانية، الفيديو مدفوع — اطلب موافقة قبل أي `generate_video`.
