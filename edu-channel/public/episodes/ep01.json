@@ -1,0 +1,44 @@
+{
+  "id": "ep01",
+  "level": "beginner",
+  "topic": "ثلاث معلومات تجعل ردود Claude مفيدة",
+  "channel": { "ar": "@اسم_القناة", "en": "@your_channel" },
+  "ar": {
+    "dir": "rtl",
+    "caption": "ردود Claude عامة؟ أضف 3 معلومات فقط وشاهد الفرق.",
+    "hashtags": ["#Claude", "#ذكاء_اصطناعي", "#تعلم_الذكاء_الاصطناعي", "#نصائح_تقنية", "#برومبت"],
+    "scenes": [
+      { "type": "hook", "kicker": "للمبتدئين", "title": "ردود Claude عامة؟", "body": "المشكلة غالباً في السؤال.",
+        "narration": "هل تشعر أن ردود Claude عامة ولا تفيدك؟ المشكلة غالباً في طريقة السؤال." },
+      { "type": "prompt", "tone": "bad", "label": "سؤال عام", "prompt": "خطط لي رحلة إلى إسطنبول.",
+        "narration": "عندما تكتب: خطط لي رحلة إلى إسطنبول، فهو لا يعرف عنك شيئاً، فيعطيك خطة تناسب الجميع." },
+      { "type": "steps", "title": "أضف 3 معلومات", "items": ["من أنت ومن معك", "هدفك بالتحديد", "قيودك: الوقت والميزانية"],
+        "narration": "الحل بسيط: أضف ثلاث معلومات. من أنت ومن معك، وما هدفك بالتحديد، وما قيودك من وقت وميزانية." },
+      { "type": "prompt", "tone": "good", "label": "سؤال واضح", "prompt": "أسافر مع عائلتي: 4 أشخاص منهم طفلان. 5 أيام في إسطنبول بميزانية متوسطة. نحب الطبيعة ولا نحب الزحام. اقترح برنامجاً لكل يوم.",
+        "narration": "مثلاً: أسافر مع عائلتي، أربعة أشخاص منهم طفلان، خمسة أيام بميزانية متوسطة، ونحب الطبيعة ولا نحب الزحام." },
+      { "type": "prompt", "tone": "tip", "label": "واختم بهذه الجملة", "prompt": "اسألني إذا نقصتك معلومة قبل أن تبدأ.",
+        "narration": "واختم بجملة: اسألني إذا نقصتك معلومة. وسيسألك عما ينقصه قبل أن يجيب." },
+      { "type": "cta", "title": "جرّبها الآن", "body": "وتابعنا لتتعلم Claude خطوة بخطوة.",
+        "narration": "جرّبها الآن، وتابعنا لتتعلم Claude خطوة بخطوة." }
+    ]
+  },
+  "en": {
+    "dir": "ltr",
+    "caption": "Getting generic answers from Claude? Add 3 details and see the difference.",
+    "hashtags": ["#Claude", "#AI", "#AItips", "#PromptTips", "#LearnAI"],
+    "scenes": [
+      { "type": "hook", "kicker": "BEGINNER", "title": "Generic answers from Claude?", "body": "The problem is usually the question.",
+        "narration": "Do Claude's answers feel generic and not that useful? The problem is usually how you ask." },
+      { "type": "prompt", "tone": "bad", "label": "Vague question", "prompt": "Plan me a trip to Istanbul.",
+        "narration": "When you type: plan me a trip to Istanbul, it knows nothing about you, so you get a plan made for everyone." },
+      { "type": "steps", "title": "Add 3 details", "items": ["Who you are and who's with you", "Your exact goal", "Your limits: time and budget"],
+        "narration": "The fix is simple. Add three details: who you are and who's with you, your exact goal, and your limits on time and budget." },
+      { "type": "prompt", "tone": "good", "label": "Clear question", "prompt": "I'm traveling with my family: 4 people, including 2 kids. 5 days in Istanbul, mid-range budget. We love nature and hate crowds. Suggest a plan for each day.",
+        "narration": "For example: family of four with two kids, five days, mid-range budget, we love nature and hate crowds." },
+      { "type": "prompt", "tone": "tip", "label": "End with this line", "prompt": "Ask me if anything is missing before you start.",
+        "narration": "Then end with: ask me if anything is missing. It will ask what it needs before answering." },
+      { "type": "cta", "title": "Try it now", "body": "Follow to learn Claude step by step.",
+        "narration": "Try it now, and follow to learn Claude step by step." }
+    ]
+  }
+}
