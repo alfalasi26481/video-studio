@@ -1,0 +1,72 @@
+{
+  "id": "ep02",
+  "level": "intermediate",
+  "topic": "الفرق بين Skill و Agent و Workflow",
+  "channel": { "ar": "@اسم_القناة", "en": "@your_channel" },
+  "ar": {
+    "dir": "rtl",
+    "caption": "Skill أم Agent أم Workflow؟ الفرق في 40 ثانية، ومتى تستخدم كل واحد.",
+    "hashtags": ["#Claude", "#ذكاء_اصطناعي", "#وكلاء_الذكاء_الاصطناعي", "#أتمتة", "#تعلم_الذكاء_الاصطناعي"],
+    "scenes": [
+      { "type": "hook", "kicker": "متوسط", "title": "Skill أم Agent أم Workflow؟", "body": "ثلاث كلمات تسمعها كثيراً. ما الفرق؟",
+        "narration": "Skill و Agent و Workflow: ثلاث كلمات تسمعها كثيراً مع Claude. ما الفرق بينها؟" },
+      { "type": "compare", "tabs": ["SKILL", "AGENT", "WORKFLOW"], "active": 0, "term": "Skill",
+        "def": "تعليمات تحفظها مرة واحدة، ويستخدمها Claude كلما احتاجها.",
+        "analogy": "مثل دليل إجراءات محفوظ", "exampleLabel": "مثال",
+        "example": "مهارة تكتب منشوراتك بأسلوبك وتنسيقك في كل مرة.",
+        "narration": "الأول Skill: تعليمات تحفظها مرة واحدة في ملف، ويستخدمها Claude تلقائياً كلما احتاجتها المهمة. مثل دليل إجراءات محفوظ." },
+      { "type": "compare", "tabs": ["SKILL", "AGENT", "WORKFLOW"], "active": 1, "term": "Agent",
+        "def": "مساعد مستقل يأخذ مهمة كاملة ويعيد لك النتيجة فقط.",
+        "analogy": "مثل موظف تكلّفه بمهمة", "exampleLabel": "مثال",
+        "example": "وكيل يراجع الكود كاملاً ويعيد لك قائمة الأخطاء.",
+        "narration": "الثاني Agent: مساعد مستقل له تعليماته وأدواته. تعطيه مهمة كاملة، فيعمل عليها وحده ويعيد لك النتيجة فقط." },
+      { "type": "compare", "tabs": ["SKILL", "AGENT", "WORKFLOW"], "active": 2, "term": "Workflow",
+        "def": "خطة تربط عدة خطوات، وتحدد من ينفذ كل خطوة وبأي ترتيب.",
+        "analogy": "مثل خطة مشروع", "exampleLabel": "مثال",
+        "example": "بحث ← كتابة ← مراجعة ← نشر",
+        "narration": "الثالث Workflow: خطة تربط عدة خطوات، وتحدد من ينفذ كل خطوة وبأي ترتيب. مثلاً: بحث، ثم كتابة، ثم مراجعة، ثم نشر." },
+      { "type": "trio", "title": "متى تستخدم كل واحد؟",
+        "items": [
+          { "term": "Skill", "rule": "تكرر نفس التعليمات كل مرة" },
+          { "term": "Agent", "rule": "مهمة كبيرة تريدها مستقلة" },
+          { "term": "Workflow", "rule": "عدة خطوات مترابطة" }
+        ],
+        "narration": "القاعدة بسيطة: تكرر نفس التعليمات؟ Skill. مهمة كبيرة مستقلة؟ Agent. عدة خطوات مترابطة؟ Workflow." },
+      { "type": "cta", "title": "احفظ المقطع", "body": "وتابعنا لتتعلم Claude خطوة بخطوة.",
+        "narration": "احفظ هذا المقطع، وتابعنا لتتعلم Claude خطوة بخطوة." }
+    ]
+  },
+  "en": {
+    "dir": "ltr",
+    "caption": "Skill, Agent or Workflow? The difference in 40 seconds, and when to use each.",
+    "hashtags": ["#Claude", "#AI", "#AIagents", "#Automation", "#LearnAI"],
+    "scenes": [
+      { "type": "hook", "kicker": "INTERMEDIATE", "title": "Skill, Agent or Workflow?", "body": "Three words you keep hearing. What's the difference?",
+        "narration": "Skill, Agent and Workflow: three words you keep hearing with Claude. What's the difference?" },
+      { "type": "compare", "tabs": ["SKILL", "AGENT", "WORKFLOW"], "active": 0, "term": "Skill",
+        "def": "Instructions you save once, and Claude uses whenever it needs them.",
+        "analogy": "Like a saved playbook", "exampleLabel": "Example",
+        "example": "A skill that writes your posts in your style and format, every time.",
+        "narration": "First, a Skill: instructions you save once in a file, and Claude uses them automatically whenever a task needs them. Like a saved playbook." },
+      { "type": "compare", "tabs": ["SKILL", "AGENT", "WORKFLOW"], "active": 1, "term": "Agent",
+        "def": "An independent helper that takes a whole task and returns only the result.",
+        "analogy": "Like handing a task to a colleague", "exampleLabel": "Example",
+        "example": "An agent that reviews all the code and returns a list of bugs.",
+        "narration": "Second, an Agent: an independent helper with its own instructions and tools. You give it a whole task, it works on it alone, and returns only the result." },
+      { "type": "compare", "tabs": ["SKILL", "AGENT", "WORKFLOW"], "active": 2, "term": "Workflow",
+        "def": "A plan that links several steps, and says who does each one, in what order.",
+        "analogy": "Like a project plan", "exampleLabel": "Example",
+        "example": "Research → Write → Review → Publish",
+        "narration": "Third, a Workflow: a plan that links several steps and says who does each one, in what order. For example: research, then write, then review, then publish." },
+      { "type": "trio", "title": "When to use which?",
+        "items": [
+          { "term": "Skill", "rule": "You repeat the same instructions" },
+          { "term": "Agent", "rule": "A big task you want done on its own" },
+          { "term": "Workflow", "rule": "Several connected steps" }
+        ],
+        "narration": "The rule is simple. Repeating the same instructions? Skill. A big standalone task? Agent. Several connected steps? Workflow." },
+      { "type": "cta", "title": "Save this", "body": "Follow to learn Claude step by step.",
+        "narration": "Save this video, and follow to learn Claude step by step." }
+    ]
+  }
+}

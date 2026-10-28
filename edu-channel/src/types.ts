@@ -12,7 +12,11 @@ export type Scene =
   | (Base & {type: 'hook'; kicker: string; title: string; body?: string})
   | (Base & {type: 'prompt'; tone: 'bad' | 'good' | 'tip'; label: string; prompt: string})
   | (Base & {type: 'steps'; title: string; items: string[]})
-  | (Base & {type: 'cta'; title: string; body?: string});
+  | (Base & {type: 'cta'; title: string; body?: string})
+  /** One concept of a 2–3 way comparison; the tab bar stays on screen across the set. */
+  | (Base & {type: 'compare'; tabs: string[]; active: number; term: string; def: string; analogy: string; example: string; exampleLabel: string})
+  /** Closing card: every compared concept with its one-line "use it when" rule. */
+  | (Base & {type: 'trio'; title: string; items: {term: string; rule: string}[]});
 
 export type LangTrack = {
   dir: 'rtl' | 'ltr';

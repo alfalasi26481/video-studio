@@ -3,7 +3,7 @@ import {
   AbsoluteFill, Audio, OffthreadVideo, Sequence, continueRender, delayRender,
   interpolate, spring, staticFile, useCurrentFrame, useVideoConfig,
 } from 'remotion';
-import {C, F} from './theme';
+import {C, F, TRIO} from './theme';
 import type {EpisodeProps, Lang, Scene} from './types';
 
 // ---------- helpers ----------
@@ -182,6 +182,73 @@ const Cta: React.FC<{s: Extract<Scene, {type: 'cta'}>; handle: string}> = ({s, h
   );
 };
 
+// ---------- comparison format ----------
+// The tab bar is the viewer's map: it stays put across the set and lights the
+// concept being explained, so the viewer always knows "where" they are.
+const TabBar: React.FC<{tabs: string[]; active: number}> = ({tabs, active}) => {
+  const a = useIn(0);
+  return (
+    <div style={{display: 'flex', gap: 14, direction: 'ltr', opacity: 0.4 + a * 0.6}}>
+      {tabs.map((t, i) => {
+        const on = i === active;
+        const col = TRIO[i % TRIO.length];
+        return (
+          <div key={i} style={{flex: 1, textAlign: 'center', padding: '18px 8px', borderRadius: 20,
+            fontFamily: F.mono, fontSize: 34, letterSpacing: 2, color: on ? col : C.muted,
+            background: on ? C.panel : 'transparent', border: `3px solid ${on ? col : C.line}`,
+            boxShadow: on ? `inset 0 -8px 0 ${col}` : 'none'}}>{t}</div>
+        );
+      })}
+    </div>
+  );
+};
+
+const Compare: React.FC<{s: Extract<Scene, {type: 'compare'}>}> = ({s}) => {
+  const col = TRIO[s.active % TRIO.length];
+  const a = useIn(4), b = useIn(14), c = useIn(26), d = useIn(40);
+  return (
+    <div style={{position: 'absolute', top: 290, bottom: 620, left: 80, right: 140, display: 'flex',
+      flexDirection: 'column', gap: 34}}>
+      <TabBar tabs={s.tabs} active={s.active} />
+      <div style={{fontFamily: F.mono, fontWeight: 500, fontSize: 104, color: col, direction: 'ltr', textAlign: 'center',
+        opacity: a, transform: `scale(${0.92 + a * 0.08})`, marginTop: 10}}>{s.term}</div>
+      <div style={{fontFamily: F.display, fontWeight: 700, fontSize: 58, lineHeight: 1.5, color: C.ink, textAlign: 'center',
+        opacity: b}}>{s.def}</div>
+      <div style={{alignSelf: 'center', fontFamily: F.body, fontWeight: 600, fontSize: 44, color: col,
+        border: `2px dashed ${col}`, borderRadius: 999, padding: '10px 32px', opacity: c}}>{s.analogy}</div>
+      <div style={{background: C.bg2, border: `2px solid ${C.line}`, borderRadius: 28, padding: '24px 30px',
+        display: 'flex', flexDirection: 'column', gap: 8, opacity: d, transform: `translateY(${(1 - d) * 24}px)`}}>
+        <span style={{fontFamily: F.display, fontWeight: 700, fontSize: 32, color: C.muted}}>{s.exampleLabel}</span>
+        <span style={{fontFamily: F.body, fontWeight: 600, fontSize: 46, lineHeight: 1.45, color: C.ink}}>{s.example}</span>
+      </div>
+    </div>
+  );
+};
+
+const Trio: React.FC<{s: Extract<Scene, {type: 'trio'}>; frames: number}> = ({s, frames}) => {
+  const a = useIn(0);
+  const gap = Math.max(8, Math.floor((frames * 0.5) / s.items.length));
+  return (
+    <Stage>
+      <div style={{fontFamily: F.display, fontWeight: 800, fontSize: 80, color: C.ink, opacity: a}}>{s.title}</div>
+      <div style={{display: 'flex', flexDirection: 'column', gap: 22}}>
+        {s.items.map((it, i) => <TrioRow key={i} i={i} term={it.term} rule={it.rule} delay={12 + i * gap} />)}
+      </div>
+    </Stage>
+  );
+};
+const TrioRow: React.FC<{i: number; term: string; rule: string; delay: number}> = ({i, term, rule, delay}) => {
+  const p = useIn(delay);
+  const col = TRIO[i % TRIO.length];
+  return (
+    <div style={{display: 'flex', flexDirection: 'column', gap: 6, background: C.bg2, borderRadius: 26,
+      border: `3px solid ${col}`, padding: '22px 30px', opacity: p, transform: `translateY(${(1 - p) * 28}px)`}}>
+      <span style={{fontFamily: F.mono, fontSize: 40, color: col, direction: 'ltr', unicodeBidi: 'plaintext'}}>{term}</span>
+      <span style={{fontFamily: F.body, fontWeight: 600, fontSize: 48, lineHeight: 1.4, color: C.ink}}>{rule}</span>
+    </div>
+  );
+};
+
 const SceneView: React.FC<{s: Scene; frames: number; lang: Lang; dir: 'rtl' | 'ltr'; handle: string}> = ({s, frames, lang, dir, handle}) => {
   const frame = useCurrentFrame();
   const fadeOut = interpolate(frame, [frames - 8, frames], [1, 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
@@ -195,6 +262,8 @@ const SceneView: React.FC<{s: Scene; frames: number; lang: Lang; dir: 'rtl' | 'l
       ) : s.type === 'hook' ? <Hook s={s} />
         : s.type === 'prompt' ? <Prompt s={s} frames={frames} dir={dir} />
         : s.type === 'steps' ? <Steps s={s} frames={frames} />
+        : s.type === 'compare' ? <Compare s={s} />
+        : s.type === 'trio' ? <Trio s={s} frames={frames} />
         : <Cta s={s} handle={handle} />}
       <Captions text={s.narration} frames={frames} lang={lang} />
       {s.audio && <Audio src={staticFile(s.audio)} />}

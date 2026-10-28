@@ -18,6 +18,9 @@ export const C = {
   tip: '#ffb547',
 };
 
+/** One colour per compared concept, in tab order (amber, sky, violet). */
+export const TRIO = ['#ffb547', '#5ec8ff', '#b49cff'];
+
 export const F = {
   display: '"Noto Kufi Arabic", "IBM Plex Sans Arabic", sans-serif',
   body: '"IBM Plex Sans Arabic", "Noto Kufi Arabic", sans-serif',
