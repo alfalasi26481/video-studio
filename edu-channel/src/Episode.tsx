@@ -5,6 +5,7 @@ import {
 } from 'remotion';
 import {C, F, TRIO} from './theme';
 import type {EpisodeProps, Lang, Scene} from './types';
+import {Backdrop, Flow, Icon} from './Flow';
 
 // ---------- helpers ----------
 const useIn = (delay = 0) => {
@@ -171,13 +172,29 @@ const StepRow: React.FC<{n: number; text: string; delay: number}> = ({n, text, d
 };
 
 const Cta: React.FC<{s: Extract<Scene, {type: 'cta'}>; handle: string}> = ({s, handle}) => {
+  const frame = useCurrentFrame();
+  const {fps} = useVideoConfig();
   const a = useIn(0), b = useIn(10), c = useIn(20);
+  // The save icon drops in, then "taps" itself: fills and bounces once.
+  const drop = spring({frame: frame - 4, fps, config: {damping: 8, stiffness: 120}});
+  const tap = spring({frame: frame - 28, fps, config: {damping: 6, stiffness: 200}});
+  const ring = interpolate(frame, [28, 52], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
   return (
     <Stage>
-      <div style={{fontFamily: F.display, fontWeight: 800, fontSize: 120, color: C.accent, opacity: a,
-        transform: `scale(${0.9 + a * 0.1})`}}>{s.title}</div>
-      {s.body && <div style={{fontFamily: F.body, fontWeight: 600, fontSize: 56, color: C.ink, lineHeight: 1.5, opacity: b}}>{s.body}</div>}
-      <div style={{fontFamily: F.mono, fontSize: 52, color: C.muted, direction: 'ltr', unicodeBidi: 'plaintext', opacity: c}}>{handle}</div>
+      <div style={{alignSelf: 'center', position: 'relative', width: 220, height: 220, translate: `0 ${(1 - drop) * -260}px`}}>
+        {ring > 0 && ring < 1 && <div style={{position: 'absolute', inset: -ring * 70, borderRadius: '50%',
+          border: `5px solid ${C.accent}`, opacity: 1 - ring}} />}
+        <div style={{position: 'absolute', inset: 0, borderRadius: 56, background: frame > 30 ? C.accent : C.panel,
+          border: `5px solid ${C.accent}`, display: 'grid', placeItems: 'center', scale: String(1 + (tap - 1) * 0.25)}}>
+          <Icon name="bookmark" color={frame > 30 ? C.bg : C.accent} size={120} />
+        </div>
+      </div>
+      <div style={{fontFamily: F.display, fontWeight: 800, fontSize: 110, color: C.accent, opacity: a, textAlign: 'center',
+        scale: String(0.9 + a * 0.1)}}>{s.title}</div>
+      {s.body && <div style={{fontFamily: F.body, fontWeight: 600, fontSize: 52, color: C.ink, lineHeight: 1.5, opacity: b,
+        textAlign: 'center'}}>{s.body}</div>}
+      <div style={{fontFamily: F.mono, fontSize: 48, color: C.muted, direction: 'ltr', unicodeBidi: 'plaintext', opacity: c,
+        textAlign: 'center'}}>{handle}</div>
     </Stage>
   );
 };
@@ -237,15 +254,50 @@ const Trio: React.FC<{s: Extract<Scene, {type: 'trio'}>; frames: number}> = ({s,
     </Stage>
   );
 };
+const TRIO_ICONS = ['doc', 'bot', 'plan'] as const;
 const TrioRow: React.FC<{i: number; term: string; rule: string; delay: number}> = ({i, term, rule, delay}) => {
+  const frame = useCurrentFrame();
+  const {fps} = useVideoConfig();
   const p = useIn(delay);
+  const pop = spring({frame: frame - delay - 6, fps, config: {damping: 9, stiffness: 160}});
+  const sweep = interpolate(frame, [delay + 10, delay + 34], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
   const col = TRIO[i % TRIO.length];
   return (
-    <div style={{display: 'flex', flexDirection: 'column', gap: 6, background: C.bg2, borderRadius: 26,
-      border: `3px solid ${col}`, padding: '22px 30px', opacity: p, transform: `translateY(${(1 - p) * 28}px)`}}>
-      <span style={{fontFamily: F.mono, fontSize: 40, color: col, direction: 'ltr', unicodeBidi: 'plaintext'}}>{term}</span>
-      <span style={{fontFamily: F.body, fontWeight: 600, fontSize: 48, lineHeight: 1.4, color: C.ink}}>{rule}</span>
+    <div style={{display: 'flex', alignItems: 'center', gap: 24, background: C.bg2, borderRadius: 26,
+      border: `3px solid ${col}`, padding: '20px 26px', opacity: p, translate: `${(1 - p) * (i % 2 ? -120 : 120)}px 0`,
+      position: 'relative', overflow: 'hidden'}}>
+      <div style={{position: 'absolute', insetInlineStart: 0, bottom: 0, height: 6, width: `${sweep * 100}%`, background: col}} />
+      <div style={{width: 96, height: 96, borderRadius: 24, background: C.panel, border: `3px solid ${col}`, flexShrink: 0,
+        display: 'grid', placeItems: 'center', scale: String(pop), rotate: `${(1 - pop) * -25}deg`}}>
+        <Icon name={TRIO_ICONS[i % 3]} color={col} size={56} />
+      </div>
+      <div style={{display: 'flex', flexDirection: 'column', gap: 4, minWidth: 0}}>
+        <span style={{fontFamily: F.mono, fontSize: 40, color: col, direction: 'ltr', unicodeBidi: 'plaintext'}}>{term}</span>
+        <span style={{fontFamily: F.body, fontWeight: 600, fontSize: 46, lineHeight: 1.4, color: C.ink}}>{rule}</span>
+      </div>
     </div>
+  );
+};
+
+const FlowScene: React.FC<{s: Extract<Scene, {type: 'flow'}>; frames: number}> = ({s, frames}) => {
+  const col = s.active !== undefined ? TRIO[s.active % TRIO.length] : C.accent;
+  const a = useIn(2), b = useIn(10);
+  return (
+    <>
+      <div style={{position: 'absolute', top: 290, left: 80, right: 140, display: 'flex', flexDirection: 'column', gap: 18}}>
+        {s.tabs && <TabBar tabs={s.tabs} active={s.active ?? 0} />}
+        {s.term && (
+          <div style={{display: 'flex', alignItems: 'baseline', justifyContent: 'center', gap: 22, flexWrap: 'wrap'}}>
+            <span style={{fontFamily: F.mono, fontSize: 64, color: col, direction: 'ltr', opacity: a,
+              translate: `0 ${(1 - a) * 30}px`}}>{s.term}</span>
+            {s.def && <span style={{fontFamily: F.display, fontWeight: 700, fontSize: 40, color: C.ink, opacity: b,
+              textAlign: 'center'}}>{s.def}</span>}
+          </div>
+        )}
+      </div>
+      {/* Tabs + headline take ~270px; the canvas starts below them. */}
+      <Flow spec={s.spec} frames={frames} top={s.tabs ? 560 : 500} />
+    </>
   );
 };
 
@@ -264,6 +316,7 @@ const SceneView: React.FC<{s: Scene; frames: number; lang: Lang; dir: 'rtl' | 'l
         : s.type === 'steps' ? <Steps s={s} frames={frames} />
         : s.type === 'compare' ? <Compare s={s} />
         : s.type === 'trio' ? <Trio s={s} frames={frames} />
+        : s.type === 'flow' ? <FlowScene s={s} frames={frames} />
         : <Cta s={s} handle={handle} />}
       <Captions text={s.narration} frames={frames} lang={lang} />
       {s.audio && <Audio src={staticFile(s.audio)} />}
@@ -280,6 +333,7 @@ export const Episode: React.FC<EpisodeProps> = ({lang, episode, sceneFrames}) =>
   return (
     <AbsoluteFill dir={track.dir} style={{background: `radial-gradient(120% 70% at 50% 35%, ${C.bg2} 0%, ${C.bg} 70%)`,
       fontFamily: F.body, color: C.ink}}>
+      <Backdrop />
       {track.scenes.map((s, i) => {
         const seq = (
           <Sequence key={i} from={from} durationInFrames={frames[i]} name={`${i + 1}-${s.type}`}>

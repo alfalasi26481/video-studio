@@ -1,3 +1,5 @@
+import type {FlowSpec} from './Flow';
+
 export type Lang = 'ar' | 'en';
 
 type Base = {
@@ -16,7 +18,9 @@ export type Scene =
   /** One concept of a 2–3 way comparison; the tab bar stays on screen across the set. */
   | (Base & {type: 'compare'; tabs: string[]; active: number; term: string; def: string; analogy: string; example: string; exampleLabel: string})
   /** Closing card: every compared concept with its one-line "use it when" rule. */
-  | (Base & {type: 'trio'; title: string; items: {term: string; rule: string}[]});
+  | (Base & {type: 'trio'; title: string; items: {term: string; rule: string}[]})
+  /** Motion diagram: boxes, drawn arrows, travelling packets; optional tab bar + headline above. */
+  | (Base & {type: 'flow'; tabs?: string[]; active?: number; term?: string; def?: string; spec: FlowSpec});
 
 export type LangTrack = {
   dir: 'rtl' | 'ltr';

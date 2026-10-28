@@ -1,72 +1,1997 @@
 {
-  "id": "ep02",
-  "level": "intermediate",
-  "topic": "الفرق بين Skill و Agent و Workflow",
-  "channel": { "ar": "@اسم_القناة", "en": "@your_channel" },
-  "ar": {
-    "dir": "rtl",
-    "caption": "Skill أم Agent أم Workflow؟ الفرق في 40 ثانية، ومتى تستخدم كل واحد.",
-    "hashtags": ["#Claude", "#ذكاء_اصطناعي", "#وكلاء_الذكاء_الاصطناعي", "#أتمتة", "#تعلم_الذكاء_الاصطناعي"],
-    "scenes": [
-      { "type": "hook", "kicker": "متوسط", "title": "Skill أم Agent أم Workflow؟", "body": "ثلاث كلمات تسمعها كثيراً. ما الفرق؟",
-        "narration": "Skill و Agent و Workflow: ثلاث كلمات تسمعها كثيراً مع Claude. ما الفرق بينها؟" },
-      { "type": "compare", "tabs": ["SKILL", "AGENT", "WORKFLOW"], "active": 0, "term": "Skill",
-        "def": "تعليمات تحفظها مرة واحدة، ويستخدمها Claude كلما احتاجها.",
-        "analogy": "مثل دليل إجراءات محفوظ", "exampleLabel": "مثال",
-        "example": "مهارة تكتب منشوراتك بأسلوبك وتنسيقك في كل مرة.",
-        "narration": "الأول Skill: تعليمات تحفظها مرة واحدة في ملف، ويستخدمها Claude تلقائياً كلما احتاجتها المهمة. مثل دليل إجراءات محفوظ." },
-      { "type": "compare", "tabs": ["SKILL", "AGENT", "WORKFLOW"], "active": 1, "term": "Agent",
-        "def": "مساعد مستقل يأخذ مهمة كاملة ويعيد لك النتيجة فقط.",
-        "analogy": "مثل موظف تكلّفه بمهمة", "exampleLabel": "مثال",
-        "example": "وكيل يراجع الكود كاملاً ويعيد لك قائمة الأخطاء.",
-        "narration": "الثاني Agent: مساعد مستقل له تعليماته وأدواته. تعطيه مهمة كاملة، فيعمل عليها وحده ويعيد لك النتيجة فقط." },
-      { "type": "compare", "tabs": ["SKILL", "AGENT", "WORKFLOW"], "active": 2, "term": "Workflow",
-        "def": "خطة تربط عدة خطوات، وتحدد من ينفذ كل خطوة وبأي ترتيب.",
-        "analogy": "مثل خطة مشروع", "exampleLabel": "مثال",
-        "example": "بحث ← كتابة ← مراجعة ← نشر",
-        "narration": "الثالث Workflow: خطة تربط عدة خطوات، وتحدد من ينفذ كل خطوة وبأي ترتيب. مثلاً: بحث، ثم كتابة، ثم مراجعة، ثم نشر." },
-      { "type": "trio", "title": "متى تستخدم كل واحد؟",
-        "items": [
-          { "term": "Skill", "rule": "تكرر نفس التعليمات كل مرة" },
-          { "term": "Agent", "rule": "مهمة كبيرة تريدها مستقلة" },
-          { "term": "Workflow", "rule": "عدة خطوات مترابطة" }
-        ],
-        "narration": "القاعدة بسيطة: تكرر نفس التعليمات؟ Skill. مهمة كبيرة مستقلة؟ Agent. عدة خطوات مترابطة؟ Workflow." },
-      { "type": "cta", "title": "احفظ المقطع", "body": "وتابعنا لتتعلم Claude خطوة بخطوة.",
-        "narration": "احفظ هذا المقطع، وتابعنا لتتعلم Claude خطوة بخطوة." }
-    ]
-  },
-  "en": {
-    "dir": "ltr",
-    "caption": "Skill, Agent or Workflow? The difference in 40 seconds, and when to use each.",
-    "hashtags": ["#Claude", "#AI", "#AIagents", "#Automation", "#LearnAI"],
-    "scenes": [
-      { "type": "hook", "kicker": "INTERMEDIATE", "title": "Skill, Agent or Workflow?", "body": "Three words you keep hearing. What's the difference?",
-        "narration": "Skill, Agent and Workflow: three words you keep hearing with Claude. What's the difference?" },
-      { "type": "compare", "tabs": ["SKILL", "AGENT", "WORKFLOW"], "active": 0, "term": "Skill",
-        "def": "Instructions you save once, and Claude uses whenever it needs them.",
-        "analogy": "Like a saved playbook", "exampleLabel": "Example",
-        "example": "A skill that writes your posts in your style and format, every time.",
-        "narration": "First, a Skill: instructions you save once in a file, and Claude uses them automatically whenever a task needs them. Like a saved playbook." },
-      { "type": "compare", "tabs": ["SKILL", "AGENT", "WORKFLOW"], "active": 1, "term": "Agent",
-        "def": "An independent helper that takes a whole task and returns only the result.",
-        "analogy": "Like handing a task to a colleague", "exampleLabel": "Example",
-        "example": "An agent that reviews all the code and returns a list of bugs.",
-        "narration": "Second, an Agent: an independent helper with its own instructions and tools. You give it a whole task, it works on it alone, and returns only the result." },
-      { "type": "compare", "tabs": ["SKILL", "AGENT", "WORKFLOW"], "active": 2, "term": "Workflow",
-        "def": "A plan that links several steps, and says who does each one, in what order.",
-        "analogy": "Like a project plan", "exampleLabel": "Example",
-        "example": "Research → Write → Review → Publish",
-        "narration": "Third, a Workflow: a plan that links several steps and says who does each one, in what order. For example: research, then write, then review, then publish." },
-      { "type": "trio", "title": "When to use which?",
-        "items": [
-          { "term": "Skill", "rule": "You repeat the same instructions" },
-          { "term": "Agent", "rule": "A big task you want done on its own" },
-          { "term": "Workflow", "rule": "Several connected steps" }
-        ],
-        "narration": "The rule is simple. Repeating the same instructions? Skill. A big standalone task? Agent. Several connected steps? Workflow." },
-      { "type": "cta", "title": "Save this", "body": "Follow to learn Claude step by step.",
-        "narration": "Save this video, and follow to learn Claude step by step." }
-    ]
-  }
+ "id": "ep02",
+ "level": "intermediate",
+ "topic": "الفرق بين Skill و Agent و Workflow",
+ "channel": {
+  "ar": "@اسم_القناة",
+  "en": "@your_channel"
+ },
+ "ar": {
+  "dir": "rtl",
+  "caption": "Skill أم Agent أم Workflow؟ الفرق في 40 ثانية، ومتى تستخدم كل واحد.",
+  "hashtags": [
+   "#Claude",
+   "#ذكاء_اصطناعي",
+   "#وكلاء_الذكاء_الاصطناعي",
+   "#أتمتة",
+   "#تعلم_الذكاء_الاصطناعي"
+  ],
+  "scenes": [
+   {
+    "type": "flow",
+    "term": "Skill · Agent · Workflow",
+    "spec": {
+     "nodes": [
+      {
+       "id": "s",
+       "label": "Skill",
+       "x": 150,
+       "y": 200,
+       "icon": "doc",
+       "color": 0
+      },
+      {
+       "id": "a",
+       "label": "Agent",
+       "x": 430,
+       "y": 200,
+       "icon": "bot",
+       "color": 1
+      },
+      {
+       "id": "w",
+       "label": "Workflow",
+       "x": 710,
+       "y": 200,
+       "icon": "plan",
+       "color": 2
+      },
+      {
+       "id": "q",
+       "label": "",
+       "x": 430,
+       "y": 580,
+       "icon": "question",
+       "color": "ink",
+       "w": 210,
+       "h": 170
+      }
+     ],
+     "edges": [
+      {
+       "id": "sq",
+       "from": "s",
+       "to": "q",
+       "bend": -40
+      },
+      {
+       "id": "aq",
+       "from": "a",
+       "to": "q"
+      },
+      {
+       "id": "wq",
+       "from": "w",
+       "to": "q",
+       "bend": 40
+      }
+     ],
+     "events": [
+      {
+       "at": 0.04,
+       "do": "show",
+       "node": "s"
+      },
+      {
+       "at": 0.14,
+       "do": "show",
+       "node": "a"
+      },
+      {
+       "at": 0.24,
+       "do": "show",
+       "node": "w"
+      },
+      {
+       "at": 0.36,
+       "do": "draw",
+       "edge": "sq"
+      },
+      {
+       "at": 0.4,
+       "do": "draw",
+       "edge": "aq"
+      },
+      {
+       "at": 0.44,
+       "do": "draw",
+       "edge": "wq"
+      },
+      {
+       "at": 0.34,
+       "do": "show",
+       "node": "q"
+      },
+      {
+       "at": 0.52,
+       "do": "packet",
+       "edge": "sq",
+       "color": 0,
+       "dur": 0.14
+      },
+      {
+       "at": 0.56,
+       "do": "packet",
+       "edge": "aq",
+       "color": 1,
+       "dur": 0.14
+      },
+      {
+       "at": 0.6,
+       "do": "packet",
+       "edge": "wq",
+       "color": 2,
+       "dur": 0.14
+      },
+      {
+       "at": 0.76,
+       "do": "pulse",
+       "node": "q"
+      },
+      {
+       "at": 0.86,
+       "do": "pulse",
+       "node": "q"
+      }
+     ],
+     "camera": [
+      {
+       "at": 0,
+       "zoom": 1.08,
+       "x": 0,
+       "y": 40
+      },
+      {
+       "at": 0.5,
+       "zoom": 1,
+       "x": 0,
+       "y": 0
+      },
+      {
+       "at": 1,
+       "zoom": 1.06,
+       "x": 0,
+       "y": -30
+      }
+     ]
+    },
+    "narration": "Skill و Agent و Workflow: ثلاث كلمات تسمعها كثيراً مع Claude. ما الفرق بينها؟",
+    "def": "ما الفرق؟"
+   },
+   {
+    "type": "flow",
+    "tabs": [
+     "SKILL",
+     "AGENT",
+     "WORKFLOW"
+    ],
+    "active": 0,
+    "term": "Skill",
+    "spec": {
+     "nodes": [
+      {
+       "id": "f",
+       "label": "SKILL.md",
+       "x": 170,
+       "y": 190,
+       "icon": "doc",
+       "color": 0
+      },
+      {
+       "id": "c",
+       "label": "Claude",
+       "x": 640,
+       "y": 190,
+       "icon": "spark",
+       "color": "ink",
+       "w": 210,
+       "h": 170
+      },
+      {
+       "id": "t1",
+       "label": "مهمة 1",
+       "x": 150,
+       "y": 600,
+       "icon": "pen",
+       "w": 170,
+       "h": 140
+      },
+      {
+       "id": "t2",
+       "label": "مهمة 2",
+       "x": 430,
+       "y": 620,
+       "icon": "pen",
+       "w": 170,
+       "h": 140
+      },
+      {
+       "id": "t3",
+       "label": "مهمة 3",
+       "x": 710,
+       "y": 600,
+       "icon": "pen",
+       "w": 170,
+       "h": 140
+      }
+     ],
+     "edges": [
+      {
+       "id": "fc",
+       "from": "f",
+       "to": "c",
+       "bend": -60
+      },
+      {
+       "id": "t1c",
+       "from": "t1",
+       "to": "c",
+       "bend": 40
+      },
+      {
+       "id": "t2c",
+       "from": "t2",
+       "to": "c"
+      },
+      {
+       "id": "t3c",
+       "from": "t3",
+       "to": "c",
+       "bend": -30
+      }
+     ],
+     "events": [
+      {
+       "at": 0.03,
+       "do": "show",
+       "node": "f"
+      },
+      {
+       "at": 0.09,
+       "do": "badge",
+       "node": "f",
+       "text": "محفوظ مرة"
+      },
+      {
+       "at": 0.13,
+       "do": "show",
+       "node": "c"
+      },
+      {
+       "at": 0.17,
+       "do": "draw",
+       "edge": "fc",
+       "dur": 0.06
+      },
+      {
+       "at": 0.24,
+       "do": "show",
+       "node": "t1"
+      },
+      {
+       "at": 0.26,
+       "do": "draw",
+       "edge": "t1c",
+       "dur": 0.05
+      },
+      {
+       "at": 0.29,
+       "do": "packet",
+       "edge": "t1c",
+       "dur": 0.07
+      },
+      {
+       "at": 0.35,
+       "do": "packet",
+       "edge": "fc",
+       "color": 0,
+       "dur": 0.07
+      },
+      {
+       "at": 0.41000000000000003,
+       "do": "pulse",
+       "node": "c"
+      },
+      {
+       "at": 0.42,
+       "do": "done",
+       "node": "t1"
+      },
+      {
+       "at": 0.42,
+       "do": "badge",
+       "node": "c",
+       "text": "×1"
+      },
+      {
+       "at": 0.48,
+       "do": "show",
+       "node": "t2"
+      },
+      {
+       "at": 0.5,
+       "do": "draw",
+       "edge": "t2c",
+       "dur": 0.05
+      },
+      {
+       "at": 0.53,
+       "do": "packet",
+       "edge": "t2c",
+       "dur": 0.07
+      },
+      {
+       "at": 0.59,
+       "do": "packet",
+       "edge": "fc",
+       "color": 0,
+       "dur": 0.07
+      },
+      {
+       "at": 0.65,
+       "do": "pulse",
+       "node": "c"
+      },
+      {
+       "at": 0.6599999999999999,
+       "do": "done",
+       "node": "t2"
+      },
+      {
+       "at": 0.6599999999999999,
+       "do": "badge",
+       "node": "c",
+       "text": "×2"
+      },
+      {
+       "at": 0.7,
+       "do": "show",
+       "node": "t3"
+      },
+      {
+       "at": 0.72,
+       "do": "draw",
+       "edge": "t3c",
+       "dur": 0.05
+      },
+      {
+       "at": 0.75,
+       "do": "packet",
+       "edge": "t3c",
+       "dur": 0.07
+      },
+      {
+       "at": 0.8099999999999999,
+       "do": "packet",
+       "edge": "fc",
+       "color": 0,
+       "dur": 0.07
+      },
+      {
+       "at": 0.87,
+       "do": "pulse",
+       "node": "c"
+      },
+      {
+       "at": 0.8799999999999999,
+       "do": "done",
+       "node": "t3"
+      },
+      {
+       "at": 0.8799999999999999,
+       "do": "badge",
+       "node": "c",
+       "text": "×3"
+      }
+     ],
+     "camera": [
+      {
+       "at": 0,
+       "zoom": 1.18,
+       "x": 220,
+       "y": 180
+      },
+      {
+       "at": 0.14,
+       "zoom": 1.18,
+       "x": 220,
+       "y": 180
+      },
+      {
+       "at": 0.26,
+       "zoom": 1,
+       "x": 0,
+       "y": 0
+      },
+      {
+       "at": 1,
+       "zoom": 1.04,
+       "x": 0,
+       "y": 0
+      }
+     ]
+    },
+    "narration": "الأول Skill: تعليمات تحفظها مرة واحدة في ملف، ويستخدمها Claude تلقائياً كلما احتاجتها المهمة. مثل دليل إجراءات محفوظ.",
+    "def": "تعليمات تحفظها مرة واحدة"
+   },
+   {
+    "type": "flow",
+    "tabs": [
+     "SKILL",
+     "AGENT",
+     "WORKFLOW"
+    ],
+    "active": 1,
+    "term": "Agent",
+    "spec": {
+     "nodes": [
+      {
+       "id": "u",
+       "label": "أنت",
+       "x": 140,
+       "y": 430,
+       "icon": "user",
+       "color": "ink",
+       "w": 170,
+       "h": 150
+      },
+      {
+       "id": "g",
+       "label": "Agent",
+       "x": 620,
+       "y": 430,
+       "icon": "bot",
+       "color": 1,
+       "w": 220,
+       "h": 180
+      },
+      {
+       "id": "k1",
+       "label": "بحث",
+       "x": 480,
+       "y": 110,
+       "icon": "search",
+       "color": 1,
+       "w": 160,
+       "h": 130
+      },
+      {
+       "id": "k2",
+       "label": "قراءة",
+       "x": 770,
+       "y": 110,
+       "icon": "eye",
+       "color": 1,
+       "w": 160,
+       "h": 130
+      },
+      {
+       "id": "k3",
+       "label": "",
+       "x": 620,
+       "y": 690,
+       "icon": "gear",
+       "color": 1,
+       "w": 130,
+       "h": 110
+      }
+     ],
+     "edges": [
+      {
+       "id": "ug",
+       "from": "u",
+       "to": "g",
+       "bend": -90
+      },
+      {
+       "id": "gu",
+       "from": "g",
+       "to": "u",
+       "bend": -90
+      },
+      {
+       "id": "g1",
+       "from": "g",
+       "to": "k1"
+      },
+      {
+       "id": "g2",
+       "from": "g",
+       "to": "k2"
+      },
+      {
+       "id": "g3",
+       "from": "g",
+       "to": "k3"
+      }
+     ],
+     "events": [
+      {
+       "at": 0.03,
+       "do": "show",
+       "node": "u"
+      },
+      {
+       "at": 0.08,
+       "do": "show",
+       "node": "g"
+      },
+      {
+       "at": 0.13,
+       "do": "draw",
+       "edge": "ug",
+       "dur": 0.06
+      },
+      {
+       "at": 0.19,
+       "do": "packet",
+       "edge": "ug",
+       "label": "مهمة",
+       "dur": 0.1
+      },
+      {
+       "at": 0.29,
+       "do": "pulse",
+       "node": "g"
+      },
+      {
+       "at": 0.3,
+       "do": "spin",
+       "node": "g",
+       "dur": 0.42
+      },
+      {
+       "at": 0.33,
+       "do": "show",
+       "node": "k1"
+      },
+      {
+       "at": 0.35,
+       "do": "draw",
+       "edge": "g1",
+       "dur": 0.04
+      },
+      {
+       "at": 0.38,
+       "do": "packet",
+       "edge": "g1",
+       "color": 1,
+       "dur": 0.06
+      },
+      {
+       "at": 0.44,
+       "do": "packet",
+       "edge": "g1",
+       "color": 1,
+       "dur": 0.06,
+       "reverse": true
+      },
+      {
+       "at": 0.47,
+       "do": "show",
+       "node": "k2"
+      },
+      {
+       "at": 0.49,
+       "do": "draw",
+       "edge": "g2",
+       "dur": 0.04
+      },
+      {
+       "at": 0.52,
+       "do": "packet",
+       "edge": "g2",
+       "color": 1,
+       "dur": 0.06
+      },
+      {
+       "at": 0.58,
+       "do": "packet",
+       "edge": "g2",
+       "color": 1,
+       "dur": 0.06,
+       "reverse": true
+      },
+      {
+       "at": 0.58,
+       "do": "show",
+       "node": "k3"
+      },
+      {
+       "at": 0.6,
+       "do": "draw",
+       "edge": "g3",
+       "dur": 0.04
+      },
+      {
+       "at": 0.63,
+       "do": "packet",
+       "edge": "g3",
+       "color": 1,
+       "dur": 0.05
+      },
+      {
+       "at": 0.68,
+       "do": "packet",
+       "edge": "g3",
+       "color": 1,
+       "dur": 0.05,
+       "reverse": true
+      },
+      {
+       "at": 0.73,
+       "do": "done",
+       "node": "g"
+      },
+      {
+       "at": 0.75,
+       "do": "draw",
+       "edge": "gu",
+       "dur": 0.06
+      },
+      {
+       "at": 0.8,
+       "do": "packet",
+       "edge": "gu",
+       "label": "النتيجة",
+       "color": "good",
+       "dur": 0.1
+      },
+      {
+       "at": 0.9,
+       "do": "pulse",
+       "node": "u"
+      },
+      {
+       "at": 0.92,
+       "do": "done",
+       "node": "u"
+      }
+     ],
+     "camera": [
+      {
+       "at": 0,
+       "zoom": 1,
+       "x": 0,
+       "y": 0
+      },
+      {
+       "at": 0.3,
+       "zoom": 1.12,
+       "x": -90,
+       "y": 60
+      },
+      {
+       "at": 0.7,
+       "zoom": 1.12,
+       "x": -90,
+       "y": 60
+      },
+      {
+       "at": 0.84,
+       "zoom": 1,
+       "x": 0,
+       "y": 0
+      }
+     ]
+    },
+    "narration": "الثاني Agent: مساعد مستقل له تعليماته وأدواته. تعطيه مهمة كاملة، فيعمل عليها وحده ويعيد لك النتيجة فقط.",
+    "def": "مساعد مستقل يعيد النتيجة"
+   },
+   {
+    "type": "flow",
+    "tabs": [
+     "SKILL",
+     "AGENT",
+     "WORKFLOW"
+    ],
+    "active": 2,
+    "term": "Workflow",
+    "spec": {
+     "nodes": [
+      {
+       "id": "pl",
+       "label": "الخطة",
+       "x": 430,
+       "y": 100,
+       "icon": "plan",
+       "color": 2,
+       "w": 200,
+       "h": 140
+      },
+      {
+       "id": "r",
+       "label": "بحث",
+       "x": 170,
+       "y": 380,
+       "icon": "search",
+       "color": 2,
+       "w": 180,
+       "h": 140
+      },
+      {
+       "id": "w",
+       "label": "كتابة",
+       "x": 690,
+       "y": 380,
+       "icon": "pen",
+       "color": 2,
+       "w": 180,
+       "h": 140
+      },
+      {
+       "id": "v",
+       "label": "مراجعة",
+       "x": 690,
+       "y": 660,
+       "icon": "eye",
+       "color": 2,
+       "w": 180,
+       "h": 140
+      },
+      {
+       "id": "p",
+       "label": "نشر",
+       "x": 170,
+       "y": 660,
+       "icon": "send",
+       "color": 2,
+       "w": 180,
+       "h": 140
+      }
+     ],
+     "edges": [
+      {
+       "id": "plr",
+       "from": "pl",
+       "to": "r"
+      },
+      {
+       "id": "plw",
+       "from": "pl",
+       "to": "w"
+      },
+      {
+       "id": "plv",
+       "from": "pl",
+       "to": "v"
+      },
+      {
+       "id": "plp",
+       "from": "pl",
+       "to": "p"
+      },
+      {
+       "id": "rw",
+       "from": "r",
+       "to": "w"
+      },
+      {
+       "id": "wv",
+       "from": "w",
+       "to": "v"
+      },
+      {
+       "id": "vp",
+       "from": "v",
+       "to": "p"
+      }
+     ],
+     "events": [
+      {
+       "at": 0.03,
+       "do": "show",
+       "node": "pl"
+      },
+      {
+       "at": 0.08,
+       "do": "pulse",
+       "node": "pl"
+      },
+      {
+       "at": 0.12,
+       "do": "show",
+       "node": "r"
+      },
+      {
+       "at": 0.13,
+       "do": "draw",
+       "edge": "plr",
+       "dur": 0.04
+      },
+      {
+       "at": 0.16999999999999998,
+       "do": "show",
+       "node": "w"
+      },
+      {
+       "at": 0.18,
+       "do": "draw",
+       "edge": "plw",
+       "dur": 0.04
+      },
+      {
+       "at": 0.22,
+       "do": "show",
+       "node": "v"
+      },
+      {
+       "at": 0.23,
+       "do": "draw",
+       "edge": "plv",
+       "dur": 0.04
+      },
+      {
+       "at": 0.27,
+       "do": "show",
+       "node": "p"
+      },
+      {
+       "at": 0.28,
+       "do": "draw",
+       "edge": "plp",
+       "dur": 0.04
+      },
+      {
+       "at": 0.36,
+       "do": "draw",
+       "edge": "rw",
+       "dur": 0.04
+      },
+      {
+       "at": 0.39,
+       "do": "draw",
+       "edge": "wv",
+       "dur": 0.04
+      },
+      {
+       "at": 0.42,
+       "do": "draw",
+       "edge": "vp",
+       "dur": 0.04
+      },
+      {
+       "at": 0.45,
+       "do": "spin",
+       "node": "r",
+       "dur": 0.07
+      },
+      {
+       "at": 0.52,
+       "do": "done",
+       "node": "r"
+      },
+      {
+       "at": 0.52,
+       "do": "packet",
+       "edge": "rw",
+       "color": 2,
+       "dur": 0.05
+      },
+      {
+       "at": 0.5700000000000001,
+       "do": "spin",
+       "node": "w",
+       "dur": 0.07
+      },
+      {
+       "at": 0.6400000000000001,
+       "do": "done",
+       "node": "w"
+      },
+      {
+       "at": 0.6400000000000001,
+       "do": "packet",
+       "edge": "wv",
+       "color": 2,
+       "dur": 0.05
+      },
+      {
+       "at": 0.6900000000000001,
+       "do": "spin",
+       "node": "v",
+       "dur": 0.07
+      },
+      {
+       "at": 0.76,
+       "do": "done",
+       "node": "v"
+      },
+      {
+       "at": 0.76,
+       "do": "packet",
+       "edge": "vp",
+       "color": 2,
+       "dur": 0.05
+      },
+      {
+       "at": 0.81,
+       "do": "spin",
+       "node": "p",
+       "dur": 0.07
+      },
+      {
+       "at": 0.8800000000000001,
+       "do": "done",
+       "node": "p"
+      },
+      {
+       "at": 0.95,
+       "do": "badge",
+       "node": "pl",
+       "text": "✓"
+      },
+      {
+       "at": 0.94,
+       "do": "pulse",
+       "node": "pl"
+      }
+     ],
+     "camera": [
+      {
+       "at": 0,
+       "zoom": 1.12,
+       "x": 0,
+       "y": 110
+      },
+      {
+       "at": 0.3,
+       "zoom": 1,
+       "x": 0,
+       "y": 0
+      },
+      {
+       "at": 0.45,
+       "zoom": 1.1,
+       "x": 0,
+       "y": 60
+      },
+      {
+       "at": 0.7,
+       "zoom": 1.1,
+       "x": 0,
+       "y": -80
+      },
+      {
+       "at": 0.92,
+       "zoom": 1,
+       "x": 0,
+       "y": 0
+      }
+     ]
+    },
+    "narration": "الثالث Workflow: خطة تربط عدة خطوات، وتحدد من ينفذ كل خطوة وبأي ترتيب. مثلاً: بحث، ثم كتابة، ثم مراجعة، ثم نشر.",
+    "def": "خطة توزّع المهام بالترتيب"
+   },
+   {
+    "type": "trio",
+    "title": "متى تستخدم كل واحد؟",
+    "items": [
+     {
+      "term": "Skill",
+      "rule": "تكرر نفس التعليمات كل مرة"
+     },
+     {
+      "term": "Agent",
+      "rule": "مهمة كبيرة تريدها مستقلة"
+     },
+     {
+      "term": "Workflow",
+      "rule": "عدة خطوات مترابطة"
+     }
+    ],
+    "narration": "القاعدة بسيطة: تكرر نفس التعليمات؟ Skill. مهمة كبيرة مستقلة؟ Agent. عدة خطوات مترابطة؟ Workflow."
+   },
+   {
+    "type": "cta",
+    "title": "احفظ المقطع",
+    "body": "وتابعنا لتتعلم Claude خطوة بخطوة.",
+    "narration": "احفظ هذا المقطع، وتابعنا لتتعلم Claude خطوة بخطوة."
+   }
+  ]
+ },
+ "en": {
+  "dir": "ltr",
+  "caption": "Skill, Agent or Workflow? The difference in 40 seconds, and when to use each.",
+  "hashtags": [
+   "#Claude",
+   "#AI",
+   "#AIagents",
+   "#Automation",
+   "#LearnAI"
+  ],
+  "scenes": [
+   {
+    "type": "flow",
+    "term": "Skill · Agent · Workflow",
+    "spec": {
+     "nodes": [
+      {
+       "id": "s",
+       "label": "Skill",
+       "x": 150,
+       "y": 200,
+       "icon": "doc",
+       "color": 0
+      },
+      {
+       "id": "a",
+       "label": "Agent",
+       "x": 430,
+       "y": 200,
+       "icon": "bot",
+       "color": 1
+      },
+      {
+       "id": "w",
+       "label": "Workflow",
+       "x": 710,
+       "y": 200,
+       "icon": "plan",
+       "color": 2
+      },
+      {
+       "id": "q",
+       "label": "",
+       "x": 430,
+       "y": 580,
+       "icon": "question",
+       "color": "ink",
+       "w": 210,
+       "h": 170
+      }
+     ],
+     "edges": [
+      {
+       "id": "sq",
+       "from": "s",
+       "to": "q",
+       "bend": -40
+      },
+      {
+       "id": "aq",
+       "from": "a",
+       "to": "q"
+      },
+      {
+       "id": "wq",
+       "from": "w",
+       "to": "q",
+       "bend": 40
+      }
+     ],
+     "events": [
+      {
+       "at": 0.04,
+       "do": "show",
+       "node": "s"
+      },
+      {
+       "at": 0.14,
+       "do": "show",
+       "node": "a"
+      },
+      {
+       "at": 0.24,
+       "do": "show",
+       "node": "w"
+      },
+      {
+       "at": 0.36,
+       "do": "draw",
+       "edge": "sq"
+      },
+      {
+       "at": 0.4,
+       "do": "draw",
+       "edge": "aq"
+      },
+      {
+       "at": 0.44,
+       "do": "draw",
+       "edge": "wq"
+      },
+      {
+       "at": 0.34,
+       "do": "show",
+       "node": "q"
+      },
+      {
+       "at": 0.52,
+       "do": "packet",
+       "edge": "sq",
+       "color": 0,
+       "dur": 0.14
+      },
+      {
+       "at": 0.56,
+       "do": "packet",
+       "edge": "aq",
+       "color": 1,
+       "dur": 0.14
+      },
+      {
+       "at": 0.6,
+       "do": "packet",
+       "edge": "wq",
+       "color": 2,
+       "dur": 0.14
+      },
+      {
+       "at": 0.76,
+       "do": "pulse",
+       "node": "q"
+      },
+      {
+       "at": 0.86,
+       "do": "pulse",
+       "node": "q"
+      }
+     ],
+     "camera": [
+      {
+       "at": 0,
+       "zoom": 1.08,
+       "x": 0,
+       "y": 40
+      },
+      {
+       "at": 0.5,
+       "zoom": 1,
+       "x": 0,
+       "y": 0
+      },
+      {
+       "at": 1,
+       "zoom": 1.06,
+       "x": 0,
+       "y": -30
+      }
+     ]
+    },
+    "narration": "Skill, Agent and Workflow: three words you keep hearing with Claude. What's the difference?",
+    "def": "What's the difference?"
+   },
+   {
+    "type": "flow",
+    "tabs": [
+     "SKILL",
+     "AGENT",
+     "WORKFLOW"
+    ],
+    "active": 0,
+    "term": "Skill",
+    "spec": {
+     "nodes": [
+      {
+       "id": "f",
+       "label": "SKILL.md",
+       "x": 170,
+       "y": 190,
+       "icon": "doc",
+       "color": 0
+      },
+      {
+       "id": "c",
+       "label": "Claude",
+       "x": 640,
+       "y": 190,
+       "icon": "spark",
+       "color": "ink",
+       "w": 210,
+       "h": 170
+      },
+      {
+       "id": "t1",
+       "label": "Task 1",
+       "x": 150,
+       "y": 600,
+       "icon": "pen",
+       "w": 170,
+       "h": 140
+      },
+      {
+       "id": "t2",
+       "label": "Task 2",
+       "x": 430,
+       "y": 620,
+       "icon": "pen",
+       "w": 170,
+       "h": 140
+      },
+      {
+       "id": "t3",
+       "label": "Task 3",
+       "x": 710,
+       "y": 600,
+       "icon": "pen",
+       "w": 170,
+       "h": 140
+      }
+     ],
+     "edges": [
+      {
+       "id": "fc",
+       "from": "f",
+       "to": "c",
+       "bend": -60
+      },
+      {
+       "id": "t1c",
+       "from": "t1",
+       "to": "c",
+       "bend": 40
+      },
+      {
+       "id": "t2c",
+       "from": "t2",
+       "to": "c"
+      },
+      {
+       "id": "t3c",
+       "from": "t3",
+       "to": "c",
+       "bend": -30
+      }
+     ],
+     "events": [
+      {
+       "at": 0.03,
+       "do": "show",
+       "node": "f"
+      },
+      {
+       "at": 0.09,
+       "do": "badge",
+       "node": "f",
+       "text": "saved once"
+      },
+      {
+       "at": 0.13,
+       "do": "show",
+       "node": "c"
+      },
+      {
+       "at": 0.17,
+       "do": "draw",
+       "edge": "fc",
+       "dur": 0.06
+      },
+      {
+       "at": 0.24,
+       "do": "show",
+       "node": "t1"
+      },
+      {
+       "at": 0.26,
+       "do": "draw",
+       "edge": "t1c",
+       "dur": 0.05
+      },
+      {
+       "at": 0.29,
+       "do": "packet",
+       "edge": "t1c",
+       "dur": 0.07
+      },
+      {
+       "at": 0.35,
+       "do": "packet",
+       "edge": "fc",
+       "color": 0,
+       "dur": 0.07
+      },
+      {
+       "at": 0.41000000000000003,
+       "do": "pulse",
+       "node": "c"
+      },
+      {
+       "at": 0.42,
+       "do": "done",
+       "node": "t1"
+      },
+      {
+       "at": 0.42,
+       "do": "badge",
+       "node": "c",
+       "text": "×1"
+      },
+      {
+       "at": 0.48,
+       "do": "show",
+       "node": "t2"
+      },
+      {
+       "at": 0.5,
+       "do": "draw",
+       "edge": "t2c",
+       "dur": 0.05
+      },
+      {
+       "at": 0.53,
+       "do": "packet",
+       "edge": "t2c",
+       "dur": 0.07
+      },
+      {
+       "at": 0.59,
+       "do": "packet",
+       "edge": "fc",
+       "color": 0,
+       "dur": 0.07
+      },
+      {
+       "at": 0.65,
+       "do": "pulse",
+       "node": "c"
+      },
+      {
+       "at": 0.6599999999999999,
+       "do": "done",
+       "node": "t2"
+      },
+      {
+       "at": 0.6599999999999999,
+       "do": "badge",
+       "node": "c",
+       "text": "×2"
+      },
+      {
+       "at": 0.7,
+       "do": "show",
+       "node": "t3"
+      },
+      {
+       "at": 0.72,
+       "do": "draw",
+       "edge": "t3c",
+       "dur": 0.05
+      },
+      {
+       "at": 0.75,
+       "do": "packet",
+       "edge": "t3c",
+       "dur": 0.07
+      },
+      {
+       "at": 0.8099999999999999,
+       "do": "packet",
+       "edge": "fc",
+       "color": 0,
+       "dur": 0.07
+      },
+      {
+       "at": 0.87,
+       "do": "pulse",
+       "node": "c"
+      },
+      {
+       "at": 0.8799999999999999,
+       "do": "done",
+       "node": "t3"
+      },
+      {
+       "at": 0.8799999999999999,
+       "do": "badge",
+       "node": "c",
+       "text": "×3"
+      }
+     ],
+     "camera": [
+      {
+       "at": 0,
+       "zoom": 1.18,
+       "x": 220,
+       "y": 180
+      },
+      {
+       "at": 0.14,
+       "zoom": 1.18,
+       "x": 220,
+       "y": 180
+      },
+      {
+       "at": 0.26,
+       "zoom": 1,
+       "x": 0,
+       "y": 0
+      },
+      {
+       "at": 1,
+       "zoom": 1.04,
+       "x": 0,
+       "y": 0
+      }
+     ]
+    },
+    "narration": "First, a Skill: instructions you save once in a file, and Claude uses them automatically whenever a task needs them. Like a saved playbook.",
+    "def": "Instructions saved once"
+   },
+   {
+    "type": "flow",
+    "tabs": [
+     "SKILL",
+     "AGENT",
+     "WORKFLOW"
+    ],
+    "active": 1,
+    "term": "Agent",
+    "spec": {
+     "nodes": [
+      {
+       "id": "u",
+       "label": "You",
+       "x": 140,
+       "y": 430,
+       "icon": "user",
+       "color": "ink",
+       "w": 170,
+       "h": 150
+      },
+      {
+       "id": "g",
+       "label": "Agent",
+       "x": 620,
+       "y": 430,
+       "icon": "bot",
+       "color": 1,
+       "w": 220,
+       "h": 180
+      },
+      {
+       "id": "k1",
+       "label": "Research",
+       "x": 480,
+       "y": 110,
+       "icon": "search",
+       "color": 1,
+       "w": 160,
+       "h": 130
+      },
+      {
+       "id": "k2",
+       "label": "Read",
+       "x": 770,
+       "y": 110,
+       "icon": "eye",
+       "color": 1,
+       "w": 160,
+       "h": 130
+      },
+      {
+       "id": "k3",
+       "label": "",
+       "x": 620,
+       "y": 690,
+       "icon": "gear",
+       "color": 1,
+       "w": 130,
+       "h": 110
+      }
+     ],
+     "edges": [
+      {
+       "id": "ug",
+       "from": "u",
+       "to": "g",
+       "bend": -90
+      },
+      {
+       "id": "gu",
+       "from": "g",
+       "to": "u",
+       "bend": -90
+      },
+      {
+       "id": "g1",
+       "from": "g",
+       "to": "k1"
+      },
+      {
+       "id": "g2",
+       "from": "g",
+       "to": "k2"
+      },
+      {
+       "id": "g3",
+       "from": "g",
+       "to": "k3"
+      }
+     ],
+     "events": [
+      {
+       "at": 0.03,
+       "do": "show",
+       "node": "u"
+      },
+      {
+       "at": 0.08,
+       "do": "show",
+       "node": "g"
+      },
+      {
+       "at": 0.13,
+       "do": "draw",
+       "edge": "ug",
+       "dur": 0.06
+      },
+      {
+       "at": 0.19,
+       "do": "packet",
+       "edge": "ug",
+       "label": "Task",
+       "dur": 0.1
+      },
+      {
+       "at": 0.29,
+       "do": "pulse",
+       "node": "g"
+      },
+      {
+       "at": 0.3,
+       "do": "spin",
+       "node": "g",
+       "dur": 0.42
+      },
+      {
+       "at": 0.33,
+       "do": "show",
+       "node": "k1"
+      },
+      {
+       "at": 0.35,
+       "do": "draw",
+       "edge": "g1",
+       "dur": 0.04
+      },
+      {
+       "at": 0.38,
+       "do": "packet",
+       "edge": "g1",
+       "color": 1,
+       "dur": 0.06
+      },
+      {
+       "at": 0.44,
+       "do": "packet",
+       "edge": "g1",
+       "color": 1,
+       "dur": 0.06,
+       "reverse": true
+      },
+      {
+       "at": 0.47,
+       "do": "show",
+       "node": "k2"
+      },
+      {
+       "at": 0.49,
+       "do": "draw",
+       "edge": "g2",
+       "dur": 0.04
+      },
+      {
+       "at": 0.52,
+       "do": "packet",
+       "edge": "g2",
+       "color": 1,
+       "dur": 0.06
+      },
+      {
+       "at": 0.58,
+       "do": "packet",
+       "edge": "g2",
+       "color": 1,
+       "dur": 0.06,
+       "reverse": true
+      },
+      {
+       "at": 0.58,
+       "do": "show",
+       "node": "k3"
+      },
+      {
+       "at": 0.6,
+       "do": "draw",
+       "edge": "g3",
+       "dur": 0.04
+      },
+      {
+       "at": 0.63,
+       "do": "packet",
+       "edge": "g3",
+       "color": 1,
+       "dur": 0.05
+      },
+      {
+       "at": 0.68,
+       "do": "packet",
+       "edge": "g3",
+       "color": 1,
+       "dur": 0.05,
+       "reverse": true
+      },
+      {
+       "at": 0.73,
+       "do": "done",
+       "node": "g"
+      },
+      {
+       "at": 0.75,
+       "do": "draw",
+       "edge": "gu",
+       "dur": 0.06
+      },
+      {
+       "at": 0.8,
+       "do": "packet",
+       "edge": "gu",
+       "label": "Result",
+       "color": "good",
+       "dur": 0.1
+      },
+      {
+       "at": 0.9,
+       "do": "pulse",
+       "node": "u"
+      },
+      {
+       "at": 0.92,
+       "do": "done",
+       "node": "u"
+      }
+     ],
+     "camera": [
+      {
+       "at": 0,
+       "zoom": 1,
+       "x": 0,
+       "y": 0
+      },
+      {
+       "at": 0.3,
+       "zoom": 1.12,
+       "x": -90,
+       "y": 60
+      },
+      {
+       "at": 0.7,
+       "zoom": 1.12,
+       "x": -90,
+       "y": 60
+      },
+      {
+       "at": 0.84,
+       "zoom": 1,
+       "x": 0,
+       "y": 0
+      }
+     ]
+    },
+    "narration": "Second, an Agent: an independent helper with its own instructions and tools. You give it a whole task, it works on it alone, and returns only the result.",
+    "def": "An independent helper"
+   },
+   {
+    "type": "flow",
+    "tabs": [
+     "SKILL",
+     "AGENT",
+     "WORKFLOW"
+    ],
+    "active": 2,
+    "term": "Workflow",
+    "spec": {
+     "nodes": [
+      {
+       "id": "pl",
+       "label": "Plan",
+       "x": 430,
+       "y": 100,
+       "icon": "plan",
+       "color": 2,
+       "w": 200,
+       "h": 140
+      },
+      {
+       "id": "r",
+       "label": "Research",
+       "x": 170,
+       "y": 380,
+       "icon": "search",
+       "color": 2,
+       "w": 180,
+       "h": 140
+      },
+      {
+       "id": "w",
+       "label": "Write",
+       "x": 690,
+       "y": 380,
+       "icon": "pen",
+       "color": 2,
+       "w": 180,
+       "h": 140
+      },
+      {
+       "id": "v",
+       "label": "Review",
+       "x": 690,
+       "y": 660,
+       "icon": "eye",
+       "color": 2,
+       "w": 180,
+       "h": 140
+      },
+      {
+       "id": "p",
+       "label": "Publish",
+       "x": 170,
+       "y": 660,
+       "icon": "send",
+       "color": 2,
+       "w": 180,
+       "h": 140
+      }
+     ],
+     "edges": [
+      {
+       "id": "plr",
+       "from": "pl",
+       "to": "r"
+      },
+      {
+       "id": "plw",
+       "from": "pl",
+       "to": "w"
+      },
+      {
+       "id": "plv",
+       "from": "pl",
+       "to": "v"
+      },
+      {
+       "id": "plp",
+       "from": "pl",
+       "to": "p"
+      },
+      {
+       "id": "rw",
+       "from": "r",
+       "to": "w"
+      },
+      {
+       "id": "wv",
+       "from": "w",
+       "to": "v"
+      },
+      {
+       "id": "vp",
+       "from": "v",
+       "to": "p"
+      }
+     ],
+     "events": [
+      {
+       "at": 0.03,
+       "do": "show",
+       "node": "pl"
+      },
+      {
+       "at": 0.08,
+       "do": "pulse",
+       "node": "pl"
+      },
+      {
+       "at": 0.12,
+       "do": "show",
+       "node": "r"
+      },
+      {
+       "at": 0.13,
+       "do": "draw",
+       "edge": "plr",
+       "dur": 0.04
+      },
+      {
+       "at": 0.16999999999999998,
+       "do": "show",
+       "node": "w"
+      },
+      {
+       "at": 0.18,
+       "do": "draw",
+       "edge": "plw",
+       "dur": 0.04
+      },
+      {
+       "at": 0.22,
+       "do": "show",
+       "node": "v"
+      },
+      {
+       "at": 0.23,
+       "do": "draw",
+       "edge": "plv",
+       "dur": 0.04
+      },
+      {
+       "at": 0.27,
+       "do": "show",
+       "node": "p"
+      },
+      {
+       "at": 0.28,
+       "do": "draw",
+       "edge": "plp",
+       "dur": 0.04
+      },
+      {
+       "at": 0.36,
+       "do": "draw",
+       "edge": "rw",
+       "dur": 0.04
+      },
+      {
+       "at": 0.39,
+       "do": "draw",
+       "edge": "wv",
+       "dur": 0.04
+      },
+      {
+       "at": 0.42,
+       "do": "draw",
+       "edge": "vp",
+       "dur": 0.04
+      },
+      {
+       "at": 0.45,
+       "do": "spin",
+       "node": "r",
+       "dur": 0.07
+      },
+      {
+       "at": 0.52,
+       "do": "done",
+       "node": "r"
+      },
+      {
+       "at": 0.52,
+       "do": "packet",
+       "edge": "rw",
+       "color": 2,
+       "dur": 0.05
+      },
+      {
+       "at": 0.5700000000000001,
+       "do": "spin",
+       "node": "w",
+       "dur": 0.07
+      },
+      {
+       "at": 0.6400000000000001,
+       "do": "done",
+       "node": "w"
+      },
+      {
+       "at": 0.6400000000000001,
+       "do": "packet",
+       "edge": "wv",
+       "color": 2,
+       "dur": 0.05
+      },
+      {
+       "at": 0.6900000000000001,
+       "do": "spin",
+       "node": "v",
+       "dur": 0.07
+      },
+      {
+       "at": 0.76,
+       "do": "done",
+       "node": "v"
+      },
+      {
+       "at": 0.76,
+       "do": "packet",
+       "edge": "vp",
+       "color": 2,
+       "dur": 0.05
+      },
+      {
+       "at": 0.81,
+       "do": "spin",
+       "node": "p",
+       "dur": 0.07
+      },
+      {
+       "at": 0.8800000000000001,
+       "do": "done",
+       "node": "p"
+      },
+      {
+       "at": 0.95,
+       "do": "badge",
+       "node": "pl",
+       "text": "✓"
+      },
+      {
+       "at": 0.94,
+       "do": "pulse",
+       "node": "pl"
+      }
+     ],
+     "camera": [
+      {
+       "at": 0,
+       "zoom": 1.12,
+       "x": 0,
+       "y": 110
+      },
+      {
+       "at": 0.3,
+       "zoom": 1,
+       "x": 0,
+       "y": 0
+      },
+      {
+       "at": 0.45,
+       "zoom": 1.1,
+       "x": 0,
+       "y": 60
+      },
+      {
+       "at": 0.7,
+       "zoom": 1.1,
+       "x": 0,
+       "y": -80
+      },
+      {
+       "at": 0.92,
+       "zoom": 1,
+       "x": 0,
+       "y": 0
+      }
+     ]
+    },
+    "narration": "Third, a Workflow: a plan that links several steps and says who does each one, in what order. For example: research, then write, then review, then publish.",
+    "def": "A plan that orders the steps"
+   },
+   {
+    "type": "trio",
+    "title": "When to use which?",
+    "items": [
+     {
+      "term": "Skill",
+      "rule": "You repeat the same instructions"
+     },
+     {
+      "term": "Agent",
+      "rule": "A big task you want done on its own"
+     },
+     {
+      "term": "Workflow",
+      "rule": "Several connected steps"
+     }
+    ],
+    "narration": "The rule is simple. Repeating the same instructions? Skill. A big standalone task? Agent. Several connected steps? Workflow."
+   },
+   {
+    "type": "cta",
+    "title": "Save this",
+    "body": "Follow to learn Claude step by step.",
+    "narration": "Save this video, and follow to learn Claude step by step."
+   }
+  ]
+ }
 }
