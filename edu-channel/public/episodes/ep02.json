@@ -23,123 +23,35 @@
     "spec": {
      "nodes": [
       {
-       "id": "s",
-       "label": "Skill",
-       "x": 150,
-       "y": 200,
-       "icon": "doc",
-       "color": 0
-      },
-      {
-       "id": "a",
-       "label": "Agent",
-       "x": 430,
-       "y": 200,
-       "icon": "bot",
-       "color": 1
-      },
-      {
-       "id": "w",
-       "label": "Workflow",
-       "x": 710,
-       "y": 200,
-       "icon": "plan",
-       "color": 2
-      },
-      {
        "id": "q",
        "label": "",
        "x": 430,
-       "y": 580,
+       "y": 640,
        "icon": "question",
        "color": "ink",
-       "w": 210,
+       "w": 200,
        "h": 170
       }
      ],
-     "edges": [
-      {
-       "id": "sq",
-       "from": "s",
-       "to": "q",
-       "bend": -40
-      },
-      {
-       "id": "aq",
-       "from": "a",
-       "to": "q"
-      },
-      {
-       "id": "wq",
-       "from": "w",
-       "to": "q",
-       "bend": 40
-      }
-     ],
+     "edges": [],
      "events": [
       {
-       "at": 0.04,
-       "do": "show",
-       "node": "s"
-      },
-      {
-       "at": 0.14,
-       "do": "show",
-       "node": "a"
-      },
-      {
-       "at": 0.24,
-       "do": "show",
-       "node": "w"
-      },
-      {
-       "at": 0.36,
-       "do": "draw",
-       "edge": "sq"
-      },
-      {
-       "at": 0.4,
-       "do": "draw",
-       "edge": "aq"
-      },
-      {
-       "at": 0.44,
-       "do": "draw",
-       "edge": "wq"
-      },
-      {
-       "at": 0.34,
+       "at": 0.35,
        "do": "show",
        "node": "q"
       },
       {
-       "at": 0.52,
-       "do": "packet",
-       "edge": "sq",
-       "color": 0,
-       "dur": 0.14
-      },
-      {
-       "at": 0.56,
-       "do": "packet",
-       "edge": "aq",
-       "color": 1,
-       "dur": 0.14
-      },
-      {
-       "at": 0.6,
-       "do": "packet",
-       "edge": "wq",
-       "color": 2,
-       "dur": 0.14
-      },
-      {
-       "at": 0.76,
+       "at": 0.55,
        "do": "pulse",
        "node": "q"
       },
       {
-       "at": 0.86,
+       "at": 0.72,
+       "do": "pulse",
+       "node": "q"
+      },
+      {
+       "at": 0.88,
        "do": "pulse",
        "node": "q"
       }
@@ -147,26 +59,45 @@
      "camera": [
       {
        "at": 0,
-       "zoom": 1.08,
-       "x": 0,
-       "y": 40
-      },
-      {
-       "at": 0.5,
        "zoom": 1,
        "x": 0,
        "y": 0
-      },
-      {
-       "at": 1,
-       "zoom": 1.06,
-       "x": 0,
-       "y": -30
       }
      ]
     },
     "narration": "Skill و Agent و Workflow: ثلاث كلمات تسمعها كثيراً مع Claude. ما الفرق بينها؟",
-    "def": "ما الفرق؟"
+    "def": "ما الفرق؟",
+    "audio": "ep02/ar-1.mp3",
+    "cues": [
+     {
+      "text": "Skill و Agent",
+      "start": 0.0,
+      "end": 1.2
+     },
+     {
+      "text": "و Workflow:",
+      "start": 1.2,
+      "end": 2.22
+     },
+     {
+      "text": "ثلاث كلمات تسمعها",
+      "start": 2.22,
+      "end": 3.68
+     },
+     {
+      "text": "كثيراً مع Claude.",
+      "start": 3.68,
+      "end": 5.32
+     },
+     {
+      "text": "ما الفرق بينها؟",
+      "start": 5.32,
+      "end": 6.8
+     }
+    ],
+    "bg": "ep02/cover-art.png",
+    "bgOpacity": 0.95,
+    "bgY": 260
    },
    {
     "type": "flow",
@@ -422,7 +353,47 @@
      ]
     },
     "narration": "الأول Skill: تعليمات تحفظها مرة واحدة في ملف، ويستخدمها Claude تلقائياً كلما احتاجتها المهمة. مثل دليل إجراءات محفوظ.",
-    "def": "تعليمات تحفظها مرة واحدة"
+    "def": "تعليمات تحفظها مرة واحدة",
+    "audio": "ep02/ar-2.mp3",
+    "cues": [
+     {
+      "text": "الأول Skill:",
+      "start": 0.0,
+      "end": 1.0
+     },
+     {
+      "text": "تعليمات تحفظها مرة",
+      "start": 1.0,
+      "end": 2.74
+     },
+     {
+      "text": "واحدة في ملف،",
+      "start": 2.74,
+      "end": 4.5
+     },
+     {
+      "text": "ويستخدمها Claude تلقائياً",
+      "start": 4.5,
+      "end": 6.54
+     },
+     {
+      "text": "كلما احتاجتها المهمة.",
+      "start": 6.54,
+      "end": 8.24
+     },
+     {
+      "text": "مثل دليل",
+      "start": 8.24,
+      "end": 9.14
+     },
+     {
+      "text": "إجراءات محفوظ.",
+      "start": 9.14,
+      "end": 10.46
+     }
+    ],
+    "bg": "ep02/bg-plate.png",
+    "bgOpacity": 0.45
    },
    {
     "type": "flow",
@@ -686,7 +657,47 @@
      ]
     },
     "narration": "الثاني Agent: مساعد مستقل له تعليماته وأدواته. تعطيه مهمة كاملة، فيعمل عليها وحده ويعيد لك النتيجة فقط.",
-    "def": "مساعد مستقل يعيد النتيجة"
+    "def": "مساعد مستقل يعيد النتيجة",
+    "audio": "ep02/ar-3.mp3",
+    "cues": [
+     {
+      "text": "الثاني Agent:",
+      "start": 0.0,
+      "end": 1.5
+     },
+     {
+      "text": "مساعد مستقل له",
+      "start": 1.5,
+      "end": 3.52
+     },
+     {
+      "text": "تعليماته وأدواته.",
+      "start": 3.52,
+      "end": 5.48
+     },
+     {
+      "text": "تعطيه مهمة كاملة،",
+      "start": 5.48,
+      "end": 7.54
+     },
+     {
+      "text": "فيعمل عليها وحده",
+      "start": 7.54,
+      "end": 9.48
+     },
+     {
+      "text": "ويعيد لك النتيجة",
+      "start": 9.48,
+      "end": 11.06
+     },
+     {
+      "text": "فقط.",
+      "start": 11.06,
+      "end": 11.42
+     }
+    ],
+    "bg": "ep02/bg-plate.png",
+    "bgOpacity": 0.45
    },
    {
     "type": "flow",
@@ -733,7 +744,7 @@
        "id": "v",
        "label": "مراجعة",
        "x": 690,
-       "y": 660,
+       "y": 620,
        "icon": "eye",
        "color": 2,
        "w": 180,
@@ -743,7 +754,7 @@
        "id": "p",
        "label": "نشر",
        "x": 170,
-       "y": 660,
+       "y": 620,
        "icon": "send",
        "color": 2,
        "w": 180,
@@ -971,7 +982,67 @@
      ]
     },
     "narration": "الثالث Workflow: خطة تربط عدة خطوات، وتحدد من ينفذ كل خطوة وبأي ترتيب. مثلاً: بحث، ثم كتابة، ثم مراجعة، ثم نشر.",
-    "def": "خطة توزّع المهام بالترتيب"
+    "def": "خطة توزّع المهام بالترتيب",
+    "audio": "ep02/ar-4.mp3",
+    "cues": [
+     {
+      "text": "الثالث Workflow:",
+      "start": 0.0,
+      "end": 1.64
+     },
+     {
+      "text": "خطة تربط",
+      "start": 1.64,
+      "end": 2.8
+     },
+     {
+      "text": "عدة خطوات،",
+      "start": 2.8,
+      "end": 3.92
+     },
+     {
+      "text": "وتحدد من ينفذ",
+      "start": 3.92,
+      "end": 5.68
+     },
+     {
+      "text": "كل خطوة وبأي",
+      "start": 5.68,
+      "end": 7.42
+     },
+     {
+      "text": "ترتيب.",
+      "start": 7.42,
+      "end": 7.96
+     },
+     {
+      "text": "مثلاً:",
+      "start": 7.96,
+      "end": 8.96
+     },
+     {
+      "text": "بحث،",
+      "start": 8.96,
+      "end": 9.74
+     },
+     {
+      "text": "ثم كتابة،",
+      "start": 9.74,
+      "end": 11.04
+     },
+     {
+      "text": "ثم مراجعة،",
+      "start": 11.04,
+      "end": 12.3
+     },
+     {
+      "text": "ثم نشر.",
+      "start": 12.3,
+      "end": 13.26
+     }
+    ],
+    "bg": "ep02/bg-plate.png",
+    "bgOpacity": 0.45
    },
    {
     "type": "trio",
@@ -990,13 +1061,73 @@
       "rule": "عدة خطوات مترابطة"
      }
     ],
-    "narration": "القاعدة بسيطة: تكرر نفس التعليمات؟ Skill. مهمة كبيرة مستقلة؟ Agent. عدة خطوات مترابطة؟ Workflow."
+    "narration": "القاعدة بسيطة: تكرر نفس التعليمات؟ Skill. مهمة كبيرة مستقلة؟ Agent. عدة خطوات مترابطة؟ Workflow.",
+    "audio": "ep02/ar-5.mp3",
+    "cues": [
+     {
+      "text": "القاعدة بسيطة:",
+      "start": 0.0,
+      "end": 1.24
+     },
+     {
+      "text": "تكرر نفس التعليمات؟",
+      "start": 1.24,
+      "end": 2.9
+     },
+     {
+      "text": "Skill.",
+      "start": 2.9,
+      "end": 3.5
+     },
+     {
+      "text": "مهمة كبيرة مستقلة؟",
+      "start": 3.5,
+      "end": 5.54
+     },
+     {
+      "text": "Agent.",
+      "start": 5.54,
+      "end": 6.16
+     },
+     {
+      "text": "عدة خطوات مترابطة؟",
+      "start": 6.16,
+      "end": 8.4
+     },
+     {
+      "text": "Workflow.",
+      "start": 8.4,
+      "end": 8.86
+     }
+    ],
+    "bg": "ep02/bg-plate.png",
+    "bgOpacity": 0.45
    },
    {
     "type": "cta",
     "title": "احفظ المقطع",
     "body": "وتابعنا لتتعلم Claude خطوة بخطوة.",
-    "narration": "احفظ هذا المقطع، وتابعنا لتتعلم Claude خطوة بخطوة."
+    "narration": "احفظ هذا المقطع، وتابعنا لتتعلم Claude خطوة بخطوة.",
+    "audio": "ep02/ar-6.mp3",
+    "cues": [
+     {
+      "text": "احفظ هذا المقطع،",
+      "start": 0.0,
+      "end": 1.22
+     },
+     {
+      "text": "وتابعنا لتتعلم Claude",
+      "start": 1.22,
+      "end": 3.14
+     },
+     {
+      "text": "خطوة بخطوة.",
+      "start": 3.14,
+      "end": 4.24
+     }
+    ],
+    "bg": "ep02/bg-plate.png",
+    "bgOpacity": 0.45
    }
   ]
  },
@@ -1017,123 +1148,35 @@
     "spec": {
      "nodes": [
       {
-       "id": "s",
-       "label": "Skill",
-       "x": 150,
-       "y": 200,
-       "icon": "doc",
-       "color": 0
-      },
-      {
-       "id": "a",
-       "label": "Agent",
-       "x": 430,
-       "y": 200,
-       "icon": "bot",
-       "color": 1
-      },
-      {
-       "id": "w",
-       "label": "Workflow",
-       "x": 710,
-       "y": 200,
-       "icon": "plan",
-       "color": 2
-      },
-      {
        "id": "q",
        "label": "",
        "x": 430,
-       "y": 580,
+       "y": 640,
        "icon": "question",
        "color": "ink",
-       "w": 210,
+       "w": 200,
        "h": 170
       }
      ],
-     "edges": [
-      {
-       "id": "sq",
-       "from": "s",
-       "to": "q",
-       "bend": -40
-      },
-      {
-       "id": "aq",
-       "from": "a",
-       "to": "q"
-      },
-      {
-       "id": "wq",
-       "from": "w",
-       "to": "q",
-       "bend": 40
-      }
-     ],
+     "edges": [],
      "events": [
       {
-       "at": 0.04,
-       "do": "show",
-       "node": "s"
-      },
-      {
-       "at": 0.14,
-       "do": "show",
-       "node": "a"
-      },
-      {
-       "at": 0.24,
-       "do": "show",
-       "node": "w"
-      },
-      {
-       "at": 0.36,
-       "do": "draw",
-       "edge": "sq"
-      },
-      {
-       "at": 0.4,
-       "do": "draw",
-       "edge": "aq"
-      },
-      {
-       "at": 0.44,
-       "do": "draw",
-       "edge": "wq"
-      },
-      {
-       "at": 0.34,
+       "at": 0.35,
        "do": "show",
        "node": "q"
       },
       {
-       "at": 0.52,
-       "do": "packet",
-       "edge": "sq",
-       "color": 0,
-       "dur": 0.14
-      },
-      {
-       "at": 0.56,
-       "do": "packet",
-       "edge": "aq",
-       "color": 1,
-       "dur": 0.14
-      },
-      {
-       "at": 0.6,
-       "do": "packet",
-       "edge": "wq",
-       "color": 2,
-       "dur": 0.14
-      },
-      {
-       "at": 0.76,
+       "at": 0.55,
        "do": "pulse",
        "node": "q"
       },
       {
-       "at": 0.86,
+       "at": 0.72,
+       "do": "pulse",
+       "node": "q"
+      },
+      {
+       "at": 0.88,
        "do": "pulse",
        "node": "q"
       }
@@ -1141,26 +1184,45 @@
      "camera": [
       {
        "at": 0,
-       "zoom": 1.08,
-       "x": 0,
-       "y": 40
-      },
-      {
-       "at": 0.5,
        "zoom": 1,
        "x": 0,
        "y": 0
-      },
-      {
-       "at": 1,
-       "zoom": 1.06,
-       "x": 0,
-       "y": -30
       }
      ]
     },
     "narration": "Skill, Agent and Workflow: three words you keep hearing with Claude. What's the difference?",
-    "def": "What's the difference?"
+    "def": "What's the difference?",
+    "audio": "ep02/en-1.mp3",
+    "cues": [
+     {
+      "text": "Skill,",
+      "start": 0.0,
+      "end": 0.34
+     },
+     {
+      "text": "Agent and Workflow:",
+      "start": 0.58,
+      "end": 1.82
+     },
+     {
+      "text": "three words you keep",
+      "start": 2.26,
+      "end": 3.22
+     },
+     {
+      "text": "hearing with Claude.",
+      "start": 3.22,
+      "end": 4.42
+     },
+     {
+      "text": "What's the difference?",
+      "start": 4.54,
+      "end": 5.22
+     }
+    ],
+    "bg": "ep02/cover-art.png",
+    "bgOpacity": 0.95,
+    "bgY": 260
    },
    {
     "type": "flow",
@@ -1416,7 +1478,52 @@
      ]
     },
     "narration": "First, a Skill: instructions you save once in a file, and Claude uses them automatically whenever a task needs them. Like a saved playbook.",
-    "def": "Instructions saved once"
+    "def": "Instructions saved once",
+    "audio": "ep02/en-2.mp3",
+    "cues": [
+     {
+      "text": "First,",
+      "start": 0.0,
+      "end": 0.28
+     },
+     {
+      "text": "a Skill:",
+      "start": 0.54,
+      "end": 0.86
+     },
+     {
+      "text": "instructions you save once",
+      "start": 1.76,
+      "end": 3.1
+     },
+     {
+      "text": "in a file,",
+      "start": 3.1,
+      "end": 3.82
+     },
+     {
+      "text": "and Claude uses them",
+      "start": 4.32,
+      "end": 5.44
+     },
+     {
+      "text": "automatically whenever a task",
+      "start": 5.44,
+      "end": 7.44
+     },
+     {
+      "text": "needs them.",
+      "start": 7.44,
+      "end": 8.08
+     },
+     {
+      "text": "Like a saved playbook.",
+      "start": 8.48,
+      "end": 9.78
+     }
+    ],
+    "bg": "ep02/bg-plate.png",
+    "bgOpacity": 0.45
    },
    {
     "type": "flow",
@@ -1680,7 +1787,67 @@
      ]
     },
     "narration": "Second, an Agent: an independent helper with its own instructions and tools. You give it a whole task, it works on it alone, and returns only the result.",
-    "def": "An independent helper"
+    "def": "An independent helper",
+    "audio": "ep02/en-3.mp3",
+    "cues": [
+     {
+      "text": "Second,",
+      "start": 0.0,
+      "end": 0.36
+     },
+     {
+      "text": "an Agent:",
+      "start": 0.82,
+      "end": 1.32
+     },
+     {
+      "text": "an independent helper",
+      "start": 1.94,
+      "end": 3.0
+     },
+     {
+      "text": "with its own",
+      "start": 3.0,
+      "end": 3.78
+     },
+     {
+      "text": "instructions and tools.",
+      "start": 3.78,
+      "end": 5.08
+     },
+     {
+      "text": "You give it",
+      "start": 5.6,
+      "end": 6.04
+     },
+     {
+      "text": "a whole task,",
+      "start": 6.04,
+      "end": 6.88
+     },
+     {
+      "text": "it works on",
+      "start": 7.2,
+      "end": 7.9
+     },
+     {
+      "text": "it alone,",
+      "start": 7.9,
+      "end": 8.34
+     },
+     {
+      "text": "and returns only",
+      "start": 8.8,
+      "end": 9.78
+     },
+     {
+      "text": "the result.",
+      "start": 9.78,
+      "end": 10.28
+     }
+    ],
+    "bg": "ep02/bg-plate.png",
+    "bgOpacity": 0.45
    },
    {
     "type": "flow",
@@ -1727,7 +1894,7 @@
        "id": "v",
        "label": "Review",
        "x": 690,
-       "y": 660,
+       "y": 620,
        "icon": "eye",
        "color": 2,
        "w": 180,
@@ -1737,7 +1904,7 @@
        "id": "p",
        "label": "Publish",
        "x": 170,
-       "y": 660,
+       "y": 620,
        "icon": "send",
        "color": 2,
        "w": 180,
@@ -1965,7 +2132,67 @@
      ]
     },
     "narration": "Third, a Workflow: a plan that links several steps and says who does each one, in what order. For example: research, then write, then review, then publish.",
-    "def": "A plan that orders the steps"
+    "def": "A plan that orders the steps",
+    "audio": "ep02/en-4.mp3",
+    "cues": [
+     {
+      "text": "Third,",
+      "start": 0.0,
+      "end": 0.24
+     },
+     {
+      "text": "a Workflow:",
+      "start": 0.68,
+      "end": 1.16
+     },
+     {
+      "text": "a plan that links",
+      "start": 1.64,
+      "end": 2.48
+     },
+     {
+      "text": "several steps and says",
+      "start": 2.48,
+      "end": 3.98
+     },
+     {
+      "text": "who does each one,",
+      "start": 3.98,
+      "end": 5.16
+     },
+     {
+      "text": "in what order.",
+      "start": 5.16,
+      "end": 6.08
+     },
+     {
+      "text": "For example:",
+      "start": 6.54,
+      "end": 7.1
+     },
+     {
+      "text": "research,",
+      "start": 7.48,
+      "end": 7.9
+     },
+     {
+      "text": "then write,",
+      "start": 8.44,
+      "end": 9.0
+     },
+     {
+      "text": "then review,",
+      "start": 9.46,
+      "end": 9.98
+     },
+     {
+      "text": "then publish.",
+      "start": 10.54,
+      "end": 11.04
+     }
+    ],
+    "bg": "ep02/bg-plate.png",
+    "bgOpacity": 0.45
    },
    {
     "type": "trio",
@@ -1984,13 +2211,73 @@
       "rule": "Several connected steps"
      }
     ],
-    "narration": "The rule is simple. Repeating the same instructions? Skill. A big standalone task? Agent. Several connected steps? Workflow."
+    "narration": "The rule is simple. Repeating the same instructions? Skill. A big standalone task? Agent. Several connected steps? Workflow.",
+    "audio": "ep02/en-5.mp3",
+    "cues": [
+     {
+      "text": "The rule is simple.",
+      "start": 0.0,
+      "end": 1.24
+     },
+     {
+      "text": "Repeating the same instructions?",
+      "start": 1.64,
+      "end": 3.04
+     },
+     {
+      "text": "Skill.",
+      "start": 3.92,
+      "end": 4.3
+     },
+     {
+      "text": "A big standalone task?",
+      "start": 5.16,
+      "end": 6.76
+     },
+     {
+      "text": "Agent.",
+      "start": 7.44,
+      "end": 7.88
+     },
+     {
+      "text": "Several connected steps?",
+      "start": 8.74,
+      "end": 10.02
+     },
+     {
+      "text": "Workflow.",
+      "start": 10.96,
+      "end": 11.28
+     }
+    ],
+    "bg": "ep02/bg-plate.png",
+    "bgOpacity": 0.45
    },
    {
     "type": "cta",
     "title": "Save this",
     "body": "Follow to learn Claude step by step.",
-    "narration": "Save this video, and follow to learn Claude step by step."
+    "narration": "Save this video, and follow to learn Claude step by step.",
+    "audio": "ep02/en-6.mp3",
+    "cues": [
+     {
+      "text": "Save this video,",
+      "start": 0.0,
+      "end": 0.86
+     },
+     {
+      "text": "and follow to learn",
+      "start": 0.86,
+      "end": 1.98
+     },
+     {
+      "text": "Claude step by step.",
+      "start": 1.98,
+      "end": 3.18
+     }
+    ],
+    "bg": "ep02/bg-plate.png",
+    "bgOpacity": 0.45
    }
   ]
  }

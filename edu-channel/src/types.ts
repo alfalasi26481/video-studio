@@ -8,6 +8,13 @@ type Base = {
   audio?: string;
   /** Optional screen recording in /public, shown instead of the drawn visual. */
   video?: string;
+  /** Caption chunks timed to the voiceover (seconds from scene start), written by scripts/sync-audio.py. */
+  cues?: {text: string; start: number; end: number}[];
+  /** Optional background art in /public (e.g. Higgsfield plate), slow zoom; bgOpacity 0..1. */
+  bg?: string;
+  bgOpacity?: number;
+  /** Push the art down (px) so its subject sits under the headline. */
+  bgY?: number;
 };
 
 export type Scene =

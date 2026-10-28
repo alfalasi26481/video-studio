@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {
-  AbsoluteFill, Audio, OffthreadVideo, Sequence, continueRender, delayRender,
+  AbsoluteFill, Audio, Img, OffthreadVideo, Sequence, continueRender, delayRender,
   interpolate, spring, staticFile, useCurrentFrame, useVideoConfig,
 } from 'remotion';
 import {C, F, TRIO} from './theme';
 import type {EpisodeProps, Lang, Scene} from './types';
 import {Backdrop, Flow, Icon} from './Flow';
+import {Mascot} from './Mascot';
 
 // ---------- helpers ----------
 const useIn = (delay = 0) => {
@@ -63,33 +64,38 @@ const TopBar: React.FC<{handle: string; level: string; lang: Lang; progress: num
   );
 };
 
-const Captions: React.FC<{text: string; frames: number; lang: Lang}> = ({text, frames, lang}) => {
+const Captions: React.FC<{text: string; frames: number; lang: Lang; cues?: {text: string; start: number; end: number}[]; left: number}> = ({text, frames, lang, cues, left}) => {
   const frame = useCurrentFrame();
-  const per = lang === 'ar' ? 3 : 4;
-  const chunks: string[] = [];
-  // Break at sentence/clause punctuation first, then into short groups.
-  for (const phrase of text.split(/(?<=[.،,؟?:!])\s+/)) {
-    const words = phrase.split(/\s+/).filter(Boolean);
-    const n = Math.ceil(words.length / per);
-    const size = Math.ceil(words.length / n);
-    for (let i = 0; i < words.length; i += size) chunks.push(words.slice(i, i + size).join(' '));
+  const {fps} = useVideoConfig();
+  let items: {text: string; at: number}[];
+  if (cues && cues.length) {
+    // Timed to the real voice: each chunk appears on its first spoken word.
+    items = cues.map((c) => ({text: c.text, at: Math.round(c.start * fps)}));
+  } else {
+    // No voiceover yet: spread chunks over the scene by word count.
+    const per = lang === 'ar' ? 3 : 4;
+    const chunks: string[] = [];
+    for (const phrase of text.split(/(?<=[.،,؟?:!])\s+/)) {
+      const words = phrase.split(/\s+/).filter(Boolean);
+      const n = Math.ceil(words.length / per);
+      const size = Math.ceil(words.length / n);
+      for (let i = 0; i < words.length; i += size) chunks.push(words.slice(i, i + size).join(' '));
+    }
+    const start = 6, end = Math.max(start + 1, frames - 10);
+    const total = chunks.reduce((a, c) => a + c.split(' ').length, 0);
+    let t = start;
+    items = chunks.map((c) => { const at = Math.round(t); t += ((end - start) * c.split(' ').length) / total; return {text: c, at}; });
   }
-  const start = 6, end = Math.max(start + 1, frames - 10);
-  const weights = chunks.map((c) => c.split(' ').length);
-  const total = weights.reduce((a, b) => a + b, 0);
-  let t = start, idx = chunks.length - 1;
-  for (let i = 0; i < chunks.length; i++) {
-    const len = ((end - start) * weights[i]) / total;
-    if (frame < t + len) { idx = i; break; }
-    t += len;
-  }
-  if (frame < start) return null;
+  let idx = -1;
+  for (let i = 0; i < items.length; i++) if (frame >= items[i].at) idx = i;
+  if (idx < 0) return null;
+  const pop = spring({frame: frame - items[idx].at, fps, config: {damping: 12, stiffness: 220}});
   return (
-    <div style={{position: 'absolute', left: 80, right: 140, top: 1330, display: 'flex', justifyContent: 'center'}}>
+    <div style={{position: 'absolute', left, right: 140, top: 1330, display: 'flex', justifyContent: 'center'}}>
       <span style={{fontFamily: F.display, fontWeight: 800, fontSize: lang === 'ar' ? 58 : 56, lineHeight: 1.5,
         color: C.ink, background: 'rgba(8,14,26,0.82)', padding: '10px 30px', borderRadius: 18, textAlign: 'center',
-        boxShadow: `inset 0 -6px 0 ${C.accent}`}}>
-        {chunks[idx]}
+        boxShadow: `inset 0 -6px 0 ${C.accent}`, scale: String(0.85 + 0.15 * pop), translate: `0 ${(1 - pop) * 14}px`}}>
+        {items[idx].text}
       </span>
     </div>
   );
@@ -306,6 +312,13 @@ const SceneView: React.FC<{s: Scene; frames: number; lang: Lang; dir: 'rtl' | 'l
   const fadeOut = interpolate(frame, [frames - 8, frames], [1, 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
   return (
     <AbsoluteFill style={{opacity: fadeOut}}>
+      {s.bg && (
+        <AbsoluteFill style={{opacity: s.bgOpacity ?? 0.35}}>
+          <Img src={staticFile(s.bg)} style={{width: '100%', height: '100%', objectFit: 'cover',
+            scale: String(interpolate(frame, [0, frames], [1.04, 1.14])), translate: `0 ${s.bgY ?? 0}px`}} />
+          <AbsoluteFill style={{background: `linear-gradient(180deg, ${C.bg}00 30%, ${C.bg} 92%)`}} />
+        </AbsoluteFill>
+      )}
       {s.video ? (
         <div style={{position: 'absolute', top: 280, bottom: 620, left: 80, right: 140, borderRadius: 36, overflow: 'hidden',
           border: `3px solid ${C.line}`}}>
@@ -318,7 +331,10 @@ const SceneView: React.FC<{s: Scene; frames: number; lang: Lang; dir: 'rtl' | 'l
         : s.type === 'trio' ? <Trio s={s} frames={frames} />
         : s.type === 'flow' ? <FlowScene s={s} frames={frames} />
         : <Cta s={s} handle={handle} />}
-      <Captions text={s.narration} frames={frames} lang={lang} />
+      {/* The presenter appears whenever the scene has a real voiceover. */}
+      {s.audio && <Mascot audio={s.audio} pose={s.type === 'flow' && s.tabs ? 'idle' : 'present'}
+        size={s.type === 'cta' ? 300 : 215} x={s.type === 'cta' ? 50 : 30} y={s.type === 'cta' ? 1180 : 1290} flip delay={4} />}
+      <Captions text={s.narration} frames={frames} lang={lang} cues={s.cues} left={s.audio ? 280 : 80} />
       {s.audio && <Audio src={staticFile(s.audio)} />}
     </AbsoluteFill>
   );
@@ -343,6 +359,8 @@ export const Episode: React.FC<EpisodeProps> = ({lang, episode, sceneFrames}) =>
         from += frames[i];
         return seq;
       })}
+      {/* Soft music bed under the voice (generated in-house, royalty-free). */}
+      {track.scenes.some((x) => x.audio) && <Audio src={staticFile('brand/bed.mp3')} volume={0.07} loop />}
       <TopBar handle={episode.channel[lang]} level={episode.level} lang={lang} progress={0} segs={frames} />
     </AbsoluteFill>
   );

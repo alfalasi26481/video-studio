@@ -110,6 +110,11 @@ for lang, t in L.items():
     for i, (fn, d) in enumerate([(skill, t['d_skill']), (agent, t['d_agent']), (workflow, t['d_wf'])]):
         new.append(dict(type='flow', tabs=TABS, active=i, term=old[i]['term'], def_=d, spec=fn(t), narration=old[i]['narration']))
     new += [keep['trio'], keep['cta']]
+    # Keep what later steps added (voiceover, timed captions, background art).
+    for s_new, s_old in zip(new, sc):
+        for k in ('audio', 'cues', 'bg', 'bgOpacity', 'bgY'):
+            if k in s_old: s_new[k] = s_old[k]
+        if s_old.get('type') == 'flow' and sc.index(s_old) == 0: s_new['spec'] = s_old['spec']
     for s in new:
         if 'def_' in s: s['def'] = s.pop('def_')
     ep[lang]['scenes'] = new
