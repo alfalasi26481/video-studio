@@ -1,4 +1,4 @@
-import type {FlowSpec} from './Flow';
+import type {FlowSpec, IconName} from './Flow';
 
 export type Lang = 'ar' | 'en';
 
@@ -9,24 +9,39 @@ type Base = {
   /** Optional screen recording in /public, shown instead of the drawn visual. */
   video?: string;
   /** Caption chunks timed to the voiceover (seconds from scene start), written by scripts/sync-audio.py. */
-  cues?: {text: string; start: number; end: number}[];
+  cues?: Cue[];
+  /**
+   * What the voice actually reads (tashkeel, "كلود" for the name so the TTS
+   * pronounces it right). Captions always show `narration`.
+   */
+  voice?: string;
   /** Optional background art in /public (e.g. Higgsfield plate), slow zoom; bgOpacity 0..1. */
   bg?: string;
   bgOpacity?: number;
   /** Push the art down (px) so its subject sits under the headline. */
   bgY?: number;
+  /** What whisper heard (written by sync-audio.py, read by the QA gate). */
+  _heard?: string;
 };
 
+export type Word = {t: string; s: number; e: number};
+export type Cue = {text: string; start: number; end: number; words?: Word[]};
+
 export type Scene =
-  | (Base & {type: 'hook'; kicker: string; title: string; body?: string})
+  | (Base & {type: 'hook'; kicker?: string; title: string; body?: string})
   | (Base & {type: 'prompt'; tone: 'bad' | 'good' | 'tip'; label: string; prompt: string})
-  | (Base & {type: 'steps'; title: string; items: string[]})
+  | (Base & {type: 'steps'; title: string; items: string[]; itemsOn?: string[]})
   | (Base & {type: 'cta'; title: string; body?: string})
   /** One concept of a 2–3 way comparison; the tab bar stays on screen across the set. */
   | (Base & {type: 'compare'; tabs: string[]; active: number; term: string; def: string; analogy: string; example: string; exampleLabel: string})
   /** Closing card: every compared concept with its one-line "use it when" rule. */
-  | (Base & {type: 'trio'; title: string; items: {term: string; rule: string}[]})
+  | (Base & {type: 'trio'; title: string; items: {term: string; rule: string; icon?: IconName}[]; itemsOn?: string[]})
   /** Motion diagram: boxes, drawn arrows, travelling packets; optional tab bar + headline above. */
+  /**
+   * A generic chat window (no product logo): optional file chip, the user's
+   * message typed then sent, a short "thinking" beat, then the reply streams in.
+   */
+  | (Base & {type: 'chat'; title?: string; attach?: string; user: string; reply: string; replyTone?: 'good' | 'bad' | 'tip'})
   | (Base & {type: 'flow'; tabs?: string[]; active?: number; term?: string; def?: string; spec: FlowSpec});
 
 export type LangTrack = {

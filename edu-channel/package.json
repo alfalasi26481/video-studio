@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@fontsource/ibm-plex-mono": "5.2.5",
+    "@fontsource/ibm-plex-sans": "^5.2.5",
     "@fontsource/ibm-plex-sans-arabic": "5.2.5",
     "@fontsource/noto-kufi-arabic": "5.2.5",
     "@remotion/cli": "4.0.538",
