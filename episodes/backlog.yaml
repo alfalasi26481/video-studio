@@ -1,0 +1,22 @@
+# قائمة الحلقات. status: idea → draft → verified → rendered → handed_off (النشر يدوي دائماً)
+# ep01–ep07 موجودة كـ JSON في فرع edu-channel-template (edu-channel/public/episodes/)
+# ولم تُنقل بعد إلى صيغة YAML هذه.
+episodes:
+  - {id: ep01, level: beginner, status: rendered_elsewhere, topic: ثلاث معلومات تجعل ردود Claude مفيدة, note: فرع edu-channel-template}
+  - {id: ep02, level: intermediate, status: rendered_elsewhere, topic: الفرق بين Skill و Agent و Workflow, note: فرع edu-channel-template}
+  - {id: ep03, level: beginner, status: rendered_elsewhere, topic: أول دقيقة لك مع Claude, note: فرع edu-channel-template}
+  - {id: ep04, level: beginner, status: rendered_elsewhere, topic: حدود الاستخدام, note: فرع edu-channel-template}
+  - {id: ep05, level: beginner, status: rendered_elsewhere, topic: خصوصيتك مع Claude, note: فرع edu-channel-template}
+  - {id: ep06, level: beginner, status: rendered_elsewhere, topic: حوّل ملاحظاتك إلى اختبار, note: فرع edu-channel-template}
+  - {id: ep07, level: beginner, status: rendered_elsewhere, topic: كيف تطلب نقداً صريحاً, note: فرع edu-channel-template}
+  - {id: ep08, level: beginner, status: verified, topic: خمس طرق تجعل طلبك أوضح}
+  - {id: ep09, level: beginner, status: verified, topic: المشاريع (Projects) في Claude}
+  - {id: ep10, level: beginner, status: verified, topic: الـ Artifacts في Claude}
+  - {id: ep11, level: beginner, status: idea, topic: رفع صورة أو ملف PDF وسؤال Claude عنه}
+  - {id: ep12, level: beginner, status: idea, topic: البحث في الويب داخل Claude ومتى تستخدمه}
+  - {id: ep13, level: intermediate, status: idea, topic: الأساليب (Styles) وتخصيص طريقة الرد}
+  - {id: ep14, level: intermediate, status: idea, topic: الذاكرة في Claude وكيف تتحكم بها}
+  - {id: ep15, level: intermediate, status: idea, topic: أعطِ Claude أمثلة ليقلّد الأسلوب}
+  - {id: ep16, level: pro, status: idea, topic: ما هي الـ Skills وكيف تصنع واحدة}
+  - {id: ep17, level: pro, status: idea, topic: Claude Code لأول مرة — بناء صفحة بسيطة}
+  - {id: ep18, level: pro, status: idea, topic: الموصلات (Connectors) وربط Claude بتطبيقاتك}

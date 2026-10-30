@@ -1,0 +1,69 @@
+id: ep10
+level: beginner
+status: verified
+title:
+  ar: ما هو الـ Artifact في Claude؟
+  en: What is an artifact in Claude?
+sources:
+  - url: https://support.claude.com/en/articles/17153992-what-are-artifacts-and-how-do-i-use-them
+    claim: An artifact is anything Claude makes for you that you'd put in front of someone (doc, dashboard, deck, small tool); it opens beside the conversation; you can ask Claude to change it; artifacts start private; available on Free, Pro, Max, Team and Enterprise; requires the "Create and edit files" setting.
+    checked: 2026-10-30
+scenes:
+  - role: hook
+    motion: KineticTitle
+    ar:
+      narration: هل تعلم أن Claude يستطيع أن يصنع لك أداة صغيرة أو مستنداً كاملاً، يفتح بجانب المحادثة؟
+      on_screen: أكثر من مجرد رد
+    en:
+      narration: Did you know Claude can make you a small tool or a full document that opens right beside the chat?
+      on_screen: More than a reply
+  - role: step
+    motion: BoxReveal
+    ar:
+      narration: الـ Artifact هو أي شيء يصنعه Claude لك لتعرضه على غيرك، مثل مستند أو عرض شرائح أو أداة تفاعلية صغيرة.
+      on_screen: ما هو الـ Artifact؟
+      items: [مستند, عرض شرائح, أداة تفاعلية]
+    en:
+      narration: An artifact is anything Claude makes for you that you would show to someone else, like a document, a slide deck, or a small interactive tool.
+      on_screen: What is an artifact?
+      items: [Document, Slide deck, Interactive tool]
+  - role: step
+    motion: ChatMock
+    ar:
+      narration: اطلبه في أي محادثة. مثلاً اطلب جدولاً لتنظيم مذاكرتك، فيظهر بجانب المحادثة.
+      on_screen: اطلبه بكلمات بسيطة
+      chat:
+        user: اصنع لي جدول مذاكرة أسبوعياً لثلاث مواد، مع خانة لتحديد ما أنجزته.
+        reply: هذا جدولك الأسبوعي، ويمكنك تحديد كل مادة بعد إنجازها.
+    en:
+      narration: Ask for one in any chat. For example, ask for a weekly study planner, and it appears beside the conversation.
+      on_screen: Ask in plain words
+      chat:
+        user: Make me a weekly study planner for three subjects, with a box to tick what I finished.
+        reply: Here is your weekly planner. You can tick each subject when it's done.
+  - role: step
+    motion: Arrow
+    ar:
+      narration: تريد تعديلاً؟ اطلب من Claude تغييره. والـ Artifact يبدأ خاصاً بك، ولا يراه غيرك حتى تقرر مشاركته.
+      on_screen: عدّل ← خاص بك أولاً
+    en:
+      narration: Want a change? Ask Claude to edit it. An artifact starts private to you, and nobody else sees it until you choose to share.
+      on_screen: Edit → private by default
+  - role: recap
+    motion: FlowDiagram
+    ar:
+      narration: الخلاصة. اطلبه، ثم عدّله، ثم شاركه إن أردت. وتأكد أن خيار إنشاء وتعديل الملفات مفعّل في الإعدادات.
+      on_screen: الخلاصة
+      items: [اطلب, عدّل, شارك]
+    en:
+      narration: To recap. Ask for it, edit it, then share it if you want. Make sure the create and edit files setting is turned on.
+      on_screen: Recap
+      items: [Ask, Edit, Share]
+  - role: cta
+    motion: KineticTitle
+    ar:
+      narration: اصنع أول Artifact لك اليوم، وتابعنا لحلقة جديدة عن Claude.
+      on_screen: جرّبه الآن
+    en:
+      narration: Make your first artifact today, and follow us for a new episode about Claude.
+      on_screen: Try it now
