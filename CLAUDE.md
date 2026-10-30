@@ -1,26 +1,32 @@
-# video-studio — قناة تعليم Claude (بلا وجه)
+# video-studio — قناة «أتقن Claude / Master Claude» (بلا وجه)
 
-قناة تواصل اجتماعي تعلّم الجمهور العام استخدام Claude من المبتدئ إلى المحترف. المالك: مانع الفلاسي — يقرأ العربية المبسطة على الجوال؛ أي نص للصق يوضع في كتلة كود.
+قناة تواصل اجتماعي تعلّم الجمهور العام استخدام Claude من المبتدئ إلى المحترف. المالك: مانع الفلاسي — يقرأ العربية المبسطة على الجوال؛ الروابط مباشرة، وأي نص للصق يوضع في كتلة كود.
+
+## المحرك المعتمد (الأهم)
+- **أي حلقة للقناة تُنتج بالمحرك المعتمد في `master-claude/` فقط** — اقرأ `master-claude/CLAUDE.md` أولاً (سكل `master-claude-episode`).
+- لا تبنِ مونتاجاً جديداً، ولا تعدّل `master-claude/src/engine/` إلا بطلب صريح من المالك وبعد موافقته على لقطات قبل/بعد.
 
 ## قواعد القناة (إلزامية)
 - لا وجه ولا صوت للمالك — تعليق صوتي بالذكاء الاصطناعي فقط.
 - كل حلقة بالعربية الفصحى (لا لهجة خليجية) **ومعها** نسخة إنجليزية مطابقة.
 - فيديو عمودي 9:16 (1080×1920) لـ TikTok و Reels و Snapchat.
-- حركة مستمرة: مربعات وأسهم ومخططات متدفقة ومحادثات وعناوين متحركة — لا شرائح نصية ثابتة.
+- حركة مستمرة — لا شرائح نصية ثابتة.
 - لا تذكر أي جهة حكومية أو خاصة أو منظمة (أسماء منتجات Claude/Anthropic مسموحة)، ولا مواضيع العمل/المكتب.
-- كل معلومة عن ميزة في Claude يجب أن تُراجع على صفحة رسمية من Anthropic وتُكتب في `sources`.
-- معيار الجودة: أسلوب المونتاج السينمائي للحلقة الأولى التي اعتمدها المالك.
+- كل معلومة عن ميزة في Claude يجب أن تُراجع على صفحة رسمية من Anthropic.
+- معيار الجودة: المونتاج السينمائي للحلقتين 1 و2 المعتمدتين.
 - أقل تكلفة: لا تصرف أرصدة مدفوعة (Higgsfield، vidIQ، ...) دون موافقة صريحة. النشر على المنصات يدوي دائماً.
 
 ## الهيكل
-- `episodes/<id>.yaml` — الحلقات (الصيغة في `docs/EPISODE_FORMAT.md`)، و`episodes/backlog.yaml` — القائمة.
-- `tools/validate_episode.py` — المدقق؛ `tools/content_check.py` — فحص الجهات والعمل واللهجة.
+- `master-claude/` — المحرك المعتمد (Remotion) وحلقاته `episodes/epNN.md` و`src/episodes/epNN.ts`.
+- `tools/engine_content_check.py` — يفحص نصوص حلقات المحرك (السكربت، الترجمة، تعليق النشر، نصوص الشاشة) ضد قواعد المحتوى.
+- `episodes/<id>.yaml` + `tools/validate_episode.py` + `tools/content_check.py` — صيغة YAML ومدققها (مسودات أفكار؛ الإنتاج يبقى بالمحرك).
 - `tests/` — pytest. شغّل `make check` قبل أي push.
 - `docs/ROADMAP.md` و `docs/DEV_LOG.md` — الخطة والسجل (أضف إدخالاً مؤرخاً كل دورة).
-- `video_studio.ipynb` — المحرك القديم على Colab (شرائح Pillow + gTTS + ffmpeg).
-- فرع `edu-channel-template` — محرك Remotion سابق (`edu-channel/`) غير مدموج.
+- `video_studio.ipynb` — المحرك القديم على Colab (لا يُستخدم للقناة).
 
 ## سير العمل
 - الفروع: `dev/<topic>` ← PR. لا push على main ولا merge.
-- السكلز في `.claude/skills/`: الفيديو المبرمج `remotion-*`، الترجمة `remotion-captions`، المنهجية `brainstorming` → `writing-plans` → `executing-plans` → `verification-before-completion`.
+- السكلز في `.claude/skills/`: `master-claude-episode` للحلقات، `remotion-*` للمرجع، المنهجية `brainstorming` → `writing-plans` → `executing-plans` → `verification-before-completion`.
+- المستندات: `docx` / `pptx` / `xlsx` / `pdf`.
+- Higgsfield عبر MCP: الصور مجانية، الفيديو مدفوع — اطلب موافقة قبل أي `generate_video`.
 - سكل `aviation-safety-video` من مشروع سابق (السلامة الجوية) — باقٍ كما هو، لا يُستخدم لهذه القناة.

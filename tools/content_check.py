@@ -64,12 +64,15 @@ class Finding:
     text: str
 
 
+# Arabic letters + diacritics only — NOT punctuation (؟ ، ؛ are in U+0600–U+06FF too).
+_L = r"\u0621-\u063A\u0640-\u065F\u0670-\u06D3\u06FA-\u06FF"
+
 _AR_PREFIXES = "(?:و|ف|ب|ل|ك|ال|وال|بال|لل|فال|كال)?"
 
 
 def _ar_exact_re(term: str) -> re.Pattern:
     # Dialect words: whole word only (optional و/ف), so «الخلاصة» never matches «خلاص».
-    return re.compile(rf"(?<![\u0600-\u06FF])(?:و|ف)?{re.escape(term)}(?![\u0600-\u06FF])")
+    return re.compile(rf"(?<![{_L}])(?:و|ف)?{re.escape(term)}(?![{_L}])")
 
 
 def _ar_word_re(term: str) -> re.Pattern:
@@ -79,7 +82,7 @@ def _ar_word_re(term: str) -> re.Pattern:
         prefix = "(?:و|ف|ب|ل|ك)?"
     else:
         prefix = _AR_PREFIXES
-    return re.compile(rf"(?<![؀-ۿ]){prefix}{t}(?:ها|هم|ات|ة|ي|ك|نا)?(?![؀-ۿ])")
+    return re.compile(rf"(?<![{_L}]){prefix}{t}(?:ها|هم|ات|ة|ي|ك|نا)?(?![{_L}])")
 
 
 def _en_word_re(term: str) -> re.Pattern:

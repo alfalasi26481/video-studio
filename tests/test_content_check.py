@@ -57,3 +57,10 @@ def test_msa_is_not_dialect(text):
 ])
 def test_clean_text_passes(text, lang):
     assert check_text(text, lang) == []
+
+
+def test_arabic_punctuation_does_not_hide_a_term():
+    # ؟ ، ؛ live in the Arabic Unicode block; they must count as word boundaries.
+    from content_check import check_text
+    for text in ("هل تكتب لبنك؟", "وزارة، ثم", "في المكتب؛ ثم", "شلون؟"):
+        assert check_text(text, "ar"), text

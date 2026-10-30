@@ -1,0 +1,19 @@
+{
+  "name": "master-claude-engine",
+  "version": "1.0.0",
+  "description": "أتقن Claude / Master Claude — cinematic episode engine (approved standard)",
+  "scripts": {
+    "studio": "remotion studio src/index.ts",
+    "list": "remotion compositions src/index.ts",
+    "render": "bash scripts/render.sh"
+  },
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@remotion/cli": "4.0.539",
+    "@remotion/renderer": "4.0.539",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "remotion": "4.0.539"
+  },
+  "private": true
+}
