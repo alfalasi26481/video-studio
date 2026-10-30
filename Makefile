@@ -1,4 +1,4 @@
-.PHONY: test validate engine-check glyph-check check
+.PHONY: test validate engine-check glyph-check layout-check check
 test:            ## run all tests
 	python3 -m pytest -q
 validate:        ## validate every episodes/ep*.yaml
@@ -7,4 +7,6 @@ engine-check:    ## content rules on master-claude/ episodes (script, captions, 
 	python3 tools/engine_content_check.py
 glyph-check:     ## every on-screen character exists in the engine fonts (all weights)
 	python3 tools/glyph_check.py
+layout-check:    ## safe zones + clipped text, measured in Chromium (needs node + playwright)
+	python3 tools/layout_check.py
 check: validate engine-check glyph-check test
