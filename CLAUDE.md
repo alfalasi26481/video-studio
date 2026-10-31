@@ -21,6 +21,7 @@
 - `tools/engine_content_check.py` — يفحص نصوص حلقات المحرك (السكربت، الترجمة، تعليق النشر، نصوص الشاشة) ضد قواعد المحتوى.
 - `tools/glyph_check.py` — يتأكد أن كل حرف على الشاشة موجود في خطوط المحرك (Tajawal/Inter، كل الأوزان) — `make glyph-check`.
 - `tools/layout_check.py` (+ `tools/layout_check/`) — يقيس صناديق النص الحقيقية في Chromium إطاراً بإطار (المحرك يُستورد كما هو) ويفحص المناطق الآمنة والنص الخارج عن بطاقته أو عن الإطار — `make layout-check` (يحتاج node + playwright، ~1.5 دقيقة).
+- `tools/episode_factory.py` — المصنع: `make episode NN=02` (فحص مسبق ← فحوص ← `render.sh` ← فحص نهائي ← حزمة تسليم في `master-claude/out/EPNN/`)؛ `make episode-preflight NN=..` يبيّن الناقص وأي خطوة تنتجه. لا يستدعي Higgsfield ولا ينشر.
 - `episodes/<id>.yaml` + `tools/validate_episode.py` + `tools/content_check.py` — صيغة YAML ومدققها (مسودات أفكار؛ الإنتاج يبقى بالمحرك).
 - `tests/` — pytest. شغّل `make check` قبل أي push.
 - `docs/ROADMAP.md` و `docs/DEV_LOG.md` — الخطة والسجل (أضف إدخالاً مؤرخاً كل دورة).

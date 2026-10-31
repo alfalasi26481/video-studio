@@ -1,4 +1,4 @@
-.PHONY: test validate engine-check glyph-check layout-check check
+.PHONY: test validate engine-check glyph-check layout-check check episode episode-preflight episode-kit
 test:            ## run all tests
 	python3 -m pytest -q
 validate:        ## validate every episodes/ep*.yaml
@@ -10,3 +10,15 @@ glyph-check:     ## every on-screen character exists in the engine fonts (all we
 layout-check:    ## safe zones + clipped text, measured in Chromium (needs node + playwright)
 	python3 tools/layout_check.py
 check: validate engine-check glyph-check test
+NN ?=
+LANGS ?= AR EN
+episode:         ## make episode NN=02 [LANGS="AR"] [RENDER=0] — preflight, checks, render, final QA, hand-off kit in master-claude/out/EPNN/
+	@test -n "$(NN)" || (echo "usage: make episode NN=02" && exit 2)
+	python3 tools/episode_factory.py preflight $(NN)
+	python3 tools/engine_content_check.py $(NN)
+	python3 tools/glyph_check.py $(NN)
+	python3 tools/episode_factory.py all $(NN) --langs "$(LANGS)" $(if $(filter 0,$(RENDER)),--no-render,)
+episode-preflight: ## what is missing for episode NN, and which engine step produces it
+	python3 tools/episode_factory.py preflight $(NN)
+episode-kit:     ## captions (.srt) + per-platform post text only (no render)
+	python3 tools/episode_factory.py kit $(NN)
