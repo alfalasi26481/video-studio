@@ -24,6 +24,7 @@
 - `tools/script_length.py` — مدة السكربت المنطوق قبل الصوت (تقدير بمعدل كلمات معاير من EP01/EP02) وبعده (`voiceDur`): 25–35 ث، والعربي ≈ الإنجليزي — `make script-length`.
 - `tools/layout_check.py` (+ `tools/layout_check/`) — يقيس صناديق النص الحقيقية في Chromium إطاراً بإطار (المحرك يُستورد كما هو) ويفحص المناطق الآمنة والنص الخارج عن بطاقته أو عن الإطار — `make layout-check` (يحتاج node + playwright، ~1.5 دقيقة).
 - `tools/episode_factory.py` — المصنع: `make episode NN=02` (فحص مسبق ← فحوص ← `render.sh` ← فحص نهائي ← حزمة تسليم في `master-claude/out/EPNN/`)؛ `make episode-preflight NN=..` يبيّن الناقص وأي خطوة تنتجه. لا يستدعي Higgsfield ولا ينشر.
+- `tools/voice_level.py` — مستوى صوت التعليق مقابل مرجع EP03-AR (-19.6 LUFS)؛ أداة إصلاح لا بوابة: `make voice-level NN=04 FIX=1` فقط إذا فشل الفحص النهائي في الصوت (حدث في EP04-AR).
 - `episodes/<id>.yaml` + `tools/validate_episode.py` + `tools/content_check.py` — صيغة YAML ومدققها (مسودات أفكار؛ الإنتاج يبقى بالمحرك).
 - `tests/` — pytest. شغّل `make check` قبل أي push.
 - `docs/ROADMAP.md` و `docs/DEV_LOG.md` — الخطة والسجل (أضف إدخالاً مؤرخاً كل دورة).

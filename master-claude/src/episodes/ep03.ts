@@ -4,8 +4,8 @@ import wAr from './ep03_words_ar.json';
 import wEn from './ep03_words_en.json';
 
 // الحلقة 3 — أربع عادات لطلب أوضح / Four Habits for a Clearer Request
-// معاينة: اللقطات مؤقتة من الحلقة 1 (بلا Higgsfield) حتى يوافق المالك.
-const clips = {hook: 'clips/ep01_hook.mp4', glitch: 'clips/ep01_glitch.mp4', mid: 'clips/ep01_beams.mp4', burst: 'clips/ep01_burst.mp4', outro: 'clips/ep01_outro.mp4'};
+// معتمدة من المالك 31 أكتوبر 2026 — لقطات Higgsfield خاصة بالحلقة (kling4_0).
+const clips = {hook: 'clips/ep03_hook.mp4', glitch: 'clips/ep01_glitch.mp4', mid: 'clips/ep03_steps.mp4', burst: 'clips/ep03_burst.mp4', outro: 'clips/ep01_outro.mp4'};
 
 const STEPS_AR: Step[] = [
   {n: '1', label: 'الوضوح', ex: 'قل ما تريده ببساطة', color: COLORS.orange, icon: 'task'},

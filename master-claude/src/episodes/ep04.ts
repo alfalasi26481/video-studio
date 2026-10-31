@@ -4,8 +4,8 @@ import wAr from './ep04_words_ar.json';
 import wEn from './ep04_words_en.json';
 
 // الحلقة 4 — المشاريع في Claude / Projects in Claude
-// معاينة: اللقطات مؤقتة من الحلقة 1 (بلا Higgsfield) حتى يوافق المالك.
-const clips = {hook: 'clips/ep01_hook.mp4', glitch: 'clips/ep01_glitch.mp4', mid: 'clips/ep01_beams.mp4', burst: 'clips/ep01_burst.mp4', outro: 'clips/ep01_outro.mp4'};
+// معتمدة من المالك 31 أكتوبر 2026 — لقطات Higgsfield خاصة بالحلقة (kling4_0).
+const clips = {hook: 'clips/ep04_hook.mp4', glitch: 'clips/ep01_glitch.mp4', mid: 'clips/ep04_space.mp4', burst: 'clips/ep04_burst.mp4', outro: 'clips/ep01_outro.mp4'};
 
 const STEPS_AR: Step[] = [
   {n: '1', label: 'المشروع', ex: 'مساحة بمحادثاتها', color: COLORS.orange, icon: 'task'},

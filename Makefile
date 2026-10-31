@@ -1,4 +1,4 @@
-.PHONY: test validate engine-check glyph-check source-check script-length layout-check check episode episode-preflight episode-kit
+.PHONY: test validate engine-check glyph-check source-check script-length layout-check check episode episode-preflight episode-kit voice-level
 test:            ## run all tests
 	python3 -m pytest -q
 validate:        ## validate every episodes/ep*.yaml
@@ -27,3 +27,6 @@ episode-preflight: ## what is missing for episode NN, and which engine step prod
 	python3 tools/episode_factory.py preflight $(NN)
 episode-kit:     ## captions (.srt) + per-platform post text only (no render)
 	python3 tools/episode_factory.py kit $(NN)
+voice-level:     ## make voice-level NN=04 [FIX=1] — voice loudness vs reference; FIX=1 repairs when final QA failed on loudness
+	@test -n "$(NN)" || (echo "usage: make voice-level NN=04 [FIX=1]" && exit 2)
+	python3 tools/voice_level.py master-claude/public/vo/ep$(NN)_ar.wav master-claude/public/vo/ep$(NN)_en.wav $(if $(filter 1,$(FIX)),--fix,)
