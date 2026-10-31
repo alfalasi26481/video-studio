@@ -20,6 +20,7 @@
 - `master-claude/` — المحرك المعتمد (Remotion) وحلقاته `episodes/epNN.md` و`src/episodes/epNN.ts`.
 - `tools/engine_content_check.py` — يفحص نصوص حلقات المحرك (السكربت، الترجمة، تعليق النشر، نصوص الشاشة) ضد قواعد المحتوى.
 - `tools/glyph_check.py` — يتأكد أن كل حرف على الشاشة موجود في خطوط المحرك (Tajawal/Inter، كل الأوزان) — `make glyph-check`.
+- `tools/source_check.py` — كل `master-claude/episodes/epNN.md` يجب أن يحوي سطر «المصدر الرسمي (رُوجع <تاريخ>): <رابط>» من نطاق Anthropic رسمي (anthropic.com · claude.com · claude.ai)؛ مراجعة أقدم من 90 يوماً = تحذير — `make source-check` (ضمن `make check` و`make episode`).
 - `tools/script_length.py` — مدة السكربت المنطوق قبل الصوت (تقدير بمعدل كلمات معاير من EP01/EP02) وبعده (`voiceDur`): 25–35 ث، والعربي ≈ الإنجليزي — `make script-length`.
 - `tools/layout_check.py` (+ `tools/layout_check/`) — يقيس صناديق النص الحقيقية في Chromium إطاراً بإطار (المحرك يُستورد كما هو) ويفحص المناطق الآمنة والنص الخارج عن بطاقته أو عن الإطار — `make layout-check` (يحتاج node + playwright، ~1.5 دقيقة).
 - `tools/episode_factory.py` — المصنع: `make episode NN=02` (فحص مسبق ← فحوص ← `render.sh` ← فحص نهائي ← حزمة تسليم في `master-claude/out/EPNN/`)؛ `make episode-preflight NN=..` يبيّن الناقص وأي خطوة تنتجه. لا يستدعي Higgsfield ولا ينشر.
