@@ -1,0 +1,69 @@
+id: ep08
+level: beginner
+status: verified
+title:
+  ar: خمس طرق تجعل طلبك أوضح لـ Claude
+  en: Five ways to make your request clearer to Claude
+sources:
+  - url: https://support.claude.com/en/articles/7996857-my-prompt-isn-t-giving-me-a-helpful-answer
+    claim: Explain simply and clearly; add context; write for someone with no background; split complex requests into steps; follow up with feedback.
+    checked: 2026-10-30
+scenes:
+  - role: hook
+    motion: KineticTitle
+    ar:
+      narration: هل تكتب طلبك ثم تحصل على رد عام لا يفيدك؟ المشكلة غالباً في طريقة الطلب، لا في Claude.
+      on_screen: الرد عام؟ راجع طلبك
+    en:
+      narration: Do you type a request and get a vague answer back? The problem is usually the request, not Claude.
+      on_screen: Vague answer? Check your request
+  - role: step
+    motion: ChatMock
+    ar:
+      narration: أولاً، اكتب طلبك ببساطة ووضوح، ثم أضف السياق الذي يحتاجه. من أنت، ولماذا تسأل، وما الذي تريده بالضبط.
+      on_screen: بساطة + سياق
+      chat:
+        user: أنا مبتدئ في الطبخ، اقترح لي ثلاث وجبات عشاء سريعة بمكونات بسيطة.
+        reply: إليك ثلاث وجبات تحضَّر في أقل من عشرين دقيقة...
+    en:
+      narration: First, write your request simply and clearly, then add the context it needs. Who you are, why you ask, and exactly what you want.
+      on_screen: Simple + context
+      chat:
+        user: I'm new to cooking. Suggest three quick dinners with simple ingredients.
+        reply: Here are three dinners you can make in under twenty minutes...
+  - role: step
+    motion: BoxReveal
+    ar:
+      narration: ثانياً، اكتب كأنك تشرح لشخص لا يعرف شيئاً عن موضوعك. وثالثاً، قسّم المهمة الكبيرة إلى خطوات صغيرة.
+      on_screen: اشرح لشخص جديد
+      items: [لا تفترض أنه يعرف, خطوة، ثم خطوة, مهمة كبيرة ← أجزاء صغيرة]
+    en:
+      narration: Second, write as if you are explaining to someone who knows nothing about your topic. Third, split a big task into small steps.
+      on_screen: Explain to a newcomer
+      items: [Assume nothing, One step at a time, Big task → small parts]
+  - role: step
+    motion: Arrow
+    ar:
+      narration: رابعاً، إذا لم يعجبك الرد فلا تبدأ من جديد. أرسل توضيحاً أو اطلب منه إعادة الكتابة بطريقة أخرى.
+      on_screen: الرد الأول ليس الأخير
+    en:
+      narration: Fourth, if you don't like the answer, don't start over. Send a clarification or ask Claude to rewrite it another way.
+      on_screen: The first answer isn't the last
+  - role: recap
+    motion: FlowDiagram
+    ar:
+      narration: الخلاصة. وضوح، ثم سياق، ثم خطوات، ثم ملاحظاتك على الرد.
+      on_screen: الخلاصة
+      items: [وضوح, سياق, خطوات, ملاحظات]
+    en:
+      narration: To recap. Clarity, then context, then steps, then your feedback on the answer.
+      on_screen: Recap
+      items: [Clarity, Context, Steps, Feedback]
+  - role: cta
+    motion: KineticTitle
+    ar:
+      narration: جرّب هذا في طلبك القادم، وتابعنا لتتعلم Claude من البداية حتى الاحتراف.
+      on_screen: تابعنا للحلقة القادمة
+    en:
+      narration: Try this on your next request, and follow us to learn Claude from beginner to pro.
+      on_screen: Follow for the next episode
