@@ -9,7 +9,7 @@ episodes:
   - {id: ep05, level: beginner, status: rendered_elsewhere, topic: خصوصيتك مع Claude, note: فرع edu-channel-template}
   - {id: ep06, level: beginner, status: rendered_elsewhere, topic: حوّل ملاحظاتك إلى اختبار, note: فرع edu-channel-template}
   - {id: ep07, level: beginner, status: rendered_elsewhere, topic: كيف تطلب نقداً صريحاً, note: فرع edu-channel-template}
-  - {id: ep08, level: beginner, status: verified, topic: خمس طرق تجعل طلبك أوضح}
+  - {id: ep08, level: beginner, status: verified, topic: خمس طرق تجعل طلبك أوضح, note: مسودة محرك master-claude/episodes/ep03.md بانتظار الموافقة}
   - {id: ep09, level: beginner, status: verified, topic: المشاريع (Projects) في Claude}
   - {id: ep10, level: beginner, status: verified, topic: الـ Artifacts في Claude}
   - {id: ep11, level: beginner, status: idea, topic: رفع صورة أو ملف PDF وسؤال Claude عنه}

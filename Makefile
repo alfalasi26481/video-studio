@@ -1,4 +1,4 @@
-.PHONY: test validate engine-check glyph-check layout-check check episode episode-preflight episode-kit
+.PHONY: test validate engine-check glyph-check script-length layout-check check episode episode-preflight episode-kit
 test:            ## run all tests
 	python3 -m pytest -q
 validate:        ## validate every episodes/ep*.yaml
@@ -7,9 +7,11 @@ engine-check:    ## content rules on master-claude/ episodes (script, captions, 
 	python3 tools/engine_content_check.py
 glyph-check:     ## every on-screen character exists in the engine fonts (all weights)
 	python3 tools/glyph_check.py
+script-length:   ## spoken length of each epNN.md script (estimate before TTS, voiceDur after): 25-35 s, AR≈EN
+	python3 tools/script_length.py
 layout-check:    ## safe zones + clipped text, measured in Chromium (needs node + playwright)
 	python3 tools/layout_check.py
-check: validate engine-check glyph-check test
+check: validate engine-check glyph-check script-length test
 NN ?=
 LANGS ?= AR EN
 episode:         ## make episode NN=02 [LANGS="AR"] [RENDER=0] — preflight, checks, render, final QA, hand-off kit in master-claude/out/EPNN/
