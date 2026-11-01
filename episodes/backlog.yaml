@@ -12,7 +12,7 @@ episodes:
   - {id: ep08, level: beginner, status: verified, topic: خمس طرق تجعل طلبك أوضح, note: مسودة محرك master-claude/episodes/ep03.md بانتظار الموافقة}
   - {id: ep09, level: beginner, status: verified, topic: المشاريع (Projects) في Claude}
   - {id: ep10, level: beginner, status: verified, topic: الـ Artifacts في Claude}
-  - {id: ep11, level: beginner, status: idea, topic: رفع صورة أو ملف PDF وسؤال Claude عنه}
+  - {id: ep11, level: beginner, status: rendered, topic: رفع صورة أو ملف PDF وسؤال Claude عنه, note: أُنتجت كحلقة المحرك 06 (master-claude/episodes/ep06.md)}
   - {id: ep12, level: beginner, status: idea, topic: البحث في الويب داخل Claude ومتى تستخدمه}
   - {id: ep13, level: intermediate, status: idea, topic: الأساليب (Styles) وتخصيص طريقة الرد}
   - {id: ep14, level: intermediate, status: idea, topic: الذاكرة في Claude وكيف تتحكم بها}

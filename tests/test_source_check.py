@@ -76,5 +76,5 @@ def test_real_engine_episodes_pass():
     files = sc.episodes()
     assert files, "engine episodes missing"
     for f in files:
-        r = sc.check_text(f.stem, f.read_text(encoding="utf-8"), TODAY)
+        r = sc.check_text(f.stem, f.read_text(encoding="utf-8"), dt.date.today())  # real files: real date
         assert r.errors == [], (f.stem, r.errors)

@@ -123,8 +123,20 @@ def check_dialect(text: str) -> list[Finding]:
     return out
 
 
+# Snapchat (Content Guidelines for Recommendation Eligibility): "Off-platform links (URLs, QR codes, etc.)"
+# are not eligible for recommendation — checked 1 Nov 2026 after two posts got "Limited Distribution".
+_LINK = re.compile(r"(?i)\bhttps?://|\bwww\.|\b[a-z0-9-]+\.(?:ai|com|net|org|io|app|co|me|ly|gg)\b")
+
+
+def check_links(text: str) -> list[Finding]:
+    m = _LINK.search(text)
+    if not m:
+        return []
+    return [Finding("LINK", f"رابط على الشاشة أو في النص: «{m.group(0)}» — سناب شات لا يوصي بمحتوى فيه روابط خارجية", text)]
+
+
 def check_text(text: str, lang: str) -> list[Finding]:
-    findings = check_organisations(text) + check_work_topics(text)
+    findings = check_organisations(text) + check_work_topics(text) + check_links(text)
     if lang == "ar":
         findings += check_dialect(text)
     return findings

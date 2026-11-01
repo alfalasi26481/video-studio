@@ -5,6 +5,7 @@ import React, {useEffect, useState} from 'react';
 import {createRoot} from 'react-dom/client';
 import {Thumbnail} from '@remotion/player';
 import {Episode} from '../../master-claude/src/engine/Episode';
+import {EpisodeV2} from '../../master-claude/src/engine2/Episode';
 import {FPS, TAIL} from '../../master-claude/src/engine/types';
 import {EPISODES} from '../../master-claude/src/episodes';
 
@@ -30,7 +31,7 @@ const App: React.FC = () => {
   return (
     <div id="canvas" style={{width: 1080, height: 1920, position: 'relative'}}>
       <Thumbnail
-        component={Episode as any}
+        component={(data.engine === 2 ? EpisodeV2 : Episode) as any}
         inputProps={{data}}
         compositionWidth={1080}
         compositionHeight={1920}

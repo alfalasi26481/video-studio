@@ -4,8 +4,8 @@ import wAr from './ep05_words_ar.json';
 import wEn from './ep05_words_en.json';
 
 // الحلقة 5 — الـ Artifact في Claude / Artifacts in Claude
-// معتمدة من المالك 1 نوفمبر 2026 — لقطات الحلقة 1 (قرار اللقطات الخاصة معلّق).
-const clips = {hook: 'clips/ep01_hook.mp4', glitch: 'clips/ep01_glitch.mp4', mid: 'clips/ep01_beams.mp4', burst: 'clips/ep01_burst.mp4', outro: 'clips/ep01_outro.mp4'};
+// معتمدة من المالك 1 نوفمبر 2026 — لقطات Higgsfield خاصة بالحلقة (kling4_0، موافقة المالك 1 نوفمبر).
+const clips = {hook: 'clips/ep05_hook.mp4', glitch: 'clips/ep01_glitch.mp4', mid: 'clips/ep05_panel.mp4', burst: 'clips/ep05_burst.mp4', outro: 'clips/ep01_outro.mp4'};
 
 const STEPS_AR: Step[] = [
   {n: '1', label: 'اطلبه', ex: 'يفتح بجانب المحادثة', color: COLORS.orange, icon: 'task'},

@@ -362,11 +362,15 @@ const ProgressBar: React.FC<{total: number}> = ({total}) => {
 
 /* ============ SCENES ============ */
 
-const Clip: React.FC<{src: string; opacity?: number; blend?: React.CSSProperties['mixBlendMode']; startFrom?: number}> = ({src, opacity = 1, blend, startFrom = 0}) => (
-  <AbsoluteFill style={{opacity, mixBlendMode: blend}}>
-    <OffthreadVideo src={staticFile(src)} muted startFrom={startFrom} style={{width: '100%', height: '100%', objectFit: 'cover', filter: COLORS.grade === 'none' ? undefined : COLORS.grade}} />
-  </AbsoluteFill>
-);
+const Clip: React.FC<{src: string; opacity?: number; blend?: React.CSSProperties['mixBlendMode']; startFrom?: number}> = ({src, opacity = 1, blend, startFrom = 0}) => {
+  const {style} = useCtx();
+  const grade = COLORS.grade === 'none' || (style.gradeExcept ?? []).includes(src) ? undefined : COLORS.grade;
+  return (
+    <AbsoluteFill style={{opacity, mixBlendMode: blend}}>
+      <OffthreadVideo src={staticFile(src)} muted startFrom={startFrom} style={{width: '100%', height: '100%', objectFit: 'cover', filter: grade}} />
+    </AbsoluteFill>
+  );
+};
 
 const HookStop: React.FC<{color?: string; glitchy?: boolean; from?: number}> = ({color, glitchy = true, from = 0}) => {
   const {d, font} = useCtx();

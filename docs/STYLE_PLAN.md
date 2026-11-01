@@ -26,7 +26,7 @@
 ## 3. جدول التنويع المقترح
 | الحلقة | الثيم | الافتتاحية | كسر النمط |
 |---|---|---|---|
-| 06 | electric | question | snap |
+| 06 ✅ (1 نوفمبر) | electric | question | snap |
 | 07 | gold | reveal | snap |
 | 08 | mint | stop | snap |
 | 09 | ember | reveal | snap |

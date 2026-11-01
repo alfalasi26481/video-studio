@@ -64,3 +64,15 @@ def test_arabic_punctuation_does_not_hide_a_term():
     from content_check import check_text
     for text in ("هل تكتب لبنك؟", "وزارة، ثم", "في المكتب؛ ثم", "شلون؟"):
         assert check_text(text, "ar"), text
+
+
+def test_on_screen_links_are_flagged():
+    from content_check import check_text as ct
+    for t in ["افتح claude.ai الآن", "Visit www.example.org", "https://x.y", "go to claude.com"]:
+        assert any(f.code == "LINK" for f in ct(t, "en")), t
+
+
+def test_product_names_and_decimals_are_not_links():
+    from content_check import check_text as ct
+    for t in ["Claude Code", "PDF أيضاً", "النسخة 2.5 أسرع", "e.g. this"]:
+        assert not any(f.code == "LINK" for f in ct(t, "en")), t

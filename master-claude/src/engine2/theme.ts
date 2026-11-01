@@ -34,7 +34,8 @@ export type ThemeName = keyof typeof THEMES;
 export type HookKind = 'stop' | 'question' | 'reveal';
 /** Visual pattern interrupt on each step + before/after: none (v1 behaviour) or a diagonal accent wipe. */
 export type BreakKind = 'none' | 'snap';
-export type Style = {theme: ThemeName; hook: HookKind; breaks: BreakKind};
+/** gradeExcept: clip paths made for this episode in its own palette (left ungraded); reused clips get the theme grade. */
+export type Style = {theme: ThemeName; hook: HookKind; breaks: BreakKind; gradeExcept?: string[]};
 export const DEFAULT_STYLE: Style = {theme: 'ember', hook: 'stop', breaks: 'none'};
 
 let current: Palette = THEMES.ember;
