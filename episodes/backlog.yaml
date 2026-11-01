@@ -15,7 +15,7 @@ episodes:
   - {id: ep11, level: beginner, status: rendered, topic: رفع صورة أو ملف PDF وسؤال Claude عنه, note: أُنتجت كحلقة المحرك 06 (master-claude/episodes/ep06.md)}
   - {id: ep12, level: beginner, status: rendered, topic: البحث في الويب داخل Claude ومتى تستخدمه, note: أُنتجت كحلقة المحرك 07 (master-claude/episodes/ep07.md)}
   - {id: ep13, level: intermediate, status: draft, topic: تعليمات Claude على مستوى الحساب (بدل Styles), note: 'Styles غير موجودة في صفحة التخصيص الرسمية الحالية (غير مؤكد) — مسودة المحرك 08 (master-claude/episodes/ep08.md)'}
-  - {id: ep14, level: intermediate, status: idea, topic: الذاكرة في Claude وكيف تتحكم بها}
+  - {id: ep14, level: intermediate, status: draft, topic: الذاكرة في Claude وكيف تتحكم بها, note: مسودة المحرك 09 (master-claude/episodes/ep09.md)}
   - {id: ep15, level: intermediate, status: idea, topic: أعطِ Claude أمثلة ليقلّد الأسلوب}
   - {id: ep16, level: pro, status: idea, topic: ما هي الـ Skills وكيف تصنع واحدة}
   - {id: ep17, level: pro, status: idea, topic: Claude Code لأول مرة — بناء صفحة بسيطة}
