@@ -111,18 +111,16 @@ def test_hashtags_deduplicated_and_capped():
     assert len(ef._HASHTAG.findall(post)) == 5
 
 
-def test_snapchat_short_first_line_only():
-    post = ef.platform_post(ef.post_captions(MD)["ar"], "snapchat")
-    assert "سطر ثانٍ" not in post and len(post) <= 160
-    assert len(ef._HASHTAG.findall(post)) <= 3
+def test_snapchat_is_not_a_target_platform():
+    assert set(ef.PLATFORMS) == {"tiktok", "instagram"}
 
 
 def test_over_limit_drops_hashtags_then_refuses():
-    long_line = "كلمة " * 30  # 150 chars
-    post = ef.platform_post(long_line + "\n#Claude #ذكاء_اصطناعي #برومبت", "snapchat")
-    assert len(post) <= 160 and post.startswith("كلمة")
+    long_line = "كلمة " * 439  # 2195 chars
+    post = ef.platform_post(long_line + "\n#Claude #ذكاء_اصطناعي #برومبت", "instagram")
+    assert len(post) <= 2200 and post.startswith("كلمة")
     with pytest.raises(ValueError):
-        ef.platform_post("كلمة " * 40, "snapchat")
+        ef.platform_post("كلمة " * 460, "instagram")
 
 
 # ---- srt
@@ -199,8 +197,10 @@ def test_build_kit_writes_srt_and_posts(root):
     kit = ef.build_kit("09", root, qa=[good()])
     pub = (kit / "PUBLISH.md").read_text(encoding="utf-8")
     assert (kit / "EP09-AR.srt").exists() and (kit / "EP09-EN.srt").exists()
-    for name in ("TikTok", "Instagram Reels", "Snapchat Spotlight"):
+    for name in ("TikTok", "Instagram Reels"):
         assert pub.count(f"**{name}**") == 2
+    assert "Snapchat" not in pub
+    assert "العربي فقط" in pub and "English only" in pub and pub.count("AI info") == 2
     assert "غير مؤكد" in pub and "EP09-AR: 1080x1920" in pub and "⚠️ فحص المحتوى" not in pub
 
 

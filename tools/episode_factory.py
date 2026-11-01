@@ -35,8 +35,18 @@ PLATFORMS = {
     "tiktok": {"name": "TikTok", "caption_max": 4000, "hashtags_max": 5, "body": "full"},
     # Instagram capped hashtags at 5 per post/Reel (Dec 2025, widely reported).
     "instagram": {"name": "Instagram Reels", "caption_max": 2200, "hashtags_max": 5, "body": "full"},
-    # Snapchat Spotlight: short description; 160 chars is commonly cited.
-    "snapchat": {"name": "Snapchat Spotlight", "caption_max": 160, "hashtags_max": 3, "body": "first"},
+}
+# Snapchat dropped 1 Nov 2026 (owner decision): Spotlight does not recommend wholly AI-generated
+# videos made outside Snapchat, even when disclosed — see docs/SNAPCHAT.md, docs/PLATFORM_STRATEGY.md.
+
+# Per-language posting checklist (docs/PLATFORM_STRATEGY.md).
+POST_CHECKLIST = {
+    "ar": ["الحساب: **العربي فقط** — لا تنشر النسخة العربية والإنجليزية في الحساب نفسه.",
+           "ارفع الملف الأصلي في كل منصة (لا تُعِد نشر فيديو تيك توك بعلامته في إنستغرام).",
+           "فعّل وسم المحتوى المُنشأ بالذكاء الاصطناعي: TikTok «AI-generated content» · Instagram «AI info» (التعليق الصوتي اصطناعي)."],
+    "en": ["Account: **English only** — never post the Arabic and English cuts on the same account.",
+           "Upload the original file to each platform (no TikTok re-uploads with a watermark on Instagram).",
+           "Turn on the AI label: TikTok \"AI-generated content\" · Instagram \"AI info\" (the voiceover is synthetic)."],
 }
 
 # Final QA thresholds — same as step 10 of master-claude/CLAUDE.md.
@@ -256,6 +266,7 @@ def build_kit(nn: str, root: Path = ROOT, langs=LANGS, qa: list[QA] | None = Non
             lines += ["", f"⚠️ لا يوجد تعليق نشر {lang} في `episodes/ep{nn}.md`", ""]
             continue
         flags += [f"{lang}: {f.code} «{f.text}»" for f in check_text(text, lc)]
+        lines += [""] + [f"- [ ] {item}" for item in POST_CHECKLIST[lc]]
         for key, rule in PLATFORMS.items():
             post = platform_post(text, key)
             lines += ["", f"**{rule['name']}** ({len(post)}/{rule['caption_max']} حرف)", "", "```", post, "```"]
