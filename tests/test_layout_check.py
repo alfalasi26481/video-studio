@@ -108,3 +108,18 @@ def test_page_errors_fail_but_media_errors_are_noise(tmp_path):
 def test_all_compositions_read_from_registry():
     ids = lc.all_compositions()
     assert {"EP01-AR", "EP01-EN", "EP02-AR", "EP02-EN"} <= set(ids)
+
+
+def test_text_touching_the_side_edge_is_error():
+    # EP07-EN «LIKE THIS?» measured at x0≈-1 (inside the 1 px tolerance) and came out cut in the render
+    t = T(t="LIKE THIS?", x0=-1, x1=522, y0=400, y1=620)
+    assert rules(M([t], [t])) == [("edge", "error", "LIKE THIS?")]
+    r = T(t="right", x0=600, x1=1075, y0=300, y1=360)
+    assert rules(M([r], [r])) == [("edge", "error", "right")]
+
+
+def test_text_with_edge_margin_is_fine_and_off_canvas_is_not_double_counted():
+    ok = T(x0=12, x1=1068, y0=300, y1=360)
+    assert rules(M([ok], [ok])) == []
+    cut = T(t="cut", x0=-40, x1=400, y0=300, y1=360)
+    assert rules(M([cut], [cut])) == [("off-canvas", "error", "cut")]

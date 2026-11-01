@@ -47,6 +47,7 @@ RIGHT_X = W - 120            # 960 (the engine's own captions keep right: 120)
 RAIL_Y = (H * 0.40, H * 0.80)
 TOP_Y = 100
 SPILL_PX = 4
+EDGE_PX = 12                 # text this close to the side edge reads as cut (EP07-EN «LIKE THIS?», 1 Nov)
 MIN_RUN = 2
 EPS = 1.0                    # sub-pixel tolerance
 
@@ -84,6 +85,10 @@ def frame_hits(t: dict) -> list[tuple[str, str, float]]:
     off = max(0.0, -x0, x1 - W, -y0, y1 - H)
     if off > EPS:
         hits.append(("off-canvas", "error", off))
+    else:
+        edge = max(EDGE_PX - x0, x1 - (W - EDGE_PX))
+        if edge > EPS:
+            hits.append(("edge", "error", edge))
     box = t.get("box")
     if box:
         bx0, by0, bx1, by1 = box
