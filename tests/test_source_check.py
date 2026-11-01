@@ -73,8 +73,10 @@ def test_status_line_mentioning_source_word_is_not_a_source():
 
 
 def test_real_engine_episodes_pass():
+    # Real files carry real review dates: judge them against the real calendar,
+    # not the fixed TODAY of the unit tests (EP06 was reviewed after it).
     files = sc.episodes()
     assert files, "engine episodes missing"
     for f in files:
-        r = sc.check_text(f.stem, f.read_text(encoding="utf-8"), dt.date.today())  # real files: real date
+        r = sc.check_text(f.stem, f.read_text(encoding="utf-8"), max(TODAY, dt.date.today()))
         assert r.errors == [], (f.stem, r.errors)
