@@ -23,6 +23,7 @@
 - `tools/glyph_check.py` — يتأكد أن كل حرف على الشاشة موجود في خطوط المحرك (Tajawal/Inter، كل الأوزان) — `make glyph-check`.
 - `tools/source_check.py` — كل `master-claude/episodes/epNN.md` يجب أن يحوي سطر «المصدر الرسمي (رُوجع <تاريخ>): <رابط>» من نطاق Anthropic رسمي (anthropic.com · claude.com · claude.ai)؛ مراجعة أقدم من 90 يوماً = تحذير — `make source-check` (ضمن `make check` و`make episode`).
 - `tools/script_length.py` — مدة السكربت المنطوق قبل الصوت (تقدير بمعدل كلمات معاير من EP01/EP02) وبعده (`voiceDur`): 25–35 ث، والعربي ≈ الإنجليزي — `make script-length`.
+- `tools/style_check.py` — من الحلقة 6: سطر «الأسلوب» في `epNN.md`، لا يتكرر الثيم ولا الافتتاحية في حلقتين متتاليتين، و`style` في `epNN.ts` يطابقه — `make style-check` (ضمن `make check`).
 - `tools/layout_check.py` (+ `tools/layout_check/`) — يقيس صناديق النص الحقيقية في Chromium إطاراً بإطار (المحرك يُستورد كما هو) ويفحص المناطق الآمنة والنص الخارج عن بطاقته أو عن الإطار — `make layout-check` (يحتاج node + playwright، ~1.5 دقيقة).
 - `tools/episode_factory.py` — المصنع: `make episode NN=02` (فحص مسبق ← فحوص ← `render.sh` ← فحص نهائي ← حزمة تسليم في `master-claude/out/EPNN/`)؛ `make episode-preflight NN=..` يبيّن الناقص وأي خطوة تنتجه. لا يستدعي Higgsfield ولا ينشر.
 - `tools/voice_level.py` — مستوى صوت التعليق مقابل مرجع EP03-AR (-19.6 LUFS)؛ أداة إصلاح لا بوابة: `make voice-level NN=04 FIX=1` فقط إذا فشل الفحص النهائي في الصوت (حدث في EP04-AR).

@@ -1,4 +1,4 @@
-.PHONY: frozen-check frozen-render test validate engine-check glyph-check source-check script-length layout-check check episode episode-preflight episode-kit voice-level
+.PHONY: style-check frozen-check frozen-render test validate engine-check glyph-check source-check script-length layout-check check episode episode-preflight episode-kit voice-level
 test:            ## run all tests
 	python3 -m pytest -q
 validate:        ## validate every episodes/ep*.yaml
@@ -13,11 +13,13 @@ script-length:   ## spoken length of each epNN.md script (estimate before TTS, v
 	python3 tools/script_length.py
 layout-check:    ## safe zones + clipped text, measured in Chromium (needs node + playwright)
 	python3 tools/layout_check.py
+style-check:     ## from EP06: style declared, never the same theme or hook twice in a row, .ts matches .md
+	python3 tools/style_check.py
 frozen-check:    ## EP01–05 frozen: v1 engine files unchanged, no old episode on engine v2
 	python3 tools/frozen_check.py
 frozen-render:   ## + render 50 frames of EP01–05 and compare pixels with the approved reference (~3 min)
 	python3 tools/frozen_check.py --render
-check: validate engine-check glyph-check source-check script-length frozen-check test
+check: validate engine-check glyph-check source-check script-length style-check frozen-check test
 NN ?=
 LANGS ?= AR EN
 episode:         ## make episode NN=02 [LANGS="AR"] [RENDER=0] — preflight, checks, render, final QA, hand-off kit in master-claude/out/EPNN/
