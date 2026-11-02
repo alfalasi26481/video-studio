@@ -68,3 +68,36 @@ New episode: Sun · Tue · Thu
 🇦🇪 بالعربي: @HANDLE_AR
 ```
 استبدل @HANDLE بأسماء الحسابات. في تيك توك استخدم أيضاً خيار ربط إنستغرام في الملف الشخصي (Edit profile → Instagram). لا روابط خارجية في نص الفيديو نفسه (`LINK`).
+
+## دورة 2 نوفمبر 2026 (المهمة الآلية) — منشورات جديدة
+شكل التعليق الجديد: سطر الوعد أولاً، ثم الإفصاح، ثم طلب واحد، ثم ≤5 وسوم.
+
+### إنستغرام الإنجليزي «Stepwise | Learn Claude» (`cmvxk5grn06wkpd1jcncfn6xe`)
+| الموعد (UTC) | الحلقة | Postiz id |
+|---|---|---|
+| 2026-11-08 16:00 | EN EP03 Four habits | cmvyt9ena0bt7rr078tvuz07z |
+| 2026-11-08 18:00 | EN EP04 Projects | cmvyt9enu0bt8rr07k6im5yw3 |
+| 2026-11-10 16:00 | EN EP05 Artifacts | cmvyt9eoc0bt9rr07r8yzule8 |
+| 2026-11-10 18:00 | EN EP06 Upload a photo/PDF | cmvyt9eou0btarr07wh5m7x95 |
+
+### تيك توك الإنجليزي sullam.stepwise.eng (`cmvxk4nxu06w5pd1jb92kcnt0`)
+| الموعد (UTC) | الحلقة | Postiz id |
+|---|---|---|
+| 2026-11-08 16:00 | EN EP03 Four habits | cmvyt9epb0btbrr07zs29kp7y |
+| 2026-11-08 18:00 | EN EP04 Projects | cmvyt9epv0btcrr07uv7c0l56 |
+| 2026-11-10 16:00 | EN EP05 Artifacts | cmvyt9eqc0btdrr076arguwz0 |
+| 2026-11-10 18:00 | EN EP06 Upload a photo/PDF | cmvyt9eqv0bterr072756id30 |
+
+ملاحظة: منشور 5 نوفمبر على الحسابين الإنجليزيين هو «A confident answer» (فيديو Stepwise القديم)، لا EP03 المحرك؛ لذلك جُدولت EN EP03 هنا.
+
+### تيك توك العربي sullam.stepwise (`cmvxkaf1b07a4qd1jdkqru9ne`)
+| الموعد (UTC) | الحلقة | Postiz id |
+|---|---|---|
+| 2026-11-03 16:00 | EP02 الجملة السحرية | cmvy0ury201ksqm081jnaux1e (سابق) |
+| 2026-11-05 16:00 | تحقق قبل أن تثق | cmvy0uryo01ktqm08uys2kfhb (سابق) |
+| 2026-11-08 16:00 | AR EP04 المشاريع | cmvyt8vey0bz6qm08681jwkkw |
+| 2026-11-10 16:00 | AR EP05 الـ Artifact | cmvyt8vfm0bz7qm08mififw1h |
+| 2026-11-12 16:00 | AR EP06 ارفع صورة أو ملفاً | cmvyt8vge0bz8qm08ucxkvj9e |
+
+⚠️ إنستغرام العربي: منشورا 3 و5 نوفمبر (المجدولان سابقاً) فيهما 7 وسوم (الحد 5) — لم يُعدَّلا (قاعدة: المجدول يبقى كما هو)؛ أُبلغ المالك.
+EP07 معتمدة لكن لا يوجد ماستر مستضاف بعد — لم تُجدول.
