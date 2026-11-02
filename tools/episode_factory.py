@@ -23,7 +23,8 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from content_check import check_text  # noqa: E402
+from content_check import check_text
+from remaster import remaster_episode  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent / "master-claude"
 LANGS = ("AR", "EN")
@@ -172,6 +173,28 @@ class QA:
     lufs: float | None = None
     peak: float | None = None
     problems: list[str] = field(default_factory=list)
+    remastered: bool = False
+
+
+AUDIO_PROBLEMS = ("loudness ", "true peak ")
+
+
+def audio_only_failure(q: QA) -> bool:
+    """Failed QA, and every problem is loudness or true peak — what remaster.py can fix."""
+    return bool(q.problems) and all(p.startswith(AUDIO_PROBLEMS) for p in q.problems)
+
+
+def remaster_failed(nn: str, qa: list[QA], root: Path = ROOT) -> list[QA]:
+    """Second master (tools/remaster.py, outside the engine) for audio-only failures, then QA again."""
+    out = []
+    for q in qa:
+        lang = q.id.rsplit("-", 1)[-1]
+        if audio_only_failure(q) and (root / "out" / "raw" / f"{q.id}.mp4").exists():
+            remaster_episode(nn, lang, root)
+            q = run_qa(nn, (lang,), root)[0]
+            q.remastered = True
+        out.append(q)
+    return out
 
 
 def parse_ebur128(stderr: str) -> tuple[float | None, float | None]:
@@ -224,7 +247,7 @@ def voice_dur(nn: str, lang: str, root: Path = ROOT) -> float | None:
     ts = root / "src" / "episodes" / f"ep{nn}.ts"
     if not ts.exists():
         return None
-    m = re.search(rf"EP{nn}_{lang}\s*:\s*EpisodeData\s*=\s*\{{.*?voiceDur:\s*([\d.]+)", ts.read_text(encoding="utf-8"), re.S)
+    m = re.search(rf"EP{nn}_{lang}\s*:\s*EpisodeData(?:V2)?\s*=\s*\{{.*?voiceDur:\s*([\d.]+)", ts.read_text(encoding="utf-8"), re.S)
     return float(m.group(1)) if m else None
 
 
@@ -275,6 +298,8 @@ def build_kit(nn: str, root: Path = ROOT, langs=LANGS, qa: list[QA] | None = Non
         lines += ["## الفحص النهائي", ""]
         for q in qa:
             status = "✅" if not q.problems else "❌ " + "؛ ".join(q.problems)
+            if q.remastered:
+                status += " (ماستر ثانٍ: tools/remaster.py)"
             lines.append(f"- {q.id}: {q.width}x{q.height} · {q.fps:g}fps · {q.duration:.1f}ث · "
                          f"{q.lufs} LUFS · ذروة {q.peak} — {status}")
         lines.append("")
@@ -309,6 +334,7 @@ def main(argv=None) -> int:
     ap.add_argument("nn", help="two-digit episode number, e.g. 02")
     ap.add_argument("--langs", default="AR EN")
     ap.add_argument("--no-render", action="store_true")
+    ap.add_argument("--no-remaster", action="store_true", help="keep render.sh master even if audio QA fails")
     ap.add_argument("--root", type=Path, default=ROOT)
     a = ap.parse_args(argv)
     nn = a.nn.zfill(2)
@@ -326,6 +352,10 @@ def main(argv=None) -> int:
     if a.cmd in ("qa", "all"):
         qa = run_qa(nn, langs, a.root)
         ok = _print_qa(qa)
+        if not ok and a.cmd == "all" and not a.no_remaster and any(audio_only_failure(q) for q in qa):
+            print("audio-only QA failure -> second master (tools/remaster.py, engine untouched)")
+            qa = remaster_failed(nn, qa, a.root)
+            ok = _print_qa(qa)
         if a.cmd == "qa":
             return 0 if ok else 1
     kit = build_kit(nn, a.root, langs, qa)
