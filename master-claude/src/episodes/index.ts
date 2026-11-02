@@ -7,6 +7,7 @@ import {EP05_AR, EP05_EN} from './ep05';
 import {EP06_AR, EP06_EN} from './ep06';
 import {EP07_AR, EP07_EN} from './ep07';
 import {EP09_AR, EP09_EN} from './ep09';
+import {EP10_AR, EP10_EN} from './ep10';
 
 /**
  * Episode registry. Composition ids = `EP<NN>-AR` / `EP<NN>-EN`.
@@ -29,4 +30,6 @@ export const EPISODES: Record<string, EpisodeData> = {
   'EP07-EN': EP07_EN,
   'EP09-AR': EP09_AR,
   'EP09-EN': EP09_EN,
+  'EP10-AR': EP10_AR,
+  'EP10-EN': EP10_EN,
 };
