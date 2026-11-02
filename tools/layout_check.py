@@ -145,6 +145,28 @@ def all_compositions() -> list[str]:
     return re.findall(r"'(EP\d+-(?:AR|EN))'\s*:", src)
 
 
+def resolve_ids(argv: list[str], available: list[str]) -> list[str]:
+    """`09`, `9`, `ep09` -> both languages of EP09; `EP09-AR` -> itself; nothing -> all.
+
+    Before cycle 22 a bare number reached node and failed with an unclear error."""
+    import re
+    if not argv:
+        return list(available)
+    out: list[str] = []
+    for a in argv:
+        m = re.fullmatch(r"(?:ep)?(\d{1,2})(?:-(ar|en))?", a.strip(), re.IGNORECASE)
+        if not m:
+            raise ValueError(f"not an episode or composition id: {a!r} (use 09 or EP09-AR)")
+        nn = f"EP{int(m.group(1)):02d}"
+        want = [f"{nn}-{m.group(2).upper()}"] if m.group(2) else [f"{nn}-AR", f"{nn}-EN"]
+        hits = [c for c in want if c in available]
+        if not hits:
+            raise ValueError(f"{nn} is not registered in src/episodes/index.ts "
+                             f"(have: {', '.join(available) or 'none'})")
+        out += [c for c in hits if c not in out]
+    return out
+
+
 def report(m: dict, findings: list[Finding]) -> bool:
     errs = [f for f in findings if f.severity == "error"]
     noise = [e for e in m.get("errors", []) if "MediaPlaybackError" not in e]
@@ -164,7 +186,11 @@ def main(argv: list[str]) -> int:
             m = json.loads(Path(p).read_text(encoding="utf-8"))
             ok &= report(m, evaluate(m))
         return 0 if ok else 1
-    ids = argv or all_compositions()
+    try:
+        ids = resolve_ids(argv, all_compositions())
+    except ValueError as e:
+        print(f"layout_check: {e}", file=sys.stderr)
+        return 2
     _prepare()
     from concurrent.futures import ThreadPoolExecutor
     with ThreadPoolExecutor(max_workers=4) as pool:

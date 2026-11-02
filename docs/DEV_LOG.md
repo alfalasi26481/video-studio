@@ -361,3 +361,18 @@
 - 3 صور من تطبيق الجوال: الإعدادات = Profile · Billing · Usage · Capabilities · Claude Code · Connectors · Permissions · Color mode · Font style · Voice · Haptic feedback · Notifications · Time & focus · Privacy · Sharing. **لا Account ولا Memory ولا Instructions.**
 - النتيجة: EP08 تبقى «على الكمبيوتر» (صحيح كما كُتبت). الخطوة 2 ما زالت تحتاج صورة Settings ← Account من الكمبيوتر (أو Profile في الجوال — غير مؤكد). EP09: مسار التفعيل في تعليق النشر صار «على الكمبيوتر».
 - `make check` ناجح.
+
+## 2026-11-02 (جلسة مجدولة) — الدورة 22: مسودة EP10 «أعطِ Claude أمثلة» + إصلاح layout_check (فرع dev/foundation، PR #1)
+**الوضع**: لا تعليقات ولا مراجعات جديدة على PR #1، ولا رد من المالك على EP08 (مكان خانة التعليمات) ولا على معاينة EP09. لم يُلمس `src/engine/` ولا `src/engine2/` ولا `scripts/`، ولم يُصرف أي رصيد، ولم يُولَّد صوت، ولم يُنشر شيء.
+
+**ما تم**
+- `master-claude/episodes/ep10.md` من backlog ep15: ثيم `electric` · افتتاحية `stop` · كسر `snap` (مطابق لجدول STYLE_PLAN، ويختلف عن EP09 ember/reveal). المشكلة: رسالة تهنئة بكلام عام لا يشبهك ← 3 بطاقات: الصق 3 أمثلة كتبتها · نوّعها (قصيرة/طويلة/مناسبة أخرى) · «اكتب واحدة بالأسلوب نفسه» ← النتيجة: تهنئة تشبهك. مثال شخصي، بلا جهات ولا عمل.
+- المصدر الرسمي رُوجع اليوم: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices — «Examples are one of the most reliable ways to steer Claude's output format, tone, and structure» · Relevant / Diverse / Structured (`<example>`) · «Include 3–5 examples for best results».
+- **غير مؤكد**: الصفحة لكتابة الطلبات عموماً، وليست صفحة مساعدة لتطبيق Claude — تطبيقها في المحادثة استنتاج. وسوم `<example>` في تعليق النشر فقط. السكربت لا يعد بنتيجة مضمونة.
+- كل الخطوات داخل المحادثة: لا تتأثر بالكمبيوتر/الجوال ولا بقائمة الإعدادات.
+- الجولة الأولى من السكربت كانت قصيرة (AR ≈ 24.1 ث < 25، أوقفها `script-length`) ← وُسّعت: AR 56 كلمة ≈ 28.7 ث · EN 79 كلمة ≈ 28.2 ث (فرق 0.5 ث).
+- `tools/layout_check.py`: `resolve_ids()` — `09` / `9` / `ep09` ← EP09-AR وEP09-EN، و`ep08-en` ← EP08-EN، وحلقة غير مسجلة ← رسالة واضحة وخروج 2 قبل تشغيل node (كان خطأ node غامضاً، ملاحظة الدورة 21). 4 اختبارات جديدة.
+- backlog: ep15 ← draft (EP10). `make check`: محتوى 0، حروف 0، مصدر OK، أسلوب OK، تجميد OK، 154 اختباراً ناجحاً.
+
+**المتبقي**: موافقة المالك على EP10؛ حكم المالك على معاينة EP09؛ مكان خانة التعليمات (EP08)؛ لقطات EP07–EP10 الخاصة (48.75 رصيداً لكل حلقة)؛ ربط الحسابات الإنجليزية وتيك توك العربي.
+**الخطوة التالية**: صوت ومعاينة مجانية لـ EP10 (Gemini + لقطات الحلقة 1) في الدورة القادمة إن لم يصل رد.

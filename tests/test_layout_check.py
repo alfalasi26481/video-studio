@@ -123,3 +123,29 @@ def test_text_with_edge_margin_is_fine_and_off_canvas_is_not_double_counted():
     assert rules(M([ok], [ok])) == []
     cut = T(t="cut", x0=-40, x1=400, y0=300, y1=360)
     assert rules(M([cut], [cut])) == [("off-canvas", "error", "cut")]
+
+
+# --- ids: the episode number is accepted, not only the full composition id (cycle 22) ---
+AVAILABLE = ["EP08-AR", "EP08-EN", "EP09-AR", "EP09-EN"]
+
+
+def test_episode_number_expands_to_both_languages():
+    assert lc.resolve_ids(["09"], AVAILABLE) == ["EP09-AR", "EP09-EN"]
+    assert lc.resolve_ids(["9"], AVAILABLE) == ["EP09-AR", "EP09-EN"]
+    assert lc.resolve_ids(["ep09"], AVAILABLE) == ["EP09-AR", "EP09-EN"]
+
+
+def test_full_composition_id_is_kept_and_normalised():
+    assert lc.resolve_ids(["EP09-AR"], AVAILABLE) == ["EP09-AR"]
+    assert lc.resolve_ids(["ep08-en"], AVAILABLE) == ["EP08-EN"]
+
+
+def test_no_ids_means_all_and_duplicates_are_dropped():
+    assert lc.resolve_ids([], AVAILABLE) == AVAILABLE
+    assert lc.resolve_ids(["09", "EP09-AR"], AVAILABLE) == ["EP09-AR", "EP09-EN"]
+
+
+def test_unknown_episode_is_a_clear_error():
+    import pytest
+    with pytest.raises(ValueError, match="EP10"):
+        lc.resolve_ids(["10"], AVAILABLE)
