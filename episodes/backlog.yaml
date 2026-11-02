@@ -17,6 +17,6 @@ episodes:
   - {id: ep13, level: intermediate, status: draft, topic: تعليمات Claude على مستوى الحساب (بدل Styles), note: 'Styles غير موجودة في صفحة التخصيص الرسمية الحالية (غير مؤكد) — مسودة المحرك 08 (master-claude/episodes/ep08.md)'}
   - {id: ep14, level: intermediate, status: rendered, topic: الذاكرة في Claude وكيف تتحكم بها, note: معاينة المحرك 09 (master-claude/episodes/ep09.md)}
   - {id: ep15, level: intermediate, status: draft, topic: أعطِ Claude أمثلة ليقلّد الأسلوب, note: مسودة المحرك 10 (master-claude/episodes/ep10.md)}
-  - {id: ep16, level: pro, status: idea, topic: ما هي الـ Skills وكيف تصنع واحدة}
+  - {id: ep16, level: pro, status: draft, topic: ما هي الـ Skills وكيف تصنع واحدة, note: مسودة المحرك 11 (master-claude/episodes/ep11.md)}
   - {id: ep17, level: pro, status: idea, topic: Claude Code لأول مرة — بناء صفحة بسيطة}
   - {id: ep18, level: pro, status: idea, topic: الموصلات (Connectors) وربط Claude بتطبيقاتك}
