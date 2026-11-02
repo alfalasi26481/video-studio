@@ -21,7 +21,7 @@
 ## الهيكل
 - `master-claude/` — المحرك المعتمد (Remotion) وحلقاته `episodes/epNN.md` و`src/episodes/epNN.ts`.
 - `tools/engine_content_check.py` — يفحص نصوص حلقات المحرك (السكربت، الترجمة، تعليق النشر، نصوص الشاشة) ضد قواعد المحتوى.
-- `tools/caption_check.py` — كلمة ترجمة عربية ملتصقة بكلمة لاتينية («لـClaude») تظهر مقلوبة على الشاشة؛ افصلها («لـ Claude») — `make caption-check` (ضمن `make check`؛ الحلقات 1–7 تحذيرات).
+- `tools/caption_check.py` — كلمة ترجمة عربية ملتصقة بكلمة لاتينية («لـClaude») تظهر مقلوبة على الشاشة؛ افصلها («لـ Claude») ، وكلمتان لاتينيتان منفصلتان في سطر عربي أو نص شاشة عربي يُحرَّك كلمة كلمة («Claude Code») تظهران مقلوبتين («Code Claude») — اربطهما بمسافة غير منقسمة (EP12، 2 نوفمبر 2026) — `make caption-check` (ضمن `make check`؛ الحلقات 1–7 تحذيرات).
 - `tools/glyph_check.py` — يتأكد أن كل حرف على الشاشة موجود في خطوط المحرك (Tajawal/Inter، كل الأوزان) — `make glyph-check`.
 - `tools/source_check.py` — كل `master-claude/episodes/epNN.md` يجب أن يحوي سطر «المصدر الرسمي (رُوجع <تاريخ>): <رابط>» من نطاق Anthropic رسمي (anthropic.com · claude.com · claude.ai)؛ مراجعة أقدم من 90 يوماً = تحذير — `make source-check` (ضمن `make check` و`make episode`).
 - `tools/script_length.py` — مدة السكربت المنطوق قبل الصوت (تقدير بمعدل كلمات معاير من EP01/EP02) وبعده (`voiceDur`): 25–35 ث، والعربي ≈ الإنجليزي — `make script-length`.

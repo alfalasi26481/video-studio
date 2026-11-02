@@ -39,3 +39,21 @@ def test_repo_episodes_have_no_errors():
 
 def test_arabic_punctuation_after_latin_passes():
     assert cc.mixed_tokens(lines("Claude،", "Claude؟")) == []
+
+
+def test_two_latin_tokens_in_arabic_line_flagged():
+    assert cc.latin_runs(lines("الحل:", "Claude", "Code")) == [(0.1, "Claude Code")]
+
+
+def test_nbsp_joined_latin_passes():
+    assert cc.latin_runs(lines("الحل:", "Claude\u00a0Code")) == []
+    assert cc.latin_runs(lines("تبويب", "Code", "ثم")) == []
+
+
+def test_ar_field_with_two_latin_words_flagged():
+    ts = ("const STEPS_AR = [{label: 'x', ex: 'Claude Code'}];\nconst STEPS_EN = [{ex: 'Open Code now'}];\n"
+          "export const EP99_AR: EpisodeDataV2 = {text: {formulaTitle: 'Claude Code', hookSub: 'صفحة بلا كود'}};\n"
+          "export const EP99_EN: EpisodeDataV2 = {text: {formulaTitle: 'Claude Code'}};")
+    assert cc.ar_field_runs(ts) == ["Claude Code", "Claude Code"]
+    ok = ts.replace("Claude Code", "Claude\u00a0Code")
+    assert cc.ar_field_runs(ok) == []

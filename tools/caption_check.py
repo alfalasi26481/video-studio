@@ -5,7 +5,13 @@ karaoke but two bidi runs for the browser: on screen it renders as «Claudeلـ�
 preview, 2 Nov 2026). Write the Arabic prefix and the Latin word as two tokens
 («لـ Claude:»), as approved EP01 does.
 
-Reads master-claude/src/episodes/epNN_words_ar.json only (read-only).
+Second rule (EP12 preview, 2 Nov 2026): two Latin words as two karaoke tokens in
+an Arabic line («Claude Code») are two separate spans in an RTL row, so the screen
+shows «Code Claude». The same happens to the Arabic on-screen fields the engine
+animates word by word (formulaTitle, hookSub, step ex). Join them with a no-break
+space («Claude\u00a0Code») so they stay one token.
+
+Reads master-claude/src/episodes/epNN_words_ar.json and epNN.ts only (read-only).
     python3 tools/caption_check.py            # all episodes
     python3 tools/caption_check.py 11         # selected episodes
 EP01–EP07 were approved before this rule: warnings only. Exit 1 on any error.
@@ -33,6 +39,36 @@ def mixed_tokens(lines: list[dict]) -> list[tuple[float, str]]:
     return out
 
 
+def _latin_only(tok: str) -> bool:
+    return bool(_LAT.search(tok)) and not _AR.search(tok)
+
+
+def latin_runs(lines: list[dict]) -> list[tuple[float, str]]:
+    """(time, 'A B') for two consecutive Latin-only tokens in one Arabic caption line."""
+    out = []
+    for line in lines:
+        words = line.get("words", [])
+        for (t, a), (_, b) in zip(words, words[1:]):
+            if _latin_only(a) and _latin_only(b):
+                out.append((t, f"{a} {b}"))
+    return out
+
+
+_AR_FIELD = re.compile(r"(?:formulaTitle|hookSub|ex):\s*'([^']*)'")
+
+
+def ar_field_runs(ts: str) -> list[str]:
+    """Arabic-side per-word fields in epNN.ts holding two space-separated Latin words."""
+    ar = ts.split("_EN: EpisodeData")[0].split("const STEPS_EN")[0] + (
+        ts.split("_AR: EpisodeData", 1)[1].split("_EN: EpisodeData")[0] if "_AR: EpisodeData" in ts else "")
+    out = []
+    for val in _AR_FIELD.findall(ar):
+        toks = val.split(" ")
+        if any(_latin_only(a) and _latin_only(b) for a, b in zip(toks, toks[1:])):
+            out.append(val)
+    return out
+
+
 def check(episodes: list[str]) -> tuple[int, int]:
     errors = warnings = 0
     for nn in episodes:
@@ -47,6 +83,14 @@ def check(episodes: list[str]) -> tuple[int, int]:
             if legacy:
                 warnings += 1
             else:
+                errors += 1
+        for t, run in latin_runs(json.loads(path.read_text(encoding="utf-8"))):
+            print(f"  [error] EP{nn} {t:6.2f}s  «{run}» كلمتان لاتينيتان منفصلتان في سطر عربي تظهران مقلوبتين — اربطهما بمسافة غير منقسمة")
+            errors += 1
+        ts = ROOT / f"ep{nn}.ts"
+        if ts.exists():
+            for val in ar_field_runs(ts.read_text(encoding="utf-8")):
+                print(f"  [error] EP{nn} نص شاشة عربي «{val}» يُحرَّك كلمة كلمة فيظهر مقلوباً — اربط الكلمتين بمسافة غير منقسمة")
                 errors += 1
     return errors, warnings
 
