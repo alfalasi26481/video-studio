@@ -1,4 +1,4 @@
-.PHONY: style-check frozen-check frozen-render test validate engine-check glyph-check source-check script-length layout-check check episode episode-preflight episode-kit voice-level
+.PHONY: similarity-check style-check frozen-check frozen-render test validate engine-check glyph-check source-check script-length layout-check check episode episode-preflight episode-kit voice-level
 test:            ## run all tests
 	python3 -m pytest -q
 validate:        ## validate every episodes/ep*.yaml
@@ -19,7 +19,9 @@ frozen-check:    ## EP01–05 frozen: v1 engine files unchanged, no old episode 
 	python3 tools/frozen_check.py
 frozen-render:   ## + render 50 frames of EP01–05 and compare pixels with the approved reference (~3 min)
 	python3 tools/frozen_check.py --render
-check: validate engine-check glyph-check source-check script-length style-check frozen-check test
+similarity-check: ## no two episodes say the same thing in the same words (owner rule 2 Nov 2026)
+	python3 tools/similarity_check.py $(NN)
+check: validate engine-check glyph-check source-check script-length style-check similarity-check frozen-check test
 NN ?=
 LANGS ?= AR EN
 episode:         ## make episode NN=02 [LANGS="AR"] [RENDER=0] — preflight, checks, render, final QA, hand-off kit in master-claude/out/EPNN/
