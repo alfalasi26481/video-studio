@@ -19,4 +19,5 @@ episodes:
   - {id: ep15, level: intermediate, status: draft, topic: أعطِ Claude أمثلة ليقلّد الأسلوب, note: مسودة المحرك 10 (master-claude/episodes/ep10.md)}
   - {id: ep16, level: pro, status: draft, topic: ما هي الـ Skills وكيف تصنع واحدة, note: مسودة المحرك 11 (master-claude/episodes/ep11.md)}
   - {id: ep17, level: pro, status: rendered, topic: Claude Code لأول مرة — بناء صفحة بسيطة, note: 'معاينة المحرك 12 (master-claude/episodes/ep12.md) — يحتاج اشتراكاً مدفوعاً (Pro فما فوق)'}
-  - {id: ep18, level: pro, status: idea, topic: الموصلات (Connectors) وربط Claude بتطبيقاتك}
+  - {id: ep18, level: pro, status: idea, topic: الموصلات (Connectors) وربط Claude بتطبيقاتك, note: 'مؤجلة — تحتاج أسماء تطبيقات/شركات لتُفهم (تعارض مع قاعدة لا جهات)؛ قرار المالك'}
+  - {id: ep19, level: beginner, status: draft, topic: الوضع الصوتي — كلّم Claude بصوتك, note: 'مسودة المحرك 13 (master-claude/episodes/ep13.md)؛ متاح مجاناً؛ اللغات غير الإنجليزية تجريبية'}
