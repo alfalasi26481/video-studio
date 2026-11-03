@@ -22,3 +22,4 @@ episodes:
   - {id: ep18, level: pro, status: idea, topic: الموصلات (Connectors) وربط Claude بتطبيقاتك, note: 'مؤجلة — تحتاج أسماء تطبيقات/شركات لتُفهم (تعارض مع قاعدة لا جهات)؛ قرار المالك'}
   - {id: ep19, level: beginner, status: draft, topic: الوضع الصوتي — كلّم Claude بصوتك, note: 'مسودة المحرك 13 (master-claude/episodes/ep13.md)؛ متاح مجاناً؛ اللغات غير الإنجليزية تجريبية'}
   - {id: ep20, level: beginner, status: draft, topic: اطلب من Claude ملفاً حقيقياً (PDF) تنزّله وتطبعه, note: 'مسودة المحرك 14 (master-claude/episodes/ep14.md)؛ مجاني وعلى الجوال؛ تشابه فكرة محتمل مع EP05 (Artifact) — حكم المالك'}
+  - {id: ep21, level: beginner, status: draft, topic: شارك محادثتك مع Claude برابط واحد, note: 'مسودة المحرك 15 (master-claude/episodes/ep15.md)؛ مجاني، بلا حساب للمستلم، للقراءة فقط؛ الجوال غير مؤكد'}
