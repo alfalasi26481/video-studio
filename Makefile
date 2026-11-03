@@ -1,10 +1,12 @@
-.PHONY: caption-check similarity-check style-check frozen-check frozen-render test validate engine-check glyph-check source-check script-length layout-check check episode episode-preflight episode-kit voice-level
+.PHONY: cue-check caption-check similarity-check style-check frozen-check frozen-render test validate engine-check glyph-check source-check script-length layout-check check episode episode-preflight episode-kit voice-level
 test:            ## run all tests
 	python3 -m pytest -q
 validate:        ## validate every episodes/ep*.yaml
 	python3 tools/validate_episode.py --all
 engine-check:    ## content rules on master-claude/ episodes (script, captions, on-screen text)
 	python3 tools/engine_content_check.py
+cue-check:       ## scene cues in speaking order, before voiceDur, on caption lines (3 Nov 2026)
+	python3 tools/cue_check.py
 caption-check:   ## Arabic caption token glued to a Latin word renders scrambled (EP11, 2 Nov 2026)
 	python3 tools/caption_check.py
 glyph-check:     ## every on-screen character exists in the engine fonts (all weights)
@@ -23,7 +25,7 @@ frozen-render:   ## + render 50 frames of EP01–05 and compare pixels with the 
 	python3 tools/frozen_check.py --render
 similarity-check: ## no two episodes say the same thing in the same words (owner rule 2 Nov 2026)
 	python3 tools/similarity_check.py $(NN)
-check: validate engine-check caption-check glyph-check source-check script-length style-check similarity-check frozen-check test
+check: validate engine-check cue-check caption-check glyph-check source-check script-length style-check similarity-check frozen-check test
 NN ?=
 LANGS ?= AR EN
 episode:         ## make episode NN=02 [LANGS="AR"] [RENDER=0] — preflight, checks, render, final QA, hand-off kit in master-claude/out/EPNN/
@@ -32,6 +34,7 @@ episode:         ## make episode NN=02 [LANGS="AR"] [RENDER=0] — preflight, ch
 	python3 tools/engine_content_check.py $(NN)
 	python3 tools/glyph_check.py $(NN)
 	python3 tools/source_check.py $(NN)
+	python3 tools/cue_check.py $(NN)
 	python3 tools/episode_factory.py all $(NN) --langs "$(LANGS)" $(if $(filter 0,$(RENDER)),--no-render,)
 episode-preflight: ## what is missing for episode NN, and which engine step produces it
 	python3 tools/episode_factory.py preflight $(NN)
