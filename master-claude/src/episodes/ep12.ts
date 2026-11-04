@@ -12,14 +12,14 @@ const clips = {hook: 'clips/ep01_hook.mp4', glitch: 'clips/ep01_glitch.mp4', mid
 const style: Style = {theme: 'mint', hook: 'reveal', breaks: 'snap'};
 
 const STEPS_AR: Step[] = [
-  {n: '1', label: 'افتح Code', ex: 'تطبيق الكمبيوتر', color: COLORS.orange, icon: 'task'},
+  {n: '1', label: 'افتح Code', ex: 'تطبيق الكمبيوتر · مدفوع', color: COLORS.orange, icon: 'task'},
   {n: '2', label: 'اختر مجلداً', ex: 'فيه قائمتك', color: COLORS.blue, icon: 'context'},
-  {n: '3', label: 'راجع ووافق', ex: 'كل تغيير', color: COLORS.green, icon: 'format'},
+  {n: '3', label: 'اختر Manual', ex: 'ووافق على كل تغيير', color: COLORS.green, icon: 'format'},
 ];
 const STEPS_EN: Step[] = [
-  {n: '1', label: 'Open Code', ex: 'Desktop app', color: COLORS.orange, icon: 'task'},
+  {n: '1', label: 'Open Code', ex: 'Desktop app · paid', color: COLORS.orange, icon: 'task'},
   {n: '2', label: 'Pick a folder', ex: 'Your list inside', color: COLORS.blue, icon: 'context'},
-  {n: '3', label: 'Review, approve', ex: 'Every change', color: COLORS.green, icon: 'format'},
+  {n: '3', label: 'Choose Manual', ex: 'Approve each change', color: COLORS.green, icon: 'format'},
 ];
 
 export const EP12_AR: EpisodeDataV2 = {
@@ -28,10 +28,10 @@ export const EP12_AR: EpisodeDataV2 = {
   lang: 'ar',
   dir: 'rtl',
   voice: 'vo/ep12_ar.wav',
-  voiceDur: 30.13,
-  cues: {problem: 4.2, typeAt: 4.6, badAt: 7.32, formula: 9.06, steps: [10.72, 14.66, 18.0], diff: 22.72, cta: 26.9},
+  voiceDur: 31.37,
+  cues: {problem: 4.18, typeAt: 4.58, badAt: 7.36, formula: 8.94, steps: [11.66, 15.94, 19.44], diff: 24.4, cta: 28.52},
   text: {
-    stop: 'هكذا؟',
+    stop: 'بلا كود؟',
     hookSub: 'صفحة بلا سطر كود',
     userMsg: 'اجعل قائمة كتبي صفحة جميلة',
     badLabel: 'البرمجة تخيفني',
@@ -57,19 +57,19 @@ export const EP12_EN: EpisodeDataV2 = {
   lang: 'en',
   dir: 'ltr',
   voice: 'vo/ep12_en.wav',
-  voiceDur: 28.89,
-  cues: {problem: 5.12, typeAt: 5.44, badAt: 8.3, formula: 9.64, steps: [11.7, 15.36, 18.0], diff: 22.64, cta: 26.82},
+  voiceDur: 29.85,
+  cues: {problem: 5.18, typeAt: 5.58, badAt: 8.34, formula: 9.84, steps: [12.74, 16.38, 19.08], diff: 23.72, cta: 27.26},
   text: {
-    stop: 'THIS?',
-    hookSub: 'A page, zero code',
+    stop: 'CODE?',
+    hookSub: 'A book page, zero code',
     userMsg: 'Turn my book list into a nice page',
     badLabel: 'Coding scares me',
     formulaTitle: 'Claude Code',
     steps: STEPS_EN,
-    before: 'A plain list',
+    before: 'A list in a file',
     after: 'A page in your folder',
     proResult: 'Your book page, ready',
-    emailSubject: 'My books — page',
+    emailSubject: 'My reading list',
     save: 'Save this video',
     follow: 'Follow',
     daily: 'A new skill every episode',

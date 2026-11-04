@@ -46,7 +46,7 @@ def test_parse_ts_reads_real_episode():
     eps = cc.parse_ts((cc.EPS / "ep13.ts").read_text(encoding="utf-8"))
     assert [(n, l) for n, l, *_ in eps] == [("EP13_AR", "ar"), ("EP13_EN", "en")]
     _, _, vd, cues, wf = eps[0]
-    assert vd == 28.37 and cues["steps"] == [9.18, 13.24, 17.14] and wf == "ep13_words_ar.json"
+    assert vd == 31.05 and cues["steps"] == [10.62, 14.6, 19.1] and wf == "ep13_words_ar.json"
 
 
 def test_repo_has_no_cue_errors():

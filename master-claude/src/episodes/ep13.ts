@@ -12,13 +12,13 @@ const clips = {hook: 'clips/ep01_hook.mp4', glitch: 'clips/ep01_glitch.mp4', mid
 const style: Style = {theme: 'ember', hook: 'question', breaks: 'snap'};
 
 const STEPS_AR: Step[] = [
-  {n: '1', label: 'اضغط الموجة', ex: 'بجانب الميكروفون', color: COLORS.orange, icon: 'task'},
-  {n: '2', label: 'اختر صوتاً', ex: 'وتحدّث بحرية', color: COLORS.blue, icon: 'role'},
-  {n: '3', label: 'اضغط إيقاف', ex: 'الحوار محفوظ', color: COLORS.green, icon: 'format'},
+  {n: '1', label: 'اضغط الموجة', ex: 'أسفل المحادثة', color: COLORS.orange, icon: 'task'},
+  {n: '2', label: 'اختر صوتاً', ex: 'أول مرة، ثم تحدّث', color: COLORS.blue, icon: 'role'},
+  {n: '3', label: 'اضغط إيقاف', ex: 'الحوار مكتوب', color: COLORS.green, icon: 'format'},
 ];
 const STEPS_EN: Step[] = [
-  {n: '1', label: 'Tap the wave', ex: 'Next to the mic', color: COLORS.orange, icon: 'task'},
-  {n: '2', label: 'Pick a voice', ex: 'Then just talk', color: COLORS.blue, icon: 'role'},
+  {n: '1', label: 'Tap the wave', ex: 'Bottom of the chat', color: COLORS.orange, icon: 'task'},
+  {n: '2', label: 'Pick a voice', ex: 'First time, then talk', color: COLORS.blue, icon: 'role'},
   {n: '3', label: 'Tap stop', ex: 'Saved as text', color: COLORS.green, icon: 'format'},
 ];
 
@@ -28,12 +28,12 @@ export const EP13_AR: EpisodeDataV2 = {
   lang: 'ar',
   dir: 'rtl',
   voice: 'vo/ep13_ar.wav',
-  voiceDur: 28.37,
-  cues: {problem: 2.28, typeAt: 2.68, badAt: 5.38, formula: 7.18, steps: [9.18, 13.24, 17.14], diff: 21.96, cta: 25.34},
+  voiceDur: 31.05,
+  cues: {problem: 2.98, typeAt: 3.38, badAt: 5.92, formula: 7.9, steps: [10.62, 14.6, 19.1], diff: 24.2, cta: 27.9},
   text: {
-    stop: 'بصوتك؟',
+    stop: 'صوتك؟',
     hookSub: 'حوار بلا كتابة',
-    userMsg: 'لنتمرّن على الإنجليزية',
+    userMsg: 'لنتمرّن على لغة جديدة',
     badLabel: 'الكتابة لا تدرّب النطق',
     formulaTitle: 'الوضع الصوتي',
     steps: STEPS_AR,
@@ -57,18 +57,18 @@ export const EP13_EN: EpisodeDataV2 = {
   lang: 'en',
   dir: 'ltr',
   voice: 'vo/ep13_en.wav',
-  voiceDur: 25.61,
-  cues: {problem: 2.32, typeAt: 2.72, badAt: 4.46, formula: 6.58, steps: [8.5, 11.78, 15.8], diff: 19.96, cta: 23.48},
+  voiceDur: 29.33,
+  cues: {problem: 2.36, typeAt: 2.76, badAt: 4.76, formula: 7.22, steps: [10.16, 13.86, 18.66], diff: 23.26, cta: 27.12},
   text: {
     stop: 'SPEAK?',
     hookSub: "Talk, don't type",
-    userMsg: "Let's practice my Spanish",
-    badLabel: "Typing won't train speaking",
+    userMsg: "Let's practice a new language",
+    badLabel: "Typing won't do it",
     formulaTitle: 'Voice mode',
     steps: STEPS_EN,
     before: 'Typing only',
-    after: 'Out loud',
-    proResult: 'Speaking practice, on',
+    after: 'A spoken chat',
+    proResult: 'Practice, out loud',
     emailSubject: 'Walk practice — voice',
     save: 'Save this video',
     follow: 'Follow',
