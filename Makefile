@@ -30,13 +30,14 @@ similarity-check: ## no two episodes say the same thing in the same words (owner
 check: validate engine-check cue-check caption-check glyph-check source-check script-length style-check similarity-check frozen-check test
 NN ?=
 LANGS ?= AR EN
-episode:         ## make episode NN=02 [LANGS="AR"] [RENDER=0] — preflight, checks, render, final QA, hand-off kit in master-claude/out/EPNN/
+episode:         ## make episode NN=02 [LANGS="AR"] [RENDER=0] [LAYOUT=0] — preflight, checks, render, final QA, hand-off kit in master-claude/out/EPNN/
 	@test -n "$(NN)" || (echo "usage: make episode NN=02" && exit 2)
 	python3 tools/episode_factory.py preflight $(NN)
 	python3 tools/engine_content_check.py $(NN)
 	python3 tools/glyph_check.py $(NN)
 	python3 tools/source_check.py $(NN)
 	python3 tools/cue_check.py $(NN)
+	$(if $(filter 0,$(LAYOUT)),@echo "layout check skipped (LAYOUT=0)",python3 tools/layout_check.py $(foreach l,$(LANGS),$(NN)-$(l)))
 	python3 tools/episode_factory.py all $(NN) --langs "$(LANGS)" $(if $(filter 0,$(RENDER)),--no-render,)
 episode-preflight: ## what is missing for episode NN, and which engine step produces it
 	python3 tools/episode_factory.py preflight $(NN)

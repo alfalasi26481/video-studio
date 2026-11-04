@@ -191,3 +191,47 @@ def test_card_off_needs_a_longer_run_than_a_scene_transition():
     assert rules(M([ok], [off], [off], [off], [ok])) == []
     # 4+ samples = the card really sits cut on screen -> error
     assert rules(M([ok], [off], [off], [off], [off], [ok])) == [("card-off", "error", "• • •")]
+
+
+# --- cycle 37: layout_check inside `make episode`, before the render ------------------------
+
+import re  # noqa: E402
+
+MAKEFILE = Path(__file__).resolve().parent.parent / "Makefile"
+
+
+def _episode_recipe() -> list[str]:
+    lines = MAKEFILE.read_text(encoding="utf-8").splitlines()
+    start = next(i for i, l in enumerate(lines) if l.startswith("episode:"))
+    out = []
+    for l in lines[start + 1:]:
+        if not l.startswith("\t"):
+            break
+        out.append(l.strip())
+    return out
+
+
+def test_make_episode_runs_layout_check_before_the_render():
+    recipe = _episode_recipe()
+    lay = [i for i, l in enumerate(recipe) if "tools/layout_check.py" in l]
+    render = [i for i, l in enumerate(recipe) if "episode_factory.py all" in l]
+    assert lay and render and lay[0] < render[0]
+
+
+def test_make_episode_layout_check_follows_langs_and_can_be_skipped():
+    line = next(l for l in _episode_recipe() if "tools/layout_check.py" in l)
+    assert "$(LANGS)" in line and "$(NN)" in line   # only the languages being rendered
+    assert re.search(r"LAYOUT\)", line)              # LAYOUT=0 skips it (no node/Chromium)
+
+
+def test_lang_suffixed_ids_resolve_like_make_passes_them():
+    avail = ["EP12-AR", "EP12-EN"]
+    assert lc.resolve_ids(["12-AR"], avail) == ["EP12-AR"]
+    assert lc.resolve_ids(["12-AR", "12-EN"], avail) == avail
+
+
+def test_missing_node_is_a_clear_exit_2_not_a_traceback(monkeypatch, capsys):
+    monkeypatch.setattr(lc, "all_compositions", lambda: ["EP12-AR"])
+    monkeypatch.setattr(lc.shutil, "which", lambda name: None)
+    assert lc.main(["12-AR"]) == 2
+    assert "node" in capsys.readouterr().err

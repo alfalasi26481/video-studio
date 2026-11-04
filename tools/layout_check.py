@@ -36,6 +36,7 @@ Exit code 1 when any error is found.
 from __future__ import annotations
 
 import json
+import shutil
 import subprocess
 import sys
 from dataclasses import dataclass
@@ -201,6 +202,10 @@ def main(argv: list[str]) -> int:
         ids = resolve_ids(argv, all_compositions())
     except ValueError as e:
         print(f"layout_check: {e}", file=sys.stderr)
+        return 2
+    if shutil.which("node") is None:  # cycle 37: `make episode` runs this; say why, don't trace back
+        print("layout_check: node is not installed — install Node.js, or skip with LAYOUT=0",
+              file=sys.stderr)
         return 2
     _prepare()
     from concurrent.futures import ThreadPoolExecutor
