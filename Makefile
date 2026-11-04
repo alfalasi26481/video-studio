@@ -1,4 +1,4 @@
-.PHONY: setup cue-check caption-check similarity-check style-check frozen-check frozen-render test validate engine-check glyph-check source-check script-length layout-check check episode episode-preflight episode-kit voice-level
+.PHONY: setup calendar-check cue-check caption-check similarity-check style-check frozen-check frozen-render test validate engine-check glyph-check source-check script-length layout-check check episode episode-preflight episode-kit voice-level
 setup:           ## install the Python tools' dependencies (a fresh container lacks brotli for glyph-check)
 	python3 -m pip install -q -r requirements-dev.txt $(if $(VIRTUAL_ENV),,--break-system-packages)
 test:            ## run all tests
@@ -27,7 +27,9 @@ frozen-render:   ## + render 50 frames of EP01–05 and compare pixels with the 
 	python3 tools/frozen_check.py --render
 similarity-check: ## no two episodes say the same thing in the same words (owner rule 2 Nov 2026)
 	python3 tools/similarity_check.py $(NN)
-check: validate engine-check cue-check caption-check glyph-check source-check script-length style-check similarity-check frozen-check test
+calendar-check:  ## publishing calendar: no EN on an AR account, no episode twice per channel, no double slot; future posts at 16:00 AR / 18:00 EN, Sun/Tue/Thu (warnings)
+	python3 tools/calendar_check.py
+check: validate engine-check cue-check caption-check glyph-check source-check script-length style-check similarity-check calendar-check frozen-check test
 NN ?=
 LANGS ?= AR EN
 episode:         ## make episode NN=02 [LANGS="AR"] [RENDER=0] [LAYOUT=0] — preflight, checks, render, final QA, hand-off kit in master-claude/out/EPNN/
