@@ -7,6 +7,12 @@ four EN renders all failed the -1.0 dBTP gate. A two-pass, linear loudnorm on th
 SAME raw render with TP=-3 gave -14.0 LUFS / -2.3 dBTP in seconds.
 Owner decision 2 Nov 2026 («اعتمد» = option 2). `render.sh` stays untouched.
 
+Trim pass (4 Nov 2026): when the audio is too hot for linear mode, loudnorm falls
+back to DYNAMIC mode and can miss the target (a test signal landed -14.4 LUFS, one
+run in ~20). The result is measured, and if it is more than 0.15 dB off, the second
+pass is redone from the raw render with a small extra gain, capped so the true
+peak stays at or under -1.5 dBTP.
+
 Input : master-claude/out/raw/EPNN-L.mp4   (written by render.sh, untouched picture)
 Output: master-claude/out/EPNN-L.mp4       (video copied, audio re-mastered)
 
@@ -22,6 +28,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent / "master-claude"
 TARGET_I, TARGET_TP, TARGET_LRA = -14.0, -3.0, 9
+TRIM_TOLERANCE = 0.15   # dB: closer than this to TARGET_I, no trim
+PEAK_CEILING = -1.5     # dBTP: a trim never pushes the true peak above this (QA gate is -1.0)
 
 
 def parse_loudnorm_json(stderr: str) -> dict:
@@ -38,6 +46,31 @@ def second_pass_filter(m: dict, i: float = TARGET_I, tp: float = TARGET_TP, lra:
             f":measured_thresh={m['input_thresh']}:offset={m['target_offset']}")
 
 
+def trim_gain(lufs: float | None, peak: float | None, target: float = TARGET_I) -> float:
+    """Extra gain (dB) that brings a measured master onto the target, capped by PEAK_CEILING."""
+    if lufs is None or peak is None:
+        return 0.0
+    g = target - lufs
+    if abs(g) <= TRIM_TOLERANCE:
+        return 0.0
+    if g > 0:
+        g = max(min(g, PEAK_CEILING - peak), 0.0)
+    return round(g, 2)
+
+
+def measure(path: Path) -> tuple[float, float]:
+    """Integrated loudness (LUFS) and true peak (dBTP), same meter as the final QA."""
+    from episode_factory import parse_ebur128  # local import: episode_factory imports this module
+    err = subprocess.run(["ffmpeg", "-hide_banner", "-nostats", "-i", str(path), "-af", "ebur128=peak=true",
+                          "-f", "null", "-"], capture_output=True, text=True).stderr
+    return parse_ebur128(err)
+
+
+def _encode(raw: Path, dst: Path, flt: str) -> None:
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(raw), "-c:v", "copy", "-af", flt,
+                    "-ar", "48000", "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", str(dst)], check=True)
+
+
 def remaster(raw: Path, out: Path, tp: float = TARGET_TP) -> None:
     first = subprocess.run(
         ["ffmpeg", "-hide_banner", "-nostats", "-i", str(raw), "-vn",
@@ -45,8 +78,10 @@ def remaster(raw: Path, out: Path, tp: float = TARGET_TP) -> None:
         capture_output=True, text=True, check=True)
     flt = second_pass_filter(parse_loudnorm_json(first.stderr), tp=tp)
     tmp = out.with_suffix(".remaster.mp4")
-    subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(raw), "-c:v", "copy", "-af", flt,
-                    "-ar", "48000", "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", str(tmp)], check=True)
+    _encode(raw, tmp, flt)
+    g = trim_gain(*measure(tmp))
+    if g:
+        _encode(raw, tmp, f"{flt},volume={g}dB")
     tmp.replace(out)
 
 

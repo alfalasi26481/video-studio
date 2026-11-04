@@ -49,16 +49,33 @@ def test_missing_raw(tmp_path):
         rm.remaster_episode("11", "EN", tmp_path)
 
 
+def test_trim_gain_corrects_dynamic_fallback_miss():
+    # seed 24 (4 Nov 2026): loudnorm fell back to dynamic mode and landed -14.4 LUFS / -2.8 dBTP.
+    assert rm.trim_gain(-14.4, -2.8) == pytest.approx(0.4)
+    assert rm.trim_gain(-14.1, -2.4) == 0.0          # inside +-0.15: leave it
+    assert rm.trim_gain(-13.6, -2.0) == pytest.approx(-0.4)
+
+
+def test_trim_gain_never_pushes_peak_over_limit():
+    # +0.9 dB would put the peak at -0.9 dBTP; cap the gain so the peak stays at -1.5.
+    assert rm.trim_gain(-14.9, -1.8) == pytest.approx(0.3)
+
+
+def _hot_raw(raw: Path, seed: int) -> None:
+    # 6 s of loud, spiky audio: a hot master like the one that failed EP11-EN.
+    # Fixed noise seed: the old random seed made this test pass ~19 runs in 20 (seed 24 fails).
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "lavfi", "-i", "color=c=black:s=1080x1920:r=30:d=6",
+                    "-f", "lavfi", "-i", f"anoisesrc=d=6:c=pink:a=0.9:seed={seed}", "-f", "lavfi", "-i", "sine=f=220:d=6",
+                    "-filter_complex", "[1:a][2:a]amix=inputs=2:normalize=0,volume=2[a]", "-map", "0:v", "-map", "[a]",
+                    "-shortest", "-c:v", "libx264", "-preset", "ultrafast", "-c:a", "aac", str(raw)], check=True)
+
+
 @pytest.mark.skipif(not shutil.which("ffmpeg"), reason="ffmpeg not installed")
-def test_remaster_fixes_hot_peak_and_keeps_picture(tmp_path):
+@pytest.mark.parametrize("seed", [1, 3, 24])
+def test_remaster_fixes_hot_peak_and_keeps_picture(tmp_path, seed):
     raw_dir = tmp_path / "out" / "raw"
     raw_dir.mkdir(parents=True)
-    raw = raw_dir / "EP99-EN.mp4"
-    # 6 s of loud, spiky audio: a hot master like the one that failed EP11-EN.
-    subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "lavfi", "-i", "color=c=black:s=1080x1920:r=30:d=6",
-                    "-f", "lavfi", "-i", "anoisesrc=d=6:c=pink:a=0.9", "-f", "lavfi", "-i", "sine=f=220:d=6",
-                    "-filter_complex", "[1:a][2:a]amix=inputs=2:normalize=0,volume=2[a]", "-map", "0:v", "-map", "[a]",
-                    "-shortest", "-c:v", "libx264", "-c:a", "aac", str(raw)], check=True)
+    _hot_raw(raw_dir / "EP99-EN.mp4", seed)
     out = rm.remaster_episode("99", "EN", tmp_path)
     q = ef.judge(ef.probe(out, "EP99-EN"))
     assert (q.width, q.height, round(q.fps)) == (1080, 1920, 30)
