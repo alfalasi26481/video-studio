@@ -101,3 +101,30 @@ New episode: Sun · Tue · Thu
 
 ⚠️ إنستغرام العربي: منشورا 3 و5 نوفمبر (المجدولان سابقاً) فيهما 7 وسوم (الحد 5) — لم يُعدَّلا (قاعدة: المجدول يبقى كما هو)؛ أُبلغ المالك.
 EP07 معتمدة لكن لا يوجد ماستر مستضاف بعد — لم تُجدول.
+
+## دورة 4 نوفمبر 2026 (المهمة الآلية)
+**الأسباب:** منشورات إنستغرام العربي 8/10/12/15 نوفمبر كانت تبدأ بسطر الإفصاح وبلا #سلم_كلود (تخالف شكل التعليق)؛ الإنجليزي كان فيه منشورات 16:00 UTC (موعد العربي) بدل 18:00؛ يوتيوب بلا حلقات بعد 7 نوفمبر؛ مراجعة «عين المشاهد» صحّحت تذكير/تأنيث جملة EP05 وسطر الوعد في EP06 (عربي وإنجليزي). كل منشور مرّ بالمراجعة قبل الجدولة.
+ملفات Postiz (تُحقق منها بإطار من كل فيديو 4 نوفمبر): AR EP03 أربع عادات lBf0L2L3Eo · AR EP04 9H4LJECzOS · AR EP05 sC3T5xi5sS · AR EP06 I54Sg6unCO · EN EP03 JCIDK3hdk1 · EN EP04 jE0ev3cTug · EN EP05 lw5zt4QTco · EN EP06 iuYpgfZp8V.
+
+| الموعد (UTC) | الحلقة | القناة | id جديد | id محذوف |
+|---|---|---|---|---|
+| 11-08 16:00 | AR EP03 أربع عادات | إنستغرام AR | cmw1o81eu050zof06qu2qz9co | cmvxeecim037ltd1h56r717kc |
+| 11-10 16:00 | AR EP04 المشاريع | إنستغرام AR | cmw1o81fi0510of063l9mqbuo | cmvxeecj2037mtd1hh71xt2gf |
+| 11-12 16:00 | AR EP05 Artifact | إنستغرام AR | cmw1o81g50511of0621q3b9bu | cmvxe3y1g035xtd1h3tpvf0sd |
+| 11-15 16:00 | AR EP06 ارفع صورة | إنستغرام AR | cmw1o81gu0512of06p492mew2 | cmvxe3y1y035ytd1hpig4ccyn |
+| 11-10 16:00 | AR EP05 Artifact | تيك توك AR | cmw1o88n204z6qg07h4nsf56b | cmvyt8vfm0bz7qm08mififw1h |
+| 11-12 16:00 | AR EP06 ارفع صورة | تيك توك AR | cmw1o88nj04z7qg07t0dnip7o | cmvyt8vge0bz8qm08ucxkvj9e |
+| 11-08 16:00 | AR EP04 المشاريع | يوتيوب AR | cmw1o81hl0513of06h8lwg3yw | — |
+| 11-10 16:00 | AR EP05 Artifact | يوتيوب AR | cmw1o81ib0514of065pblcj2e | — |
+| 11-12 16:00 | AR EP06 ارفع صورة | يوتيوب AR | cmw1o81j00515of062p03x0ro | — |
+| 11-08 18:00 | EN EP03 Four habits | إنستغرام EN | cmw1o8on20516of06ti58hxqr | cmvyt9ena0bt7rr078tvuz07z (كان 16:00) |
+| 11-10 18:00 | EN EP04 Projects | إنستغرام EN | cmw1o8onu0517of06zz1wjsrj | cmvyt9enu0bt8rr07k6im5yw3 (كان 11-08) |
+| 11-12 18:00 | EN EP05 Artifacts | إنستغرام EN | cmw1o8ool0518of066sy98och | cmvyt9eoc0bt9rr07r8yzule8 (كان 11-10 16:00) |
+| 11-15 18:00 | EN EP06 Upload | إنستغرام EN | cmw1o8opa0519of06jpj6maxh | cmvyt9eou0btarr07wh5m7x95 (كان 11-10) |
+| 11-08 18:00 | EN EP03 Four habits | تيك توك EN | cmw1o8opy051aof068y6vqavk | cmvyt9epb0btbrr07zs29kp7y (كان 16:00) |
+| 11-10 18:00 | EN EP04 Projects | تيك توك EN | cmw1o8oqn051bof06i19lxzb7 | cmvyt9epv0btcrr07uv7c0l56 (كان 11-08) |
+| 11-12 18:00 | EN EP05 Artifacts | تيك توك EN | cmw1o8ore051cof063jij67s9 | cmvyt9eqc0btdrr076arguwz0 (كان 11-10 16:00) |
+| 11-15 18:00 | EN EP06 Upload | تيك توك EN | cmw1o8os4051dof06png7vv6x | cmvyt9eqv0bterr072756id30 (كان 11-10) |
+
+بقي كما هو: تيك توك AR 11-08 EP04 (cmvyt8vey0bz6qm08681jwkkw)، ومنشورات 5 نوفمبر وأرشيف يوتيوب 4–7 نوفمبر.
+ملاحظة: تيك توك AR ويوتيوب لا يحملان «أربع عادات» (AR EP03 المحرك) — إنستغرام AR وحده يحملها (8 نوفمبر). EP07+ بلا ماستر مستضاف — لم تُجدول.
