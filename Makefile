@@ -1,4 +1,6 @@
-.PHONY: cue-check caption-check similarity-check style-check frozen-check frozen-render test validate engine-check glyph-check source-check script-length layout-check check episode episode-preflight episode-kit voice-level
+.PHONY: setup cue-check caption-check similarity-check style-check frozen-check frozen-render test validate engine-check glyph-check source-check script-length layout-check check episode episode-preflight episode-kit voice-level
+setup:           ## install the Python tools' dependencies (a fresh container lacks brotli for glyph-check)
+	python3 -m pip install -q -r requirements-dev.txt $(if $(VIRTUAL_ENV),,--break-system-packages)
 test:            ## run all tests
 	python3 -m pytest -q
 validate:        ## validate every episodes/ep*.yaml

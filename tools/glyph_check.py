@@ -164,8 +164,26 @@ def all_episode_ids(root: Path = ROOT) -> list[str]:
     return sorted(p.stem[2:] for p in (root / "src" / "episodes").glob("ep[0-9][0-9].ts"))
 
 
+REQUIRED_MODULES = ("fontTools", "brotli")  # brotli: fontTools needs it to read the engine's .woff2 fonts
+
+
+def missing_modules(names=REQUIRED_MODULES) -> list[str]:
+    """Modules this check needs that are not installed (a fresh container lacks brotli)."""
+    import importlib.util
+
+    return [n for n in names if importlib.util.find_spec(n) is None]
+
+
 def main(argv: list[str], root: Path | None = None) -> int:
     root = root or ROOT
+    absent = missing_modules()
+    if absent:
+        print(
+            f"glyph check: missing Python module(s): {', '.join(absent)} — "
+            "run `make setup` (pip install -r requirements-dev.txt)",
+            file=sys.stderr,
+        )
+        return 2
     ids = argv[1:] or all_episode_ids(root)
     cov = Coverage(root)
     missing = [m for nn in ids for m in check_episode(nn, root, cov)]
