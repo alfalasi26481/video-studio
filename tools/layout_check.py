@@ -19,6 +19,10 @@ Rules (1080x1920 canvas; zones match the channel checklist in master-claude/CLAU
   off-canvas  text crosses the frame edge (word cut by the frame)    -> error
   spill       text sticks out of the card/box that holds it by > 4 px
               ("no word cut at the edge of a card or box")           -> error
+  card-off    the card that holds the text crosses the frame edge by > 4 px,
+              even when the text itself is inside: its border/icon is cut
+              (EP13-EN stamp, 4 Nov 2026: text x0=65, card x0=-40, the ✕ icon
+              is an SVG so no text rule saw it)                      -> error
 
 Camera punches/shakes move everything for a few frames, so a finding only
 counts when it holds on >= MIN_RUN consecutive sampled frames.
@@ -49,6 +53,10 @@ TOP_Y = 100
 SPILL_PX = 4
 EDGE_PX = 12                 # text this close to the side edge reads as cut (EP07-EN «LIKE THIS?», 1 Nov)
 MIN_RUN = 2
+# card-off runs longer: every scene transition / camera whip swings a card past the
+# edge for exactly 2 samples (0.2 s, seen in 20 of 28 compositions, 4 Nov 2026); the
+# real defect (EP13-EN stamp) held 10 samples (1.8 s). 4 samples = ~0.6 s on screen.
+RULE_MIN_RUN = {"card-off": 4}
 EPS = 1.0                    # sub-pixel tolerance
 
 
@@ -95,6 +103,9 @@ def frame_hits(t: dict) -> list[tuple[str, str, float]]:
         spill = max(0.0, bx0 - x0, x1 - bx1, by0 - y0, y1 - by1)
         if spill > SPILL_PX:
             hits.append(("spill", "error", spill))
+        card_off = max(0.0, -bx0, bx1 - W, -by0, by1 - H)
+        if card_off > SPILL_PX and off <= EPS:  # text itself off-canvas is already reported
+            hits.append(("card-off", "error", card_off))
     return hits
 
 
@@ -118,7 +129,7 @@ def evaluate(measure: dict, min_run: int = MIN_RUN) -> list[Finding]:
         run: list[tuple[int, int, str, float]] = []
         for h in hits + [(-99, 0, "", 0.0)]:  # sentinel flushes the last run
             if run and h[0] != run[-1][0] + 1:
-                if len(run) >= min_run:
+                if len(run) >= max(min_run, RULE_MIN_RUN.get(rule, 0)):
                     out.append(Finding(rule, run[0][2], text, run[0][1], run[-1][1], _median([r[3] for r in run])))
                 run = []
             run.append(h)

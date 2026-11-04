@@ -149,3 +149,45 @@ def test_unknown_episode_is_a_clear_error():
     import pytest
     with pytest.raises(ValueError, match="EP10"):
         lc.resolve_ids(["10"], AVAILABLE)
+
+
+# --- card cut by the frame (EP13-EN, 4 Nov 2026) --------------------------------
+# The rotated stamp «Typing won't train speaking»: its text measured x0=65 (inside),
+# but its card — red border + ✕ icon (an SVG, not text) — reached x0=-40, and the
+# render showed the stamp cut at the left edge. The text rules could not see it.
+
+def test_card_crossing_the_frame_edge_is_error_even_if_its_text_is_inside():
+    t = T(t="Typing won't train speaking", x0=65, x1=873, y0=532, y1=736, box=[-40, 502, 917, 777])
+    assert rules(M([t], [t], [t], [t])) == [("card-off", "error", "Typing won't train speaking")]
+
+
+def test_card_off_depth_is_how_far_the_card_leaves_the_frame():
+    t = T(x0=65, x1=873, box=[-40, 500, 1100, 780])
+    (f,) = lc.evaluate(M([t], [t], [t], [t]))
+    assert f.rule == "card-off" and f.depth == 40
+
+
+def test_card_inside_the_frame_and_border_overhang_within_tolerance_are_fine():
+    inside = T(box=[40, 560, 1040, 700])
+    shadow = T(t="ظل", box=[-3, 560, 1083, 700])   # sub-tolerance: border/antialias
+    assert rules(M([inside, shadow], [inside, shadow])) == []
+
+
+def test_card_off_during_a_one_frame_punch_is_ignored():
+    off = T(box=[-200, 450, 1080, 800])
+    ok = T(box=[60, 500, 960, 760])
+    assert rules(M([ok], [off], [ok])) == []
+
+
+def test_text_already_off_canvas_is_not_reported_twice_as_card_off():
+    t = T(x0=-30, x1=400, box=[-60, 560, 500, 700])
+    assert [r for r, _, _ in rules(M([t], [t]))] == ["off-canvas"]
+
+
+def test_card_off_needs_a_longer_run_than_a_scene_transition():
+    off = T(t="• • •", box=[-80, 450, 1000, 800])
+    ok = T(t="• • •", box=[60, 500, 960, 760])
+    # 2-3 samples = a whip between scenes (every episode has one) -> ignored
+    assert rules(M([ok], [off], [off], [off], [ok])) == []
+    # 4+ samples = the card really sits cut on screen -> error
+    assert rules(M([ok], [off], [off], [off], [off], [ok])) == [("card-off", "error", "• • •")]
