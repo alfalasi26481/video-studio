@@ -56,6 +56,14 @@ QA_RULES = {"width": 1080, "height": 1920, "fps": 30.0, "lufs": -14.0, "lufs_tol
 # Which engine step (master-claude/CLAUDE.md table) produces each asset.
 STEP_FOR = {"script": 1, "vo": 2, "words": 5, "episode": 4, "registry": 4, "clips": 6, "music": 7}
 
+# Caption shape used by the Postiz publishing cycles (docs/publishing/CALENDAR.md, 2 Nov 2026):
+# promise line first, then the AI disclosure, then the rest, then <=5 hashtags. 4 Nov 2026: Arabic
+# Instagram posts were rescheduled by hand because they opened with the disclosure and lacked #سلم_كلود.
+# The English account's brand tag is not documented anywhere yet (غير مؤكد) — none is added.
+DISCLOSURE = "🤖 بمساعدة الذكاء الاصطناعي | AI-assisted"
+BRAND_TAG = {"ar": "#سلم_كلود", "en": None}
+_DISCLOSURE_HINTS = ("بمساعدة الذكاء الاصطناعي", "ai-assisted")
+
 _FENCE = re.compile(r"```[a-zA-Z]*\n(.*?)```", re.S)
 _ASSET = re.compile(r"""['"]((?:clips|vo|music)/[^'"]+)['"]""")
 _HASHTAG = re.compile(r"#[\w\u0600-\u06FF]+")
@@ -126,12 +134,26 @@ def split_caption(text: str) -> tuple[list[str], list[str]]:
     return body, tags
 
 
+def _caption_lang(text: str) -> str:
+    return "ar" if re.search(r"[\u0600-\u06FF]", _HASHTAG.sub("", text).replace(DISCLOSURE, "")) else "en"
+
+
+def shape_caption(body: list[str], tags: list[str], lang: str, max_tags: int) -> tuple[list[str], list[str]]:
+    """Promise line, disclosure, rest; hashtags capped with the language's brand tag kept."""
+    rest = [b for b in body if not any(h in b.lower() for h in _DISCLOSURE_HINTS)]
+    body = rest[:1] + [DISCLOSURE] + rest[1:]
+    brand = BRAND_TAG.get(lang)
+    if brand and brand.lower() not in (t.lower() for t in tags):
+        tags = tags[:1] + [brand] + tags[1:]
+    return body, tags[:max_tags]
+
+
 def platform_post(text: str, platform: str) -> str:
     rule = PLATFORMS[platform]
     body, tags = split_caption(text)
     if rule["body"] == "first":
         body = body[:1]
-    tags = tags[: rule["hashtags_max"]]
+    body, tags = shape_caption(body, tags, _caption_lang(text), rule["hashtags_max"])
     post = "\n".join(body + ([" ".join(tags)] if tags else []))
     while len(post) > rule["caption_max"] and tags:
         tags = tags[:-1]  # drop hashtags first, never cut a sentence mid-word

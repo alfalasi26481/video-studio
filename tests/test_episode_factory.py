@@ -125,7 +125,7 @@ def test_snapchat_is_not_a_target_platform():
 
 
 def test_over_limit_drops_hashtags_then_refuses():
-    long_line = "كلمة " * 439  # 2195 chars
+    long_line = "كلمة " * 428  # 2140 chars + the disclosure line
     post = ef.platform_post(long_line + "\n#Claude #ذكاء_اصطناعي #برومبت", "instagram")
     assert len(post) <= 2200 and post.startswith("كلمة")
     with pytest.raises(ValueError):
@@ -224,3 +224,49 @@ def test_cli_preflight_exit_codes(root, capsys):
     assert ef.main(["preflight", "9", "--root", str(root)]) == 0
     assert ef.main(["preflight", "12", "--root", str(root)]) == 1
     assert "step  1" in capsys.readouterr().out
+
+
+# ---- caption shape (docs/publishing/CALENDAR.md, 2 + 4 Nov 2026):
+# promise line first, then the AI disclosure, then the rest, then <=5 hashtags; Arabic carries #سلم_كلود.
+def test_caption_shape_promise_then_disclosure():
+    post = ef.platform_post(ef.post_captions(MD)["en"], "tiktok")
+    lines = post.splitlines()
+    assert lines[0] == "First line about Claude ✨"
+    assert lines[1] == ef.DISCLOSURE
+    assert lines[2] == "Second line 👇"
+
+
+def test_disclosure_not_duplicated_and_moved_after_promise():
+    text = f"{ef.DISCLOSURE}\nوعد الحلقة\nسطر\n#Claude"
+    lines = ef.platform_post(text, "instagram").splitlines()
+    assert lines[:2] == ["وعد الحلقة", ef.DISCLOSURE]
+    assert sum(ef.DISCLOSURE in l for l in lines) == 1
+
+
+def test_arabic_brand_tag_added_within_cap():
+    post = ef.platform_post(ef.post_captions(MD)["ar"], "instagram")
+    tags = ef._HASHTAG.findall(post)
+    assert ef.BRAND_TAG["ar"] in tags and len(tags) <= 5
+    assert tags[0] == "#Claude"  # existing order kept, brand right after the first tag
+    assert tags[1] == ef.BRAND_TAG["ar"]
+
+
+def test_brand_tag_not_duplicated():
+    post = ef.platform_post(f"وعد\n#Claude {ef.BRAND_TAG['ar']} #ذكاء_اصطناعي", "tiktok")
+    assert ef._HASHTAG.findall(post).count(ef.BRAND_TAG["ar"]) == 1
+
+
+def test_english_gets_no_arabic_brand_tag():
+    post = ef.platform_post(ef.post_captions(MD)["en"], "instagram")
+    assert ef.BRAND_TAG["ar"] not in post
+
+
+def test_real_episode_posts_have_shape():
+    for nn in ("12", "15"):
+        caps = ef.post_captions((REAL / f"episodes/ep{nn}.md").read_text(encoding="utf-8"))
+        for lc, text in caps.items():
+            for platform in ef.PLATFORMS:
+                lines = ef.platform_post(text, platform).splitlines()
+                assert lines[1] == ef.DISCLOSURE, (nn, lc, platform)
+                assert len(ef._HASHTAG.findall(lines[-1])) <= 5
+                assert (ef.BRAND_TAG["ar"] in lines[-1]) == (lc == "ar")
