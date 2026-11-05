@@ -13,6 +13,9 @@ errors
   dup-ep    the same episode scheduled twice on one channel
   dup-slot  two posts at the same date+time on one channel
   no-ep     an EPNN with no master-claude/episodes/epNN.md
+  unapproved  a future post whose epNN.md status line («- الحالة: **…**») does
+            not open with «معتمدة» — only owner-approved episodes go out
+            (5 Nov 2026: --plan proposed EP08 «مسودة v2» and EP09 for 19/22 Nov)
 warnings (future posts only, from --today)
   time      Arabic not at 16:00 UTC, English not at 18:00 UTC (4 Nov 2026)
   weekday   not Sunday / Tuesday / Thursday (the published cadence)
@@ -31,6 +34,7 @@ warnings (future posts only, from --today)
   inside the account's run first, then the episodes after its last one, up to
   the last master-claude/episodes/epNN.md. Printed as rows in the calendar's
   own table shape (id columns «—»), ready to paste once Postiz returns ids
+  — an episode that is not approved is held back and listed, never proposed
   (5 Nov 2026: every feed ends 15 Nov; EP07+ wait for hosted masters).
 
 Nothing is fetched from Postiz; the file is the only input.
@@ -154,6 +158,22 @@ def current(posts: list[Post]) -> list[Post]:
     return [p for p in posts if p.post_id not in gone]
 
 
+STATUS = re.compile(r"^-\s*الحالة:\s*\*\*(.+?)\*\*", re.M)
+
+
+def status(n: int, episodes: Path = EPISODES) -> str:
+    """The bold status word(s) of epNN.md, or "" when missing."""
+    f = episodes / f"ep{n:02d}.md"
+    if not f.exists():
+        return ""
+    m = STATUS.search(f.read_text(encoding="utf-8"))
+    return m.group(1).strip() if m else ""
+
+
+def approved(n: int, episodes: Path = EPISODES) -> bool:
+    return status(n, episodes).startswith("معتمدة")
+
+
 def check(posts: list[Post], today: dt.date, episodes: Path = EPISODES) -> list[tuple[str, str, str]]:
     """(level, rule, message) for the current schedule."""
     out: list[tuple[str, str, str]] = []
@@ -172,6 +192,9 @@ def check(posts: list[Post], today: dt.date, episodes: Path = EPISODES) -> list[
             seen_ep[key] = p
             if not (episodes / f"ep{p.ep}.md").exists():
                 out.append(("error", "no-ep", f"{where}: no master-claude/episodes/ep{p.ep}.md"))
+            elif p.when.date() >= today and not approved(int(p.ep), episodes):
+                out.append(("error", "unapproved", f"{where}: ep{p.ep}.md status is "
+                            f"«{status(int(p.ep), episodes) or 'missing'}», not «معتمدة»"))
         slot = (p.channel, p.when)
         if slot in seen_slot:
             out.append(("error", "dup-slot", f"{where}: slot taken by «{seen_slot[slot].label}» (line {seen_slot[slot].line})"))
@@ -240,11 +263,25 @@ def episode_title(n: int, lang: str, episodes: Path = EPISODES) -> str:
     return (en if lang == "en" and en else ar).strip()
 
 
-def plan(posts: list[Post], today: dt.date, count: int = 3,
-         last_ep: int | None = None) -> list[tuple[str, dt.datetime, int]]:
-    """(channel, slot, episode) proposals: next `count` episodes per account."""
+def held(posts: list[Post], last_ep: int | None = None,
+         episodes: Path = EPISODES) -> list[int]:
+    """Episodes the plan would reach but skips because they are not approved."""
     if last_ep is None:
-        last_ep = last_episode()
+        last_ep = last_episode(episodes)
+    eps = [int(p.ep) for p in current(posts) if p.ep]
+    if not eps:
+        return []
+    return [n for n in range(min(eps) + 1, last_ep + 1)
+            if (episodes / f"ep{n:02d}.md").exists() and not approved(n, episodes)
+            and str(n).zfill(2) not in {p.ep for p in current(posts)}]
+
+
+def plan(posts: list[Post], today: dt.date, count: int = 3,
+         last_ep: int | None = None,
+         episodes: Path = EPISODES) -> list[tuple[str, dt.datetime, int]]:
+    """(channel, slot, episode) proposals: next `count` approved episodes per account."""
+    if last_ep is None:
+        last_ep = last_episode(episodes)
     by_channel: dict[str, list[Post]] = {}
     for p in current(posts):
         by_channel.setdefault(p.channel, []).append(p)
@@ -258,6 +295,7 @@ def plan(posts: list[Post], today: dt.date, count: int = 3,
             continue
         queue = [n for n in range(min(have) + 1, max(have)) if n not in have]
         queue += list(range(max(have) + 1, last_ep + 1))
+        queue = [n for n in queue if approved(n, episodes)]
         taken = {p.when for p in ps}
         start = max(max(p.when for p in ps),
                     dt.datetime.combine(today, dt.time(0, 0)) - dt.timedelta(minutes=1))
@@ -311,6 +349,10 @@ def main(argv: list[str] | None = None) -> int:
         print(f"calendar plan: {len(rows)} proposal(s), next {a.plan} per account — not scheduled; "
               "each needs a hosted master")
         print(plan_table(rows))
+        hold = held(posts)
+        if hold:
+            print("held (not approved, never proposed): " + ", ".join(
+                f"EP{n:02d} «{status(n) or 'no status'}»" for n in hold))
         return 0
     findings = check(posts, a.today) + gaps(posts)
     if a.runway_days > 0:

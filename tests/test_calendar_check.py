@@ -206,10 +206,25 @@ def test_gap_is_a_warning_in_main(tmp_path, capsys):
 
 # --- plan: next free cadence slots per account (5 Nov 2026, every feed ends 15 Nov) ---
 
-def plan(md: str, today: dt.date = TODAY, count: int = 3, last_ep: int = 15):
+def episodes_dir(statuses: dict[int, str], last: int = 15) -> Path:
+    """A throwaway episodes folder: every epNN.md approved unless overridden."""
+    import tempfile
+    d = Path(tempfile.mkdtemp())
+    for n in range(1, last + 1):
+        word = statuses.get(n, "معتمدة من المالك")
+        (d / f"ep{n:02d}.md").write_text(f"# الحلقة {n} — عنوان / Title\n\n- الحالة: **{word}** (تجربة)\n",
+                                         encoding="utf-8")
+    return d
+
+
+ALL_APPROVED = episodes_dir({})
+
+
+def plan(md: str, today: dt.date = TODAY, count: int = 3, last_ep: int = 15, episodes: Path = ALL_APPROVED):
     posts, problems = cc.parse(md)
     assert problems == []
-    return [(c, f"{w:%Y-%m-%d %H:%M}", ep) for c, w, ep in cc.plan(posts, today, count=count, last_ep=last_ep)]
+    return [(c, f"{w:%Y-%m-%d %H:%M}", ep)
+            for c, w, ep in cc.plan(posts, today, count=count, last_ep=last_ep, episodes=episodes)]
 
 
 def test_plan_continues_after_last_post_on_cadence():
@@ -259,3 +274,58 @@ def test_plan_cli_prints_pasteable_rows(capsys):
     out = capsys.readouterr().out
     assert "| الموعد (UTC) | الحلقة | القناة | id جديد | id محذوف |" in out
     assert "EP07" in out
+
+
+# --- approval gate (5 Nov 2026: --plan proposed EP08 «مسودة v2» and EP09 for 19/22 Nov) ---
+
+def test_status_reads_bold_word():
+    d = episodes_dir({8: "مسودة v2"}, last=9)
+    assert cc.status(8, d) == "مسودة v2"
+    assert cc.approved(7, d) and not cc.approved(8, d)
+    assert cc.status(20, d) == "" and not cc.approved(20, d)
+
+
+def test_plan_skips_unapproved_episodes():
+    d = episodes_dir({8: "مسودة v2", 9: "معاينة مرندرة"})
+    md = channel_table("إنستغرام العربي", [("2026-11-15 16:00", "AR EP06", pid(1))])
+    assert [ep for _, _, ep in plan(md, episodes=d)] == [7, 10, 11]
+
+
+def test_plan_does_not_fill_a_gap_with_a_draft():
+    d = episodes_dir({6: "مسودة"})
+    md = channel_table("تيك توك العربي", [("2026-11-10 16:00", "AR EP05", pid(1)),
+                                           ("2026-11-12 16:00", "AR EP07", pid(2))])
+    assert [ep for _, _, ep in plan(md, episodes=d)] == [8, 9, 10]
+
+
+def test_held_lists_unscheduled_drafts_only():
+    d = episodes_dir({4: "مسودة", 8: "مسودة v2"}, last=9)
+    posts, _ = cc.parse(channel_table("إنستغرام العربي", [("2026-11-01 16:00", "AR EP04", pid(1)),
+                                                          ("2026-11-03 16:00", "AR EP06", pid(2))]))
+    assert cc.held(posts, episodes=d) == [8]
+
+
+def test_future_post_of_unapproved_episode_is_error():
+    d = episodes_dir({8: "مسودة v2"}, last=9)
+    md = channel_table("إنستغرام العربي", [("2026-11-19 16:00", "AR EP08", pid(1))])
+    assert ("error", "unapproved") in run(md, episodes=d)
+
+
+def test_past_post_is_not_rechecked_for_approval():
+    d = episodes_dir({8: "مسودة v2"}, last=9)
+    md = channel_table("إنستغرام العربي", [("2026-11-01 16:00", "AR EP08", pid(1))])
+    assert ("error", "unapproved") not in run(md, episodes=d)
+
+
+def test_real_episodes_approval_matches_status_lines():
+    real = ROOT / "master-claude" / "episodes"
+    assert cc.approved(7, real) and cc.approved(15, real)
+    assert not cc.approved(8, real)  # «مسودة v2» on 5 Nov 2026
+
+
+def test_plan_cli_lists_held_episodes(capsys):
+    assert cc.main(["--plan", "3", "--today", "2026-11-05"]) == 0
+    out = capsys.readouterr().out
+    assert "held (not approved, never proposed): EP08" in out
+    rows = [l for l in out.splitlines() if l.startswith("| 11-")]
+    assert rows and not any("EP08" in l for l in rows)
