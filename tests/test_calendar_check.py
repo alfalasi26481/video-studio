@@ -154,3 +154,51 @@ def test_main_prints_runway_and_stays_green(tmp_path, capsys):
     assert cc.main(["--file", str(f), "--today", "2026-11-04"]) == 0
     out = capsys.readouterr().out
     assert "[warning] runway" in out and "1 warning(s)" in out
+
+
+# --- gap: an episode skipped inside an account's own run (5 Nov 2026: EP03-AR
+#     on Instagram, missing between EP02 and EP04 on Arabic TikTok) ---
+
+def gaps(md: str):
+    posts, problems = cc.parse(md)
+    assert problems == []
+    return cc.gaps(posts)
+
+
+def test_gap_flags_episode_skipped_between_neighbours():
+    md = channel_table("تيك توك العربي", [("2026-11-03 16:00", "EP02 الجملة", pid(1)),
+                                          ("2026-11-08 16:00", "AR EP04 المشاريع", pid(2))])
+    out = gaps(md)
+    assert [(lvl, rule) for lvl, rule, _ in out] == [("warning", "gap")]
+    assert "EP03" in out[0][2] and "tiktok-ar" in out[0][2]
+
+
+def test_gap_names_sibling_account_that_has_it():
+    md = channel_table("إنستغرام العربي", [("2026-11-08 16:00", "AR EP03 أربع عادات", pid(1))])
+    md += channel_table("تيك توك العربي", [("2026-11-03 16:00", "EP02 الجملة", pid(2)),
+                                           ("2026-11-08 16:00", "AR EP04 المشاريع", pid(3))])
+    out = gaps(md)
+    assert len(out) == 1 and "instagram-ar" in out[0][2]
+
+
+def test_gap_quiet_for_account_that_started_later():
+    md = channel_table("يوتيوب العربي", [("2026-11-08 16:00", "AR EP04 المشاريع", pid(1)),
+                                         ("2026-11-10 16:00", "AR EP05 Artifact", pid(2))])
+    assert gaps(md) == []
+
+
+def test_gap_ignores_deleted_posts():
+    md = ("### تيك توك العربي\n| الموعد (UTC) | الحلقة | Postiz id | id محذوف |\n|---|---|---|---|\n"
+          f"| 2026-11-03 16:00 | EP02 الجملة | {pid(1)} | |\n"
+          f"| 2026-11-05 16:00 | AR EP03 عادات | {pid(2)} | |\n"
+          f"| 2026-11-08 16:00 | AR EP04 المشاريع | {pid(3)} | {pid(2)} |\n")
+    assert [r for _, r, _ in gaps(md)] == ["gap"]
+
+
+def test_gap_is_a_warning_in_main(tmp_path, capsys):
+    f = tmp_path / "CALENDAR.md"
+    f.write_text(channel_table("تيك توك العربي", [("2026-11-20 16:00", "EP02 الجملة", pid(1)),
+                                                 ("2026-11-22 16:00", "AR EP04 المشاريع", pid(2))]),
+                 encoding="utf-8")
+    assert cc.main(["--file", str(f), "--today", "2026-11-04"]) == 0
+    assert "[warning] gap" in capsys.readouterr().out

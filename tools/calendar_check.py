@@ -20,6 +20,10 @@ warnings (future posts only, from --today)
             away (default 7), or nothing is left at all — the masters for the
             next episodes need the owner's go-ahead before the feed runs dry
             (5 Nov 2026: Arabic TikTok and YouTube end 12 Nov, the rest 15 Nov)
+  gap       an episode missing inside an account's own run (between its first
+            and last episode) — an account that simply started later is fine
+            (5 Nov 2026: EP03-AR was on Instagram only; Arabic TikTok jumped
+            from EP02 to EP04)
 
 Nothing is fetched from Postiz; the file is the only input.
 """
@@ -193,6 +197,25 @@ def runway(posts: list[Post], today: dt.date, days: int = RUNWAY_DAYS) -> list[t
     return out
 
 
+def gaps(posts: list[Post]) -> list[tuple[str, str, str]]:
+    """One warning per episode skipped inside an account's own EP run."""
+    eps: dict[str, set[int]] = {}
+    for p in current(posts):
+        if p.ep:
+            eps.setdefault(p.channel, set()).add(int(p.ep))
+    out: list[tuple[str, str, str]] = []
+    for channel, have in sorted(eps.items()):
+        lang = channel.rsplit("-", 1)[-1]
+        for n in range(min(have) + 1, max(have)):
+            if n in have:
+                continue
+            on = sorted(c for c, s in eps.items() if c != channel and c.endswith(f"-{lang}") and n in s)
+            where = f" (scheduled on {', '.join(on)})" if on else ""
+            out.append(("warning", "gap", f"{channel}: EP{n:02d} missing between "
+                        f"EP{min(have):02d} and EP{max(have):02d}{where}"))
+    return out
+
+
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--file", type=Path, default=CALENDAR)
@@ -210,7 +233,7 @@ def main(argv: list[str] | None = None) -> int:
     if a.list:
         for p in sorted(current(posts), key=lambda p: (p.when, p.channel)):
             print(f"  {p.when:%Y-%m-%d %H:%M}  {p.channel:<13} {p.label}")
-    findings = check(posts, a.today)
+    findings = check(posts, a.today) + gaps(posts)
     if a.runway_days > 0:
         findings += runway(posts, a.today, a.runway_days)
     for level, rule, msg in findings:
