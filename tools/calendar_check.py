@@ -353,6 +353,14 @@ def main(argv: list[str] | None = None) -> int:
         if hold:
             print("held (not approved, never proposed): " + ", ".join(
                 f"EP{n:02d} «{status(n) or 'no status'}»" for n in hold))
+        try:
+            import clip_status
+            ph = sorted({n for _, _, n in rows} & set(clip_status.placeholder_approved()))
+        except Exception:  # noqa: BLE001 — the plan stays usable without the clip report
+            ph = []
+        if ph:
+            print("placeholder clips (EP01 shots until the owner approves own shots): "
+                  + ", ".join(f"EP{n:02d}" for n in ph) + " — make clip-status")
         return 0
     findings = check(posts, a.today) + gaps(posts)
     if a.runway_days > 0:
