@@ -1,4 +1,4 @@
-.PHONY: setup calendar-check cue-check caption-check similarity-check style-check frozen-check frozen-render test validate engine-check glyph-check source-check script-length layout-check check episode episode-preflight episode-kit voice-level
+.PHONY: setup calendar-check calendar-plan cue-check caption-check similarity-check style-check frozen-check frozen-render test validate engine-check glyph-check source-check script-length layout-check check episode episode-preflight episode-kit voice-level
 setup:           ## install the Python tools' dependencies (a fresh container lacks brotli for glyph-check)
 	python3 -m pip install -q -r requirements-dev.txt $(if $(VIRTUAL_ENV),,--break-system-packages)
 test:            ## run all tests
@@ -29,6 +29,9 @@ similarity-check: ## no two episodes say the same thing in the same words (owner
 	python3 tools/similarity_check.py $(NN)
 calendar-check:  ## publishing calendar: no EN on an AR account, no episode twice per channel, no double slot; future posts at 16:00 AR / 18:00 EN, Sun/Tue/Thu; an account's schedule ending within 7 days (warnings)
 	python3 tools/calendar_check.py
+
+calendar-plan:  ## read-only: next N (default 3) episodes per account on free Sun/Tue/Thu slots, as rows for CALENDAR.md — schedules nothing
+	python3 tools/calendar_check.py --plan $(or $(N),3)
 check: validate engine-check cue-check caption-check glyph-check source-check script-length style-check similarity-check calendar-check frozen-check test
 NN ?=
 LANGS ?= AR EN

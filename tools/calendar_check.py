@@ -25,6 +25,14 @@ warnings (future posts only, from --today)
             (5 Nov 2026: EP03-AR was on Instagram only; Arabic TikTok jumped
             from EP02 to EP04)
 
+--plan N (read-only proposal, never scheduled by this tool)
+  the next N episodes per account on the next free cadence slots after its
+  last current post (or after today if the feed is dry): a skipped episode
+  inside the account's run first, then the episodes after its last one, up to
+  the last master-claude/episodes/epNN.md. Printed as rows in the calendar's
+  own table shape (id columns «—»), ready to paste once Postiz returns ids
+  (5 Nov 2026: every feed ends 15 Nov; EP07+ wait for hosted masters).
+
 Nothing is fetched from Postiz; the file is the only input.
 """
 from __future__ import annotations
@@ -216,6 +224,69 @@ def gaps(posts: list[Post]) -> list[tuple[str, str, str]]:
     return out
 
 
+def last_episode(episodes: Path = EPISODES) -> int:
+    nums = [int(m.group(1)) for f in episodes.glob("ep*.md") if (m := re.fullmatch(r"ep(\d\d)\.md", f.name))]
+    return max(nums, default=0)
+
+
+def episode_title(n: int, lang: str, episodes: Path = EPISODES) -> str:
+    """Short title from the episode heading «# الحلقة N — AR / EN»."""
+    f = episodes / f"ep{n:02d}.md"
+    if not f.exists():
+        return ""
+    head = f.read_text(encoding="utf-8").splitlines()[0]
+    title = head.split("—", 1)[-1].strip()
+    ar, _, en = title.partition(" / ")
+    return (en if lang == "en" and en else ar).strip()
+
+
+def plan(posts: list[Post], today: dt.date, count: int = 3,
+         last_ep: int | None = None) -> list[tuple[str, dt.datetime, int]]:
+    """(channel, slot, episode) proposals: next `count` episodes per account."""
+    if last_ep is None:
+        last_ep = last_episode()
+    by_channel: dict[str, list[Post]] = {}
+    for p in current(posts):
+        by_channel.setdefault(p.channel, []).append(p)
+    out: list[tuple[str, dt.datetime, int]] = []
+    for channel, ps in sorted(by_channel.items()):
+        lang = channel.rsplit("-", 1)[-1]
+        if lang not in SLOT:
+            continue
+        have = {int(p.ep) for p in ps if p.ep}
+        if not have:
+            continue
+        queue = [n for n in range(min(have) + 1, max(have)) if n not in have]
+        queue += list(range(max(have) + 1, last_ep + 1))
+        taken = {p.when for p in ps}
+        start = max(max(p.when for p in ps),
+                    dt.datetime.combine(today, dt.time(0, 0)) - dt.timedelta(minutes=1))
+        day = start.date()
+        for ep in queue[:count]:
+            while True:
+                slot = dt.datetime.combine(day, dt.time(*SLOT[lang]))
+                if slot > start and day.weekday() in CADENCE and slot not in taken:
+                    break
+                day += dt.timedelta(days=1)
+            taken.add(slot)
+            start = slot
+            out.append((channel, slot, ep))
+    return out
+
+
+CHANNEL_NAME = {"instagram": "إنستغرام", "tiktok": "تيك توك", "youtube": "يوتيوب"}
+
+
+def plan_table(rows: list[tuple[str, dt.datetime, int]]) -> str:
+    lines = ["| الموعد (UTC) | الحلقة | القناة | id جديد | id محذوف |", "|---|---|---|---|---|"]
+    for channel, when, ep in sorted(rows, key=lambda r: (r[1], r[0])):
+        platform, lang = channel.rsplit("-", 1)
+        title = episode_title(ep, lang)
+        label = f"{lang.upper()} EP{ep:02d} {title}".strip()
+        lines.append(f"| {when:%m-%d %H:%M} | {label} | {CHANNEL_NAME.get(platform, platform)} {lang.upper()} | — | — |")
+    return "\n".join(lines)
+
+
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--file", type=Path, default=CALENDAR)
@@ -223,6 +294,8 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--runway-days", type=int, default=RUNWAY_DAYS,
                     help="warn when an account's schedule ends sooner than this (0 = off)")
     ap.add_argument("--list", action="store_true", help="print the current schedule")
+    ap.add_argument("--plan", type=int, metavar="N", default=0,
+                    help="propose the next N episodes per account on free cadence slots (read-only)")
     a = ap.parse_args(argv)
     if not a.file.exists():
         print(f"calendar check: {a.file} not found", file=sys.stderr)
@@ -233,6 +306,12 @@ def main(argv: list[str] | None = None) -> int:
     if a.list:
         for p in sorted(current(posts), key=lambda p: (p.when, p.channel)):
             print(f"  {p.when:%Y-%m-%d %H:%M}  {p.channel:<13} {p.label}")
+    if a.plan > 0:
+        rows = plan(posts, a.today, a.plan)
+        print(f"calendar plan: {len(rows)} proposal(s), next {a.plan} per account — not scheduled; "
+              "each needs a hosted master")
+        print(plan_table(rows))
+        return 0
     findings = check(posts, a.today) + gaps(posts)
     if a.runway_days > 0:
         findings += runway(posts, a.today, a.runway_days)

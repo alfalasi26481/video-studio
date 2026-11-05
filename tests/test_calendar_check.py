@@ -202,3 +202,60 @@ def test_gap_is_a_warning_in_main(tmp_path, capsys):
                  encoding="utf-8")
     assert cc.main(["--file", str(f), "--today", "2026-11-04"]) == 0
     assert "[warning] gap" in capsys.readouterr().out
+
+
+# --- plan: next free cadence slots per account (5 Nov 2026, every feed ends 15 Nov) ---
+
+def plan(md: str, today: dt.date = TODAY, count: int = 3, last_ep: int = 15):
+    posts, problems = cc.parse(md)
+    assert problems == []
+    return [(c, f"{w:%Y-%m-%d %H:%M}", ep) for c, w, ep in cc.plan(posts, today, count=count, last_ep=last_ep)]
+
+
+def test_plan_continues_after_last_post_on_cadence():
+    md = channel_table("إنستغرام العربي", [("2026-11-12 16:00", "AR EP05", pid(1)),
+                                            ("2026-11-15 16:00", "AR EP06", pid(2))])
+    # 15 Nov is a Sunday -> Tue 17, Thu 19, Sun 22
+    assert plan(md) == [("instagram-ar", "2026-11-17 16:00", 7),
+                        ("instagram-ar", "2026-11-19 16:00", 8),
+                        ("instagram-ar", "2026-11-22 16:00", 9)]
+
+
+def test_plan_uses_english_slot_time():
+    md = channel_table("تيك توك الإنجليزي", [("2026-11-15 18:00", "EN EP06 Upload", pid(1))])
+    assert plan(md, count=1) == [("tiktok-en", "2026-11-17 18:00", 7)]
+
+
+def test_plan_fills_a_gap_first():
+    md = channel_table("تيك توك العربي", [("2026-11-10 16:00", "AR EP05", pid(1)),
+                                           ("2026-11-12 16:00", "AR EP07", pid(2))])
+    assert [ep for _, _, ep in plan(md)] == [6, 8, 9]
+
+
+def test_plan_stops_at_last_episode_file():
+    md = channel_table("إنستغرام العربي", [("2026-11-15 16:00", "AR EP14", pid(1))])
+    assert [ep for _, _, ep in plan(md, count=5)] == [15]
+
+
+def test_plan_starts_from_today_when_the_feed_is_dry():
+    md = channel_table("إنستغرام العربي", [("2026-11-01 16:00", "AR EP06", pid(1))])
+    # 4 Nov (Wed) is today; feed ended 1 Nov -> next cadence slot is Thu 5 Nov
+    assert plan(md, count=1) == [("instagram-ar", "2026-11-05 16:00", 7)]
+
+
+def test_plan_on_real_calendar_starts_after_15_nov():
+    posts, _ = cc.parse(cc.CALENDAR.read_text(encoding="utf-8"))
+    rows = cc.plan(posts, dt.date(2026, 11, 5), count=1)
+    assert rows, "every account should get a proposal"
+    for channel, when, ep in rows:
+        assert when.date() > dt.date(2026, 11, 15)
+        assert when.weekday() in cc.CADENCE
+        assert (when.hour, when.minute) == cc.SLOT[channel.rsplit("-", 1)[-1]]
+        assert ep >= 7
+
+
+def test_plan_cli_prints_pasteable_rows(capsys):
+    assert cc.main(["--plan", "1", "--today", "2026-11-05"]) == 0
+    out = capsys.readouterr().out
+    assert "| الموعد (UTC) | الحلقة | القناة | id جديد | id محذوف |" in out
+    assert "EP07" in out
