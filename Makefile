@@ -27,7 +27,7 @@ frozen-render:   ## + render 50 frames of EP01–05 and compare pixels with the 
 	python3 tools/frozen_check.py --render
 similarity-check: ## no two episodes say the same thing in the same words (owner rule 2 Nov 2026)
 	python3 tools/similarity_check.py $(NN)
-calendar-check:  ## publishing calendar: no EN on an AR account, no episode twice per channel, no double slot; future posts at 16:00 AR / 18:00 EN, Sun/Tue/Thu (warnings)
+calendar-check:  ## publishing calendar: no EN on an AR account, no episode twice per channel, no double slot; future posts at 16:00 AR / 18:00 EN, Sun/Tue/Thu; an account's schedule ending within 7 days (warnings)
 	python3 tools/calendar_check.py
 check: validate engine-check cue-check caption-check glyph-check source-check script-length style-check similarity-check calendar-check frozen-check test
 NN ?=

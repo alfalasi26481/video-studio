@@ -16,6 +16,10 @@ errors
 warnings (future posts only, from --today)
   time      Arabic not at 16:00 UTC, English not at 18:00 UTC (4 Nov 2026)
   weekday   not Sunday / Tuesday / Thursday (the published cadence)
+  runway    an account's last current post is fewer than --runway-days days
+            away (default 7), or nothing is left at all — the masters for the
+            next episodes need the owner's go-ahead before the feed runs dry
+            (5 Nov 2026: Arabic TikTok and YouTube end 12 Nov, the rest 15 Nov)
 
 Nothing is fetched from Postiz; the file is the only input.
 """
@@ -168,10 +172,33 @@ def check(posts: list[Post], today: dt.date, episodes: Path = EPISODES) -> list[
     return out
 
 
+RUNWAY_DAYS = 7
+
+
+def runway(posts: list[Post], today: dt.date, days: int = RUNWAY_DAYS) -> list[tuple[str, str, str]]:
+    """One warning per account whose current schedule ends within `days` of today."""
+    last: dict[str, dt.datetime] = {}
+    for p in current(posts):
+        if p.channel not in last or p.when > last[p.channel]:
+            last[p.channel] = p.when
+    out: list[tuple[str, str, str]] = []
+    for channel, when in sorted(last.items()):
+        left = (when.date() - today).days
+        if left < 0:
+            out.append(("warning", "runway", f"{channel}: nothing scheduled after "
+                        f"{when:%Y-%m-%d} — the feed is dry"))
+        elif left < days:
+            out.append(("warning", "runway", f"{channel}: schedule ends {when:%Y-%m-%d} "
+                        f"({left} day(s) left, threshold {days})"))
+    return out
+
+
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--file", type=Path, default=CALENDAR)
     ap.add_argument("--today", type=dt.date.fromisoformat, default=dt.datetime.now(dt.timezone.utc).date())
+    ap.add_argument("--runway-days", type=int, default=RUNWAY_DAYS,
+                    help="warn when an account's schedule ends sooner than this (0 = off)")
     ap.add_argument("--list", action="store_true", help="print the current schedule")
     a = ap.parse_args(argv)
     if not a.file.exists():
@@ -184,6 +211,8 @@ def main(argv: list[str] | None = None) -> int:
         for p in sorted(current(posts), key=lambda p: (p.when, p.channel)):
             print(f"  {p.when:%Y-%m-%d %H:%M}  {p.channel:<13} {p.label}")
     findings = check(posts, a.today)
+    if a.runway_days > 0:
+        findings += runway(posts, a.today, a.runway_days)
     for level, rule, msg in findings:
         print(f"  [{level}] {rule}: {msg}")
     errors = len(problems) + sum(1 for f in findings if f[0] == "error")

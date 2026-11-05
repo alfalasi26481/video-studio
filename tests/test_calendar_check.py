@@ -105,3 +105,52 @@ def test_unknown_channel_language_is_reported():
 
 def test_real_calendar_passes():
     assert cc.main(["--today", "2026-11-04"]) == 0
+
+
+# --- runway (5 Nov 2026): how many days of scheduled posts are left per account
+
+def runway(md: str, today: dt.date = TODAY, days: int = 7):
+    posts, _ = cc.parse(md)
+    return cc.runway(posts, today, days)
+
+
+def test_runway_warns_when_account_schedule_ends_within_days():
+    md = channel_table("تيك توك العربي", [("2026-11-08 16:00", "AR EP03 أربع عادات", pid(1))])
+    out = runway(md)
+    assert [(lvl, rule) for lvl, rule, _ in out] == [("warning", "runway")]
+    assert "2026-11-08" in out[0][2] and "4 day" in out[0][2]
+
+
+def test_runway_quiet_when_schedule_reaches_beyond_days():
+    md = channel_table("تيك توك العربي", [("2026-11-20 16:00", "AR EP03 أربع عادات", pid(1))])
+    assert runway(md) == []
+
+
+def test_runway_is_per_account():
+    md = channel_table("تيك توك العربي", [("2026-11-20 16:00", "AR EP03 أربع عادات", pid(1))])
+    md += channel_table("إنستغرام الإنجليزي", [("2026-11-06 18:00", "EN EP03 Four habits", pid(2))])
+    out = runway(md)
+    assert len(out) == 1 and "instagram-en" in out[0][2]
+
+
+def test_runway_flags_account_with_nothing_left():
+    md = channel_table("إنستغرام العربي", [("2026-11-01 16:00", "AR EP01 المعادلة", pid(1))])
+    out = runway(md)
+    assert len(out) == 1 and "nothing scheduled" in out[0][2]
+
+
+def test_runway_ignores_deleted_posts():
+    md = ("### إنستغرام العربي\n| الموعد (UTC) | الحلقة | Postiz id | id محذوف |\n|---|---|---|---|\n"
+          f"| 2026-11-20 16:00 | AR EP03 أربع عادات | {pid(1)} | |\n"
+          f"| 2026-11-06 16:00 | AR EP04 المشاريع | {pid(2)} | {pid(1)} |\n")
+    out = runway(md)
+    assert len(out) == 1 and "2026-11-06" in out[0][2]
+
+
+def test_main_prints_runway_and_stays_green(tmp_path, capsys):
+    f = tmp_path / "CALENDAR.md"
+    f.write_text(channel_table("تيك توك العربي", [("2026-11-08 16:00", "AR EP03 أربع عادات", pid(1))]),
+                 encoding="utf-8")
+    assert cc.main(["--file", str(f), "--today", "2026-11-04"]) == 0
+    out = capsys.readouterr().out
+    assert "[warning] runway" in out and "1 warning(s)" in out
