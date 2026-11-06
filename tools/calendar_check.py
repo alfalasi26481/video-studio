@@ -36,6 +36,10 @@ warnings (future posts only, from --today)
   own table shape (id columns «—»), ready to paste once Postiz returns ids
   — an episode that is not approved is held back and listed, never proposed
   (5 Nov 2026: every feed ends 15 Nov; EP07+ wait for hosted masters).
+  A «decide by» line gives, per proposed episode, its first slot minus
+  --lead-days (default 2: own shots + render + final check + upload) — the
+  last day the owner's clips/hosting decision still keeps that slot
+  (6 Nov 2026: EP07 first slot 17 Nov → decide by 15 Nov).
 
 Nothing is fetched from Postiz; the file is the only input.
 """
@@ -312,6 +316,20 @@ def plan(posts: list[Post], today: dt.date, count: int = 3,
     return out
 
 
+LEAD_DAYS = 2
+
+
+def decide_by(rows: list[tuple[str, dt.datetime, int]],
+              lead_days: int = LEAD_DAYS) -> list[tuple[int, dt.date, dt.datetime]]:
+    """(episode, decide-by date, first slot) per proposed episode, earliest slot first."""
+    first: dict[int, dt.datetime] = {}
+    for _, when, ep in rows:
+        if ep not in first or when < first[ep]:
+            first[ep] = when
+    return sorted(((ep, (w - dt.timedelta(days=lead_days)).date(), w) for ep, w in first.items()),
+                  key=lambda r: (r[2], r[0]))
+
+
 CHANNEL_NAME = {"instagram": "إنستغرام", "tiktok": "تيك توك", "youtube": "يوتيوب"}
 
 
@@ -331,6 +349,8 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--today", type=dt.date.fromisoformat, default=dt.datetime.now(dt.timezone.utc).date())
     ap.add_argument("--runway-days", type=int, default=RUNWAY_DAYS,
                     help="warn when an account's schedule ends sooner than this (0 = off)")
+    ap.add_argument("--lead-days", type=int, default=LEAD_DAYS,
+                    help="--plan: days before an episode's first slot its master must be decided")
     ap.add_argument("--list", action="store_true", help="print the current schedule")
     ap.add_argument("--plan", type=int, metavar="N", default=0,
                     help="propose the next N episodes per account on free cadence slots (read-only)")
@@ -349,6 +369,11 @@ def main(argv: list[str] | None = None) -> int:
         print(f"calendar plan: {len(rows)} proposal(s), next {a.plan} per account — not scheduled; "
               "each needs a hosted master")
         print(plan_table(rows))
+        dl = decide_by(rows, a.lead_days)
+        if dl:
+            print(f"decide by (first slot − {a.lead_days} d): " + ", ".join(
+                f"EP{ep:02d} {d:%d %b}" + (" — PAST" if d < a.today else "")
+                for ep, d, _ in dl))
         hold = held(posts)
         if hold:
             print("held (not approved, never proposed): " + ", ".join(

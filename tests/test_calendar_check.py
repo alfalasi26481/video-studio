@@ -329,3 +329,29 @@ def test_plan_cli_lists_held_episodes(capsys):
     assert "held (not approved, never proposed): EP08" in out
     rows = [l for l in out.splitlines() if l.startswith("| 11-")]
     assert rows and not any("EP08" in l for l in rows)
+
+
+def _when(s):
+    return dt.datetime.fromisoformat(s)
+
+
+def test_decide_by_uses_first_slot_per_episode():
+    rows = [("instagram-en", _when("2026-11-17 18:00"), 7),
+            ("tiktok-ar", _when("2026-11-17 16:00"), 7),
+            ("tiktok-ar", _when("2026-11-19 16:00"), 11)]
+    assert cc.decide_by(rows) == [(7, dt.date(2026, 11, 15), _when("2026-11-17 16:00")),
+                                  (11, dt.date(2026, 11, 17), _when("2026-11-19 16:00"))]
+
+
+def test_decide_by_lead_days_and_empty():
+    rows = [("tiktok-ar", _when("2026-11-17 16:00"), 7)]
+    assert cc.decide_by(rows, 5)[0][1] == dt.date(2026, 11, 12)
+    assert cc.decide_by([]) == []
+
+
+def test_plan_cli_prints_decide_by_and_flags_past(capsys):
+    rc = cc.main(["--plan", "1", "--today", "2026-11-16"])
+    out = capsys.readouterr().out
+    assert rc == 0
+    line = [l for l in out.splitlines() if l.startswith("decide by")]
+    assert line and "EP07" in line[0] and "PAST" in line[0]
