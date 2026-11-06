@@ -1,4 +1,4 @@
-.PHONY: setup clip-status calendar-check calendar-plan cue-check caption-check similarity-check style-check frozen-check frozen-render test validate engine-check glyph-check source-check script-length layout-check check episode episode-preflight episode-kit voice-level
+.PHONY: setup metrics-check clip-status calendar-check calendar-plan cue-check caption-check similarity-check style-check frozen-check frozen-render test validate engine-check glyph-check source-check script-length layout-check check episode episode-preflight episode-kit voice-level
 setup:           ## install the Python tools' dependencies (a fresh container lacks brotli for glyph-check)
 	python3 -m pip install -q -r requirements-dev.txt $(if $(VIRTUAL_ENV),,--break-system-packages)
 test:            ## run all tests
@@ -33,9 +33,12 @@ calendar-check:  ## publishing calendar: no EN on an AR account, no episode twic
 clip-status:     ## approved episodes still on EP01 placeholder shots + the credits own shots would cost (read-only)
 	python3 tools/clip_status.py $(NN)
 
+metrics-check:   ## docs/metrics.csv: valid rows, style labels match the episode; posts older than 48 h with no numbers (warnings, read-only)
+	python3 tools/metrics_check.py
+
 calendar-plan:  ## read-only: next N (default 3) episodes per account on free Sun/Tue/Thu slots, as rows for CALENDAR.md — schedules nothing
 	python3 tools/calendar_check.py --plan $(or $(N),3)
-check: validate engine-check cue-check caption-check glyph-check source-check script-length style-check similarity-check calendar-check clip-status frozen-check test
+check: validate engine-check cue-check caption-check glyph-check source-check script-length style-check similarity-check calendar-check clip-status metrics-check frozen-check test
 NN ?=
 LANGS ?= AR EN
 episode:         ## make episode NN=02 [LANGS="AR"] [RENDER=0] [LAYOUT=0] — preflight, checks, render, final QA, hand-off kit in master-claude/out/EPNN/
