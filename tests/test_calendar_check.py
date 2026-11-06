@@ -355,3 +355,53 @@ def test_plan_cli_prints_decide_by_and_flags_past(capsys):
     assert rc == 0
     line = [l for l in out.splitlines() if l.startswith("decide by")]
     assert line and "EP07" in line[0] and "PAST" in line[0]
+
+
+def status_table(title: str, rows: list[tuple[str, str, str, str]]) -> str:
+    out = [f"## {title}", "| الموعد (UTC) | الحلقة | Postiz id | الحالة |", "|---|---|---|---|"]
+    out += [f"| {w} | {lbl} | {i} | {s} |" for w, lbl, i, s in rows]
+    return "\n".join(out) + "\n"
+
+
+def unconfirmed(md: str, today: dt.date = TODAY):
+    posts, _ = cc.parse(md)
+    return cc.unconfirmed(posts, today)
+
+
+def test_past_post_marked_published_is_confirmed():
+    md = status_table("إنستغرام العربي", [("2026-10-31 16:00", "التعريف", pid(1), "منشور")])
+    assert unconfirmed(md) == []
+
+
+def test_past_post_still_scheduled_is_unconfirmed():
+    md = status_table("إنستغرام العربي", [("2026-11-01 16:00", "EP01 المعادلة", pid(1), "مجدول (من جلسة سابقة)"),
+                                          ("2026-11-03 16:00", "EP02 الجملة", pid(2), "مجدول")])
+    out = unconfirmed(md)
+    assert [(lvl, rule) for lvl, rule, _ in out] == [("warning", "unconfirmed")]
+    assert "2 past post(s)" in out[0][2] and "11-01 EP01" in out[0][2] and "11-03 EP02" in out[0][2]
+
+
+def test_table_without_status_column_counts_as_unconfirmed():
+    md = channel_table("تيك توك العربي", [("2026-11-03 16:00", "EP02 الجملة السحرية", pid(1))])
+    assert len(unconfirmed(md)) == 1
+
+
+def test_future_and_today_posts_are_not_asked_for():
+    md = status_table("إنستغرام العربي", [("2026-11-04 16:00", "AR EP03 أ", pid(1), "مجدول"),
+                                          ("2026-11-08 16:00", "AR EP04 ب", pid(2), "مجدول")])
+    assert unconfirmed(md) == []
+
+
+def test_deleted_post_is_not_asked_for():
+    md = channel_table("تيك توك العربي", [("2026-11-03 16:00", "EP02 أ", pid(1))])
+    md += "\n| الموعد (UTC) | الحلقة | القناة | id جديد | id محذوف |\n|---|---|---|---|---|\n"
+    md += f"| 11-10 16:00 | AR EP02 أ | تيك توك AR | {pid(2)} | {pid(1)} |\n"
+    assert unconfirmed(md) == []
+
+
+def test_unconfirmed_is_one_warning_per_account_in_main(capsys, tmp_path):
+    f = tmp_path / "c.md"
+    f.write_text(channel_table("إنستغرام العربي", [("2026-11-01 16:00", "EP01 أ", pid(1))])
+                 + channel_table("تيك توك العربي", [("2026-11-01 16:00", "EP01 أ", pid(2))]), encoding="utf-8")
+    assert cc.main(["--file", str(f), "--today", "2026-11-04", "--runway-days", "0"]) == 0
+    assert capsys.readouterr().out.count("unconfirmed:") == 2

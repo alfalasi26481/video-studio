@@ -27,6 +27,11 @@ warnings (future posts only, from --today)
             and last episode) — an account that simply started later is fine
             (5 Nov 2026: EP03-AR was on Instagram only; Arabic TikTok jumped
             from EP02 to EP04)
+  unconfirmed  one per account: posts dated before --today that the file does
+            not mark «منشور» (no «الحالة» column, or another word in it) —
+            the file says what was scheduled, not what went out; metrics_check
+            asks for 48 h numbers on them all the same (6 Nov 2026: 5 past
+            posts on Arabic Instagram/TikTok, only the 31 Oct intro marked)
 
 --plan N (read-only proposal, never scheduled by this tool)
   the next N episodes per account on the next free cadence slots after its
@@ -74,6 +79,7 @@ class Post:
     lang: str          # channel language
     post_id: str
     deleted: list[str] = field(default_factory=list)
+    state: str = ""    # the row's «الحالة» cell, "" when the table has none
 
     @property
     def ep(self) -> str | None:
@@ -144,7 +150,8 @@ def parse(text: str) -> tuple[list[Post], list[str]]:
             problems.append(f"line {n}: channel language unknown: «{channel}»")
             continue
         label = next((v for h, v in col.items() if "الحلقة" in h), "")
-        posts.append(Post(n, when, label, normalise(channel), lang, ids[0], deleted))
+        state = next((v for h, v in col.items() if "الحالة" in h), "")
+        posts.append(Post(n, when, label, normalise(channel), lang, ids[0], deleted, state))
     return posts, problems
 
 
@@ -248,6 +255,24 @@ def gaps(posts: list[Post]) -> list[tuple[str, str, str]]:
             where = f" (scheduled on {', '.join(on)})" if on else ""
             out.append(("warning", "gap", f"{channel}: EP{n:02d} missing between "
                         f"EP{min(have):02d} and EP{max(have):02d}{where}"))
+    return out
+
+
+PUBLISHED = "منشور"
+
+
+def unconfirmed(posts: list[Post], today: dt.date) -> list[tuple[str, str, str]]:
+    """One warning per account listing its past posts not marked «منشور»."""
+    by: dict[str, list[Post]] = {}
+    for p in current(posts):
+        if p.when.date() < today and not p.state.startswith(PUBLISHED):
+            by.setdefault(p.channel, []).append(p)
+    out: list[tuple[str, str, str]] = []
+    for channel, ps in sorted(by.items()):
+        ps.sort(key=lambda p: p.when)
+        items = ", ".join(f"{p.when:%m-%d} {('EP' + p.ep) if p.ep else p.label.split(" (")[0].strip("«» ")[:24]}" for p in ps)
+        out.append(("warning", "unconfirmed", f"{channel}: {len(ps)} past post(s) not marked "
+                    f"«{PUBLISHED}» ({items}) — confirm in Postiz that they went out, then mark them"))
     return out
 
 
@@ -387,7 +412,7 @@ def main(argv: list[str] | None = None) -> int:
             print("placeholder clips (EP01 shots until the owner approves own shots): "
                   + ", ".join(f"EP{n:02d}" for n in ph) + " — make clip-status")
         return 0
-    findings = check(posts, a.today) + gaps(posts)
+    findings = check(posts, a.today) + gaps(posts) + unconfirmed(posts, a.today)
     if a.runway_days > 0:
         findings += runway(posts, a.today, a.runway_days)
     for level, rule, msg in findings:
