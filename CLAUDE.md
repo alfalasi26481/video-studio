@@ -35,6 +35,7 @@
 - `tools/episode_factory.py` — المصنع: `make episode NN=02` (فحص مسبق ← فحوص ← `render.sh` ← فحص نهائي ← حزمة تسليم في `master-claude/out/EPNN/`)؛ `make episode-preflight NN=..` يبيّن الناقص وأي خطوة تنتجه. لا يستدعي Higgsfield ولا ينشر. تعليقات `PUBLISH.md` بشكل النشر: الوعد ← الإفصاح ← الباقي ← ≤5 وسوم (`#سلم_كلود` للعربي).
 - `tools/voice_level.py` — مستوى صوت التعليق مقابل مرجع EP03-AR (-19.6 LUFS)؛ أداة إصلاح لا بوابة: `make voice-level NN=04 FIX=1` فقط إذا فشل الفحص النهائي في الصوت (حدث في EP04-AR).
 - `tools/remaster.py` — ماستر ثانٍ خارج المحرك (loudnorm ثنائي المرور، TP=-3) على `out/raw/EPNN-L.mp4` نفسه؛ `make episode` يشغّله تلقائياً **فقط** إذا فشل الفحص النهائي في الصوت وحده (قرار المالك 2 نوفمبر 2026، بعد EP11-EN). `render.sh` لا يُعدّل. `--no-remaster` لتعطيله.
+- `tools/backlog_check.py` — `episodes/backlog.yaml` مقابل حلقات المحرك: كل صف يحمل `engine: N` لحلقته، وحالته تطابق سطر «الحالة» في `epNN.md` (`stale`)، وكل `epNN.md` له صف (`unmapped`)، وتحذير `ideas` حين تبقى أقل من 3 أفكار (6 نوفمبر 2026: كل الأفكار استُهلكت، وep18 مؤجلة) — `make backlog-check` (ضمن `make check`). حدّث الصف عند كل مسودة أو اعتماد.
 - `episodes/<id>.yaml` + `tools/validate_episode.py` + `tools/content_check.py` — صيغة YAML ومدققها (مسودات أفكار؛ الإنتاج يبقى بالمحرك).
 - `tests/` — pytest. شغّل `make check` قبل أي push.
 - `docs/ROADMAP.md` و `docs/DEV_LOG.md` — الخطة والسجل (أضف إدخالاً مؤرخاً كل دورة).

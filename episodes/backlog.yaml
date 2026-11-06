@@ -1,7 +1,11 @@
-# قائمة الحلقات. status: idea → draft → verified → rendered → handed_off (النشر يدوي دائماً)
+# قائمة الحلقات. status: idea → draft → verified → rendered → approved → handed_off (deferred = مؤجلة بقرار)
+# engine: N = master-claude/episodes/epNN.md (حلقة المحرك). الملاحظات تذكر الحالة يوم كتابتها؛ الحالة الحالية في epNN.md.
+# make backlog-check يقارن الحالة بسطر «الحالة» في epNN.md، ويحذّر حين تبقى أقل من 3 أفكار.
 # ep01–ep07 موجودة كـ JSON في فرع edu-channel-template (edu-channel/public/episodes/)
 # ولم تُنقل بعد إلى صيغة YAML هذه.
 episodes:
+  - {id: mc01, engine: 1, level: beginner, status: approved, topic: معادلة الطلب الاحترافي, note: حلقة المحرك 1 — بلا مسودة YAML}
+  - {id: mc02, engine: 2, level: beginner, status: approved, topic: الجملة السحرية, note: حلقة المحرك 2 — بلا مسودة YAML}
   - {id: ep01, level: beginner, status: rendered_elsewhere, topic: ثلاث معلومات تجعل ردود Claude مفيدة, note: فرع edu-channel-template}
   - {id: ep02, level: intermediate, status: rendered_elsewhere, topic: الفرق بين Skill و Agent و Workflow, note: فرع edu-channel-template}
   - {id: ep03, level: beginner, status: rendered_elsewhere, topic: أول دقيقة لك مع Claude, note: فرع edu-channel-template}
@@ -9,17 +13,17 @@ episodes:
   - {id: ep05, level: beginner, status: rendered_elsewhere, topic: خصوصيتك مع Claude, note: فرع edu-channel-template}
   - {id: ep06, level: beginner, status: rendered_elsewhere, topic: حوّل ملاحظاتك إلى اختبار, note: فرع edu-channel-template}
   - {id: ep07, level: beginner, status: rendered_elsewhere, topic: كيف تطلب نقداً صريحاً, note: فرع edu-channel-template}
-  - {id: ep08, level: beginner, status: verified, topic: خمس طرق تجعل طلبك أوضح, note: مسودة محرك master-claude/episodes/ep03.md بانتظار الموافقة}
-  - {id: ep09, level: beginner, status: verified, topic: المشاريع (Projects) في Claude}
-  - {id: ep10, level: beginner, status: verified, topic: الـ Artifacts في Claude}
-  - {id: ep11, level: beginner, status: rendered, topic: رفع صورة أو ملف PDF وسؤال Claude عنه, note: أُنتجت كحلقة المحرك 06 (master-claude/episodes/ep06.md)}
-  - {id: ep12, level: beginner, status: rendered, topic: البحث في الويب داخل Claude ومتى تستخدمه, note: أُنتجت كحلقة المحرك 07 (master-claude/episodes/ep07.md)}
-  - {id: ep13, level: intermediate, status: draft, topic: تعليمات Claude على مستوى الحساب (بدل Styles), note: 'Styles غير موجودة في صفحة التخصيص الرسمية الحالية (غير مؤكد) — مسودة المحرك 08 (master-claude/episodes/ep08.md)'}
-  - {id: ep14, level: intermediate, status: rendered, topic: الذاكرة في Claude وكيف تتحكم بها, note: معاينة المحرك 09 (master-claude/episodes/ep09.md)}
-  - {id: ep15, level: intermediate, status: draft, topic: أعطِ Claude أمثلة ليقلّد الأسلوب, note: مسودة المحرك 10 (master-claude/episodes/ep10.md)}
-  - {id: ep16, level: pro, status: draft, topic: ما هي الـ Skills وكيف تصنع واحدة, note: مسودة المحرك 11 (master-claude/episodes/ep11.md)}
-  - {id: ep17, level: pro, status: rendered, topic: Claude Code لأول مرة — بناء صفحة بسيطة, note: 'معاينة المحرك 12 (master-claude/episodes/ep12.md) — يحتاج اشتراكاً مدفوعاً (Pro فما فوق)'}
-  - {id: ep18, level: pro, status: idea, topic: الموصلات (Connectors) وربط Claude بتطبيقاتك, note: 'مؤجلة — تحتاج أسماء تطبيقات/شركات لتُفهم (تعارض مع قاعدة لا جهات)؛ قرار المالك'}
-  - {id: ep19, level: beginner, status: draft, topic: الوضع الصوتي — كلّم Claude بصوتك, note: 'مسودة المحرك 13 (master-claude/episodes/ep13.md)؛ متاح مجاناً؛ اللغات غير الإنجليزية تجريبية'}
-  - {id: ep20, level: beginner, status: draft, topic: اطلب من Claude ملفاً حقيقياً (PDF) تنزّله وتطبعه, note: 'مسودة المحرك 14 (master-claude/episodes/ep14.md)؛ مجاني وعلى الجوال؛ تشابه فكرة محتمل مع EP05 (Artifact) — حكم المالك'}
-  - {id: ep21, level: beginner, status: draft, topic: شارك محادثتك مع Claude برابط واحد, note: 'مسودة المحرك 15 (master-claude/episodes/ep15.md)؛ مجاني، بلا حساب للمستلم، للقراءة فقط؛ الجوال غير مؤكد'}
+  - {id: ep08, engine: 3, level: beginner, status: approved, topic: خمس طرق تجعل طلبك أوضح, note: مسودة محرك master-claude/episodes/ep03.md بانتظار الموافقة}
+  - {id: ep09, engine: 4, level: beginner, status: approved, topic: المشاريع (Projects) في Claude}
+  - {id: ep10, engine: 5, level: beginner, status: approved, topic: الـ Artifacts في Claude}
+  - {id: ep11, engine: 6, level: beginner, status: approved, topic: رفع صورة أو ملف PDF وسؤال Claude عنه, note: أُنتجت كحلقة المحرك 06 (master-claude/episodes/ep06.md)}
+  - {id: ep12, engine: 7, level: beginner, status: approved, topic: البحث في الويب داخل Claude ومتى تستخدمه, note: أُنتجت كحلقة المحرك 07 (master-claude/episodes/ep07.md)}
+  - {id: ep13, engine: 8, level: intermediate, status: approved, topic: تعليمات Claude على مستوى الحساب (بدل Styles), note: 'Styles غير موجودة في صفحة التخصيص الرسمية الحالية (غير مؤكد) — مسودة المحرك 08 (master-claude/episodes/ep08.md)'}
+  - {id: ep14, engine: 9, level: intermediate, status: approved, topic: الذاكرة في Claude وكيف تتحكم بها, note: معاينة المحرك 09 (master-claude/episodes/ep09.md)}
+  - {id: ep15, engine: 10, level: intermediate, status: approved, topic: أعطِ Claude أمثلة ليقلّد الأسلوب, note: مسودة المحرك 10 (master-claude/episodes/ep10.md)}
+  - {id: ep16, engine: 11, level: pro, status: approved, topic: ما هي الـ Skills وكيف تصنع واحدة, note: مسودة المحرك 11 (master-claude/episodes/ep11.md)}
+  - {id: ep17, engine: 12, level: pro, status: approved, topic: Claude Code لأول مرة — بناء صفحة بسيطة, note: 'معاينة المحرك 12 (master-claude/episodes/ep12.md) — يحتاج اشتراكاً مدفوعاً (Pro فما فوق)'}
+  - {id: ep18, level: pro, status: deferred, topic: الموصلات (Connectors) وربط Claude بتطبيقاتك, note: 'مؤجلة — تحتاج أسماء تطبيقات/شركات لتُفهم (تعارض مع قاعدة لا جهات)؛ قرار المالك'}
+  - {id: ep19, engine: 13, level: beginner, status: approved, topic: الوضع الصوتي — كلّم Claude بصوتك, note: 'مسودة المحرك 13 (master-claude/episodes/ep13.md)؛ متاح مجاناً؛ اللغات غير الإنجليزية تجريبية'}
+  - {id: ep20, engine: 14, level: beginner, status: approved, topic: اطلب من Claude ملفاً حقيقياً (PDF) تنزّله وتطبعه, note: 'مسودة المحرك 14 (master-claude/episodes/ep14.md)؛ مجاني وعلى الجوال؛ تشابه فكرة محتمل مع EP05 (Artifact) — حكم المالك'}
+  - {id: ep21, engine: 15, level: beginner, status: approved, topic: شارك محادثتك مع Claude برابط واحد, note: 'مسودة المحرك 15 (master-claude/episodes/ep15.md)؛ مجاني، بلا حساب للمستلم، للقراءة فقط؛ الجوال غير مؤكد'}
