@@ -13,13 +13,13 @@ const style: Style = {theme: 'ember', hook: 'reveal', breaks: 'snap'};
 
 const STEPS_AR: Step[] = [
   {n: '1', label: 'قل «تذكّر»', ex: 'عندي شرفة صغيرة', color: COLORS.orange, icon: 'heart'},
-  {n: '2', label: 'انسَ أو عدّل', ex: 'في أي وقت', color: COLORS.blue, icon: 'task'},
-  {n: '3', label: 'محادثة خفية', ex: 'الشبح أعلى اليمين', color: COLORS.green, icon: 'context'},
+  {n: '2', label: 'انسَ أو عدّل', ex: 'متى شئت', color: COLORS.blue, icon: 'task'},
+  {n: '3', label: 'محادثة خفية', ex: 'عند البدء · فوق يميناً', color: COLORS.green, icon: 'context'},
 ];
 const STEPS_EN: Step[] = [
   {n: '1', label: 'Say "remember"', ex: 'Small balcony only', color: COLORS.orange, icon: 'heart'},
   {n: '2', label: 'Forget or update', ex: 'Anytime', color: COLORS.blue, icon: 'task'},
-  {n: '3', label: 'Incognito', ex: 'Ghost icon, top right', color: COLORS.green, icon: 'context'},
+  {n: '3', label: 'Incognito', ex: 'Chat start · top right', color: COLORS.green, icon: 'context'},
 ];
 
 export const EP09_AR: EpisodeDataV2 = {
@@ -28,11 +28,11 @@ export const EP09_AR: EpisodeDataV2 = {
   lang: 'ar',
   dir: 'rtl',
   voice: 'vo/ep09_ar.wav',
-  voiceDur: 28.41,
-  cues: {problem: 3.46, typeAt: 4.0, badAt: 5.36, formula: 7.96, steps: [9.84, 13.34, 17.18], diff: 21.56, cta: 25.44},
+  voiceDur: 32.41,
+  cues: {problem: 3.5, typeAt: 4.44, badAt: 6.54, formula: 8.56, steps: [10.72, 14.42, 18.58], diff: 25.12, cta: 29.34},
   text: {
     stop: 'هكذا؟',
-    hookSub: 'يعرف ما لديك',
+    hookSub: 'يتذكّر شرفتك الصغيرة',
     userMsg: 'ماذا أزرع هذا الشهر؟',
     badLabel: 'حديقة لا تملكها',
     formulaTitle: 'ذاكرة Claude',
@@ -57,13 +57,13 @@ export const EP09_EN: EpisodeDataV2 = {
   lang: 'en',
   dir: 'ltr',
   voice: 'vo/ep09_en.wav',
-  voiceDur: 30.49,
-  cues: {problem: 4.32, typeAt: 4.9, badAt: 6.52, formula: 9.2, steps: [11.36, 15.34, 19.36], diff: 24.2, cta: 27.74},
+  voiceDur: 31.21,
+  cues: {problem: 3.54, typeAt: 4.16, badAt: 6.22, formula: 8.7, steps: [10.82, 14.46, 18.44], diff: 24.58, cta: 28.3},
   text: {
     stop: 'THIS?',
-    hookSub: 'Knows your setup',
+    hookSub: 'Remembers your balcony',
     userMsg: 'What should I plant this month?',
-    badLabel: "A garden you don't have",
+    badLabel: 'No garden here',
     formulaTitle: "Claude's memory",
     steps: STEPS_EN,
     before: 'Before',

@@ -13,13 +13,13 @@ const style: Style = {theme: 'electric', hook: 'stop', breaks: 'snap'};
 
 const STEPS_AR: Step[] = [
   {n: '1', label: 'الصق 3 أمثلة', ex: 'كتبتها أنت', color: COLORS.orange, icon: 'task'},
-  {n: '2', label: 'نوّعها', ex: 'قصير · طويل · مناسبة أخرى', color: COLORS.blue, icon: 'format'},
-  {n: '3', label: '«بالأسلوب نفسه»', ex: 'لأخي في عيد ميلاده', color: COLORS.green, icon: 'heart'},
+  {n: '2', label: 'نوّعها', ex: 'قصيرة · طويلة · مناسبة أخرى', color: COLORS.blue, icon: 'format'},
+  {n: '3', label: '«بالأسلوب نفسه»', ex: 'لصديقي في تخرّجه', color: COLORS.green, icon: 'heart'},
 ];
 const STEPS_EN: Step[] = [
   {n: '1', label: 'Paste 3 examples', ex: 'Your own', color: COLORS.orange, icon: 'task'},
-  {n: '2', label: 'Mix them', ex: 'Short · long · new occasion', color: COLORS.blue, icon: 'format'},
-  {n: '3', label: '"Same style"', ex: "Brother's birthday", color: COLORS.green, icon: 'heart'},
+  {n: '2', label: 'Vary them', ex: 'Short · long · other occasion', color: COLORS.blue, icon: 'format'},
+  {n: '3', label: '"Same style"', ex: "Friend's graduation", color: COLORS.green, icon: 'heart'},
 ];
 
 export const EP10_AR: EpisodeDataV2 = {
@@ -28,8 +28,8 @@ export const EP10_AR: EpisodeDataV2 = {
   lang: 'ar',
   dir: 'rtl',
   voice: 'vo/ep10_ar.wav',
-  voiceDur: 30.13,
-  cues: {problem: 1.82, typeAt: 2.3, badAt: 3.98, formula: 5.32, steps: [7.66, 11.48, 17.54], diff: 23.2, cta: 26.9},
+  voiceDur: 31.13,
+  cues: {problem: 0.8, typeAt: 1.2, badAt: 2.66, formula: 4.24, steps: [6.72, 10.94, 17.48], diff: 23.72, cta: 27.92},
   text: {
     stop: 'توقف!',
     hookSub: 'لا يشبه كلامك؟',
@@ -37,10 +37,10 @@ export const EP10_AR: EpisodeDataV2 = {
     badLabel: 'كأن غريباً كتبها',
     formulaTitle: 'أعطه أمثلة',
     steps: STEPS_AR,
-    before: 'تهنئة عامة',
+    before: 'تهنئة باردة',
     after: 'بأسلوبك أنت',
     proResult: 'تهنئة تشبهك',
-    emailSubject: 'عيد ميلاد سعيد يا أخي',
+    emailSubject: 'مبروك التخرّج يا صديقي',
     save: 'احفظ الفيديو',
     follow: 'تابعنا',
     daily: 'مهارة جديدة في كل حلقة',
@@ -57,19 +57,19 @@ export const EP10_EN: EpisodeDataV2 = {
   lang: 'en',
   dir: 'ltr',
   voice: 'vo/ep10_en.wav',
-  voiceDur: 25.81,
-  cues: {problem: 1.86, typeAt: 2.18, badAt: 3.28, formula: 4.88, steps: [7.96, 10.82, 15.4], diff: 20.18, cta: 23.92},
+  voiceDur: 25.45,
+  cues: {problem: 0.72, typeAt: 1.1, badAt: 2.12, formula: 3.86, steps: [6.14, 9.18, 13.72], diff: 19.12, cta: 23.3},
   text: {
     stop: 'STOP!',
     hookSub: 'Not your voice?',
     userMsg: 'Write me a greeting',
-    badLabel: 'Like a stranger wrote it',
+    badLabel: 'A stranger wrote it',
     formulaTitle: 'Give examples',
     steps: STEPS_EN,
-    before: 'Generic',
+    before: 'Flat greeting',
     after: 'Your style',
     proResult: 'Sounds like you',
-    emailSubject: 'Happy birthday, bro',
+    emailSubject: 'Congrats on graduating!',
     save: 'Save this video',
     follow: 'Follow',
     daily: 'A new skill every episode',

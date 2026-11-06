@@ -320,10 +320,19 @@ def test_past_post_is_not_rechecked_for_approval():
 def test_real_episodes_approval_matches_status_lines():
     real = ROOT / "master-claude" / "episodes"
     assert cc.approved(7, real) and cc.approved(15, real)
-    assert not cc.approved(8, real)  # «مسودة v2» on 5 Nov 2026
+    # EP08–EP10 approved 6 Nov 2026 after the critic passes (status «معتمدة 6 نوفمبر 2026»)
+    assert all(cc.approved(n, real) for n in (8, 9, 10))
 
 
-def test_plan_cli_lists_held_episodes(capsys):
+def test_plan_cli_lists_held_episodes(capsys, monkeypatch):
+    d = episodes_dir({8: "مسودة v2"}, last=15)
+    monkeypatch.setattr(cc, "EPISODES", d)
+    monkeypatch.setattr(cc.status, "__defaults__", (d,))
+    monkeypatch.setattr(cc.approved, "__defaults__", (d,))
+    monkeypatch.setattr(cc.held, "__defaults__", (None, d))
+    monkeypatch.setattr(cc.plan, "__defaults__", (3, None, d))
+    monkeypatch.setattr(cc.last_episode, "__defaults__", (d,))
+    monkeypatch.setattr(cc.episode_title, "__defaults__", (d,))
     assert cc.main(["--plan", "3", "--today", "2026-11-05"]) == 0
     out = capsys.readouterr().out
     assert "held (not approved, never proposed): EP08" in out
