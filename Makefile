@@ -1,4 +1,4 @@
-.PHONY: setup postiz-reconcile backlog-check metrics-check clip-status calendar-check calendar-plan cue-check caption-check similarity-check style-check frozen-check frozen-render test validate engine-check glyph-check source-check script-length layout-check check episode episode-preflight episode-kit voice-level
+.PHONY: setup voice-transcript postiz-reconcile backlog-check metrics-check clip-status calendar-check calendar-plan cue-check caption-check similarity-check style-check frozen-check frozen-render test validate engine-check glyph-check source-check script-length layout-check check episode episode-preflight episode-kit voice-level
 setup:           ## install the Python tools' dependencies (a fresh container lacks brotli for glyph-check)
 	python3 -m pip install -q -r requirements-dev.txt $(if $(VIRTUAL_ENV),,--break-system-packages)
 test:            ## run all tests
@@ -62,3 +62,6 @@ episode-kit:     ## captions (.srt) + per-platform post text only (no render)
 voice-level:     ## make voice-level NN=04 [FIX=1] — voice loudness vs reference; FIX=1 repairs when final QA failed on loudness
 	@test -n "$(NN)" || (echo "usage: make voice-level NN=04 [FIX=1]" && exit 2)
 	python3 tools/voice_level.py master-claude/public/vo/ep$(NN)_ar.wav master-claude/public/vo/ep$(NN)_en.wav $(if $(filter 1,$(FIX)),--fix,)
+voice-transcript: ## make voice-transcript NN=09|all [MODEL=medium] — does the voice say the script? (whisper; hints with timestamps)
+	@test -n "$(NN)" || (echo "usage: make voice-transcript NN=09|all [MODEL=medium]" && exit 2)
+	python3 tools/voice_transcript_check.py $(NN) $(if $(MODEL),--model $(MODEL),)
