@@ -414,3 +414,61 @@ def test_unconfirmed_is_one_warning_per_account_in_main(capsys, tmp_path):
                  + channel_table("تيك توك العربي", [("2026-11-01 16:00", "EP01 أ", pid(2))]), encoding="utf-8")
     assert cc.main(["--file", str(f), "--today", "2026-11-04", "--runway-days", "0"]) == 0
     assert capsys.readouterr().out.count("unconfirmed:") == 2
+
+
+# --- source-age: the official page re-opened close to the post date (7 Nov 2026) ---
+
+def _ep(tmp: Path, n: int, reviewed: str, state: str = "معتمدة 1 نوفمبر") -> None:
+    (tmp / f"ep{n:02d}.md").write_text(
+        f"# الحلقة {n} — عنوان / Title\n\n- الحالة: **{state}**\n"
+        f"- المصدر الرسمي (رُوجع {reviewed}): https://support.claude.com/en/articles/1\n",
+        encoding="utf-8")
+
+
+def test_source_reviewed_long_before_post_warns_once_per_episode(tmp_path):
+    _ep(tmp_path, 7, "2026-11-01")
+    md = channel_table("إنستغرام العربي", [("2026-11-26 16:00", "AR EP07 بحث", pid(1))])
+    md += channel_table("تيك توك العربي", [("2026-11-26 16:00", "AR EP07 بحث", pid(2))])
+    posts, _ = cc.parse(md)
+    out = cc.source_age(posts, TODAY, episodes=tmp_path)
+    assert [(lvl, rule) for lvl, rule, _ in out] == [("warning", "source-age")]
+    assert "EP07" in out[0][2] and "2026-11-01" in out[0][2] and "25" in out[0][2]
+
+
+def test_source_reviewed_recently_is_fine(tmp_path):
+    _ep(tmp_path, 7, "2026-11-01")
+    md = channel_table("إنستغرام العربي", [("2026-11-10 16:00", "AR EP07 بحث", pid(1))])
+    posts, _ = cc.parse(md)
+    assert cc.source_age(posts, TODAY, episodes=tmp_path) == []
+
+
+def test_source_age_uses_the_first_future_post(tmp_path):
+    _ep(tmp_path, 7, "2026-11-01")
+    md = channel_table("إنستغرام العربي", [("2026-11-10 16:00", "AR EP07 بحث", pid(1))])
+    md += channel_table("إنستغرام الإنجليزي", [("2026-11-30 18:00", "EN EP07 Search", pid(2))])
+    posts, _ = cc.parse(md)
+    assert cc.source_age(posts, TODAY, episodes=tmp_path) == []
+
+
+def test_past_posts_and_missing_source_are_not_source_age(tmp_path):
+    _ep(tmp_path, 7, "2026-10-01")
+    (tmp_path / "ep08.md").write_text("# الحلقة 8 — x\n- الحالة: **معتمدة**\n", encoding="utf-8")
+    md = channel_table("إنستغرام العربي", [("2026-11-02 16:00", "AR EP07 بحث", pid(1)),
+                                           ("2026-12-01 16:00", "AR EP08 x", pid(2))])
+    posts, _ = cc.parse(md)
+    assert cc.source_age(posts, TODAY, episodes=tmp_path) == []  # missing source = source_check's error
+
+
+def test_source_age_days_zero_turns_it_off(tmp_path):
+    _ep(tmp_path, 7, "2026-10-01")
+    md = channel_table("إنستغرام العربي", [("2026-11-26 16:00", "AR EP07 بحث", pid(1))])
+    posts, _ = cc.parse(md)
+    assert cc.source_age(posts, TODAY, days=0, episodes=tmp_path) == []
+
+
+def test_plan_rows_get_source_age_too(tmp_path):
+    _ep(tmp_path, 7, "2026-11-01")
+    rows = [("instagram-ar", dt.datetime(2026, 11, 17, 16), 7),
+            ("tiktok-ar", dt.datetime(2026, 11, 19, 16), 7)]
+    assert cc.recheck_sources(rows, episodes=tmp_path) == [(7, dt.date(2026, 11, 1), 16)]
+    assert cc.recheck_sources(rows, days=20, episodes=tmp_path) == []

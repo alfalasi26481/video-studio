@@ -32,6 +32,11 @@ warnings (future posts only, from --today)
             the file says what was scheduled, not what went out; metrics_check
             asks for 48 h numbers on them all the same (6 Nov 2026: 5 past
             posts on Arabic Instagram/TikTok, only the 31 Oct intro marked)
+  source-age  one per episode: its first future post is more than
+            --source-days (default 14, 0 = off) after the newest official-page
+            review date in epNN.md — re-open the page before it goes out
+            (7 Nov 2026: EP07's web-search page had already moved to "no
+            toggle" between drafts; approved episodes wait weeks in the queue)
 
 --plan N (read-only proposal, never scheduled by this tool)
   the next N episodes per account on the next free cadence slots after its
@@ -45,6 +50,8 @@ warnings (future posts only, from --today)
   --lead-days (default 2: own shots + render + final check + upload) — the
   last day the owner's clips/hosting decision still keeps that slot
   (6 Nov 2026: EP07 first slot 17 Nov → decide by 15 Nov).
+  A «re-check source» line lists proposed episodes whose first slot is more
+  than --source-days after their official-page review.
 
 Nothing is fetched from Postiz; the file is the only input.
 """
@@ -276,6 +283,55 @@ def unconfirmed(posts: list[Post], today: dt.date) -> list[tuple[str, str, str]]
     return out
 
 
+SOURCE_DAYS = 14
+
+
+def reviewed(n: int, episodes: Path = EPISODES) -> dt.date | None:
+    """Newest «المصدر الرسمي (رُوجع …)» date of epNN.md (source_check's parser)."""
+    f = episodes / f"ep{n:02d}.md"
+    if not f.exists():
+        return None
+    import source_check
+    return source_check.check_text(f.stem, f.read_text(encoding="utf-8")).reviewed
+
+
+def _stale(first: dict[int, dt.date], days: int,
+           episodes: Path) -> list[tuple[int, dt.date, int]]:
+    out = []
+    if days <= 0:
+        return out
+    for n, when in sorted(first.items()):
+        r = reviewed(n, episodes)
+        if r is not None and (when - r).days > days:
+            out.append((n, r, (when - r).days))
+    return out
+
+
+def source_age(posts: list[Post], today: dt.date, days: int = SOURCE_DAYS,
+               episodes: Path = EPISODES) -> list[tuple[str, str, str]]:
+    """One warning per episode whose first future post is > `days` after its source review."""
+    first: dict[int, dt.date] = {}
+    for p in current(posts):
+        if p.ep and p.when.date() >= today:
+            n = int(p.ep)
+            if n not in first or p.when.date() < first[n]:
+                first[n] = p.when.date()
+    return [("warning", "source-age", f"EP{n:02d}: official page reviewed {r}, first post "
+             f"{first[n]} ({gap} days later, threshold {days}) — re-open the source page "
+             "and update the «رُوجع» date before it goes out")
+            for n, r, gap in _stale(first, days, episodes)]
+
+
+def recheck_sources(rows: list[tuple[str, dt.datetime, int]], days: int = SOURCE_DAYS,
+                    episodes: Path = EPISODES) -> list[tuple[int, dt.date, int]]:
+    """(episode, review date, days to first slot) for proposed episodes past `days`."""
+    first: dict[int, dt.date] = {}
+    for _, when, ep in rows:
+        if ep not in first or when.date() < first[ep]:
+            first[ep] = when.date()
+    return _stale(first, days, episodes)
+
+
 def last_episode(episodes: Path = EPISODES) -> int:
     nums = [int(m.group(1)) for f in episodes.glob("ep*.md") if (m := re.fullmatch(r"ep(\d\d)\.md", f.name))]
     return max(nums, default=0)
@@ -376,6 +432,9 @@ def main(argv: list[str] | None = None) -> int:
                     help="warn when an account's schedule ends sooner than this (0 = off)")
     ap.add_argument("--lead-days", type=int, default=LEAD_DAYS,
                     help="--plan: days before an episode's first slot its master must be decided")
+    ap.add_argument("--source-days", type=int, default=SOURCE_DAYS,
+                    help="warn when an episode's first future post is more than this many days "
+                         "after its official-page review (0 = off)")
     ap.add_argument("--list", action="store_true", help="print the current schedule")
     ap.add_argument("--plan", type=int, metavar="N", default=0,
                     help="propose the next N episodes per account on free cadence slots (read-only)")
@@ -399,6 +458,10 @@ def main(argv: list[str] | None = None) -> int:
             print(f"decide by (first slot − {a.lead_days} d): " + ", ".join(
                 f"EP{ep:02d} {d:%d %b}" + (" — PAST" if d < a.today else "")
                 for ep, d, _ in dl))
+        stale = recheck_sources(rows, a.source_days)
+        if stale:
+            print(f"re-check source (first slot > {a.source_days} d after review): " + ", ".join(
+                f"EP{n:02d} reviewed {r:%d %b} ({g} d)" for n, r, g in stale))
         hold = held(posts)
         if hold:
             print("held (not approved, never proposed): " + ", ".join(
@@ -412,7 +475,8 @@ def main(argv: list[str] | None = None) -> int:
             print("placeholder clips (EP01 shots until the owner approves own shots): "
                   + ", ".join(f"EP{n:02d}" for n in ph) + " — make clip-status")
         return 0
-    findings = check(posts, a.today) + gaps(posts) + unconfirmed(posts, a.today)
+    findings = (check(posts, a.today) + gaps(posts) + unconfirmed(posts, a.today)
+                + source_age(posts, a.today, a.source_days))
     if a.runway_days > 0:
         findings += runway(posts, a.today, a.runway_days)
     for level, rule, msg in findings:
