@@ -16,7 +16,7 @@ errors
   unapproved  a future post whose epNN.md status line («- الحالة: **…**») does
             not open with «معتمدة» — only owner-approved episodes go out
             (5 Nov 2026: --plan proposed EP08 «مسودة v2» and EP09 for 19/22 Nov)
-warnings (future posts only, from --today)
+warnings (future posts only: after --now, default the current UTC minute; --today = whole days)
   time      Arabic not at 16:00 UTC, English not at 18:00 UTC (4 Nov 2026)
   weekday   not Sunday / Tuesday / Thursday (the published cadence)
   runway    an account's last current post is fewer than --runway-days days
@@ -27,7 +27,7 @@ warnings (future posts only, from --today)
             and last episode) — an account that simply started later is fine
             (5 Nov 2026: EP03-AR was on Instagram only; Arabic TikTok jumped
             from EP02 to EP04)
-  unconfirmed  one per account: posts dated before --today that the file does
+  unconfirmed  one per account: posts before --now (or --today) that the file does
             not mark «منشور» (no «الحالة» column, or another word in it) —
             the file says what was scheduled, not what went out; metrics_check
             asks for 48 h numbers on them all the same (6 Nov 2026: 5 past
@@ -192,7 +192,15 @@ def approved(n: int, episodes: Path = EPISODES) -> bool:
     return status(n, episodes).startswith("معتمدة")
 
 
-def check(posts: list[Post], today: dt.date, episodes: Path = EPISODES) -> list[tuple[str, str, str]]:
+def _future(p: Post, ref: dt.date | dt.datetime) -> bool:
+    """Still to come at `ref`: a datetime compares to the minute (a post at 16:00 has gone
+    out by a 20:25 run, 7 Nov 2026); a bare date keeps the whole-day rule."""
+    if isinstance(ref, dt.datetime):
+        return p.when > ref
+    return p.when.date() >= ref
+
+
+def check(posts: list[Post], today: dt.date | dt.datetime, episodes: Path = EPISODES) -> list[tuple[str, str, str]]:
     """(level, rule, message) for the current schedule."""
     out: list[tuple[str, str, str]] = []
     live = current(posts)
@@ -210,14 +218,14 @@ def check(posts: list[Post], today: dt.date, episodes: Path = EPISODES) -> list[
             seen_ep[key] = p
             if not (episodes / f"ep{p.ep}.md").exists():
                 out.append(("error", "no-ep", f"{where}: no master-claude/episodes/ep{p.ep}.md"))
-            elif p.when.date() >= today and not approved(int(p.ep), episodes):
+            elif _future(p, today) and not approved(int(p.ep), episodes):
                 out.append(("error", "unapproved", f"{where}: ep{p.ep}.md status is "
                             f"«{status(int(p.ep), episodes) or 'missing'}», not «معتمدة»"))
         slot = (p.channel, p.when)
         if slot in seen_slot:
             out.append(("error", "dup-slot", f"{where}: slot taken by «{seen_slot[slot].label}» (line {seen_slot[slot].line})"))
         seen_slot[slot] = p
-        if p.when.date() >= today:
+        if _future(p, today):
             if (p.when.hour, p.when.minute) != SLOT[p.lang]:
                 out.append(("warning", "time", f"{where}: {p.lang.upper()} slot is {SLOT[p.lang][0]:02d}:00 UTC"))
             if p.when.weekday() not in CADENCE:
@@ -268,11 +276,11 @@ def gaps(posts: list[Post]) -> list[tuple[str, str, str]]:
 PUBLISHED = "منشور"
 
 
-def unconfirmed(posts: list[Post], today: dt.date) -> list[tuple[str, str, str]]:
+def unconfirmed(posts: list[Post], today: dt.date | dt.datetime) -> list[tuple[str, str, str]]:
     """One warning per account listing its past posts not marked «منشور»."""
     by: dict[str, list[Post]] = {}
     for p in current(posts):
-        if p.when.date() < today and not p.state.startswith(PUBLISHED):
+        if not _future(p, today) and not p.state.startswith(PUBLISHED):
             by.setdefault(p.channel, []).append(p)
     out: list[tuple[str, str, str]] = []
     for channel, ps in sorted(by.items()):
@@ -307,12 +315,12 @@ def _stale(first: dict[int, dt.date], days: int,
     return out
 
 
-def source_age(posts: list[Post], today: dt.date, days: int = SOURCE_DAYS,
+def source_age(posts: list[Post], today: dt.date | dt.datetime, days: int = SOURCE_DAYS,
                episodes: Path = EPISODES) -> list[tuple[str, str, str]]:
     """One warning per episode whose first future post is > `days` after its source review."""
     first: dict[int, dt.date] = {}
     for p in current(posts):
-        if p.ep and p.when.date() >= today:
+        if p.ep and _future(p, today):
             n = int(p.ep)
             if n not in first or p.when.date() < first[n]:
                 first[n] = p.when.date()
@@ -427,7 +435,10 @@ def plan_table(rows: list[tuple[str, dt.datetime, int]]) -> str:
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--file", type=Path, default=CALENDAR)
-    ap.add_argument("--today", type=dt.date.fromisoformat, default=dt.datetime.now(dt.timezone.utc).date())
+    ap.add_argument("--today", type=dt.date.fromisoformat, default=None,
+                    help="judge past/future by whole days (tests); default: --now")
+    ap.add_argument("--now", type=dt.datetime.fromisoformat, default=None,
+                    help="UTC moment that splits past from future posts (default: now)")
     ap.add_argument("--runway-days", type=int, default=RUNWAY_DAYS,
                     help="warn when an account's schedule ends sooner than this (0 = off)")
     ap.add_argument("--lead-days", type=int, default=LEAD_DAYS,
@@ -439,6 +450,9 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--plan", type=int, metavar="N", default=0,
                     help="propose the next N episodes per account on free cadence slots (read-only)")
     a = ap.parse_args(argv)
+    now = a.now or dt.datetime.now(dt.timezone.utc).replace(tzinfo=None)
+    ref = a.today if a.today else now
+    a.today = a.today or now.date()
     if not a.file.exists():
         print(f"calendar check: {a.file} not found", file=sys.stderr)
         return 2
@@ -475,8 +489,8 @@ def main(argv: list[str] | None = None) -> int:
             print("placeholder clips (EP01 shots until the owner approves own shots): "
                   + ", ".join(f"EP{n:02d}" for n in ph) + " — make clip-status")
         return 0
-    findings = (check(posts, a.today) + gaps(posts) + unconfirmed(posts, a.today)
-                + source_age(posts, a.today, a.source_days))
+    findings = (check(posts, ref) + gaps(posts) + unconfirmed(posts, ref)
+                + source_age(posts, ref, a.source_days))
     if a.runway_days > 0:
         findings += runway(posts, a.today, a.runway_days)
     for level, rule, msg in findings:

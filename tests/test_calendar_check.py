@@ -472,3 +472,33 @@ def test_plan_rows_get_source_age_too(tmp_path):
             ("tiktok-ar", dt.datetime(2026, 11, 19, 16), 7)]
     assert cc.recheck_sources(rows, episodes=tmp_path) == [(7, dt.date(2026, 11, 1), 16)]
     assert cc.recheck_sources(rows, days=20, episodes=tmp_path) == []
+
+
+# --- now vs today: a post earlier today has already gone out (7 Nov 2026) ---
+
+NOW = dt.datetime(2026, 11, 7, 20, 25)
+
+
+def test_post_earlier_today_is_past_for_slot_and_weekday():
+    # youtube-ar «تحقق قبل أن تثق» went out Saturday 16:00; the 20:25 run still warned "weekday"
+    md = channel_table("إنستغرام العربي", [("2026-11-07 16:00", "AR أرشيف", pid(1))])
+    assert run(md, today=NOW) == []
+
+
+def test_post_later_today_is_still_future():
+    md = channel_table("إنستغرام العربي", [("2026-11-07 21:00", "AR أرشيف", pid(1))])
+    assert ("warning", "weekday") in run(md, today=NOW)
+
+
+def test_post_earlier_today_counts_as_unconfirmed():
+    posts, _ = cc.parse(channel_table("إنستغرام العربي", [("2026-11-07 16:00", "EP01 أ", pid(1))]))
+    assert [r for _, r, _ in cc.unconfirmed(posts, NOW)] == ["unconfirmed"]
+    assert cc.unconfirmed(posts, NOW.date()) == []  # a date keeps the old whole-day rule
+
+
+def test_main_now_flag_drives_past_and_future(tmp_path, capsys):
+    f = tmp_path / "c.md"
+    f.write_text(channel_table("إنستغرام العربي", [("2026-11-07 16:00", "AR أرشيف", pid(1))]), encoding="utf-8")
+    assert cc.main(["--file", str(f), "--now", "2026-11-07T20:25", "--runway-days", "0"]) == 0
+    out = capsys.readouterr().out
+    assert "weekday" not in out and "unconfirmed:" in out
