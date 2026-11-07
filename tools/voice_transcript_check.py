@@ -64,8 +64,20 @@ def normalize(word: str, lang: str) -> str:
     return _ALIASES.get(w, w) if lang == "ar" else w
 
 
+_HARAKAT = re.compile("[\u0610-\u061a\u064b-\u065f\u0670\u06d6-\u06ed]")  # combining marks only (no tatweel)
+_TATWEEL_JOIN = re.compile(r"ـ\s+")                 # «الـ Artifact» / «لـ Claude» = one spoken word
+
+
 def tokens(text: str, lang: str) -> list[str]:
-    out = [normalize(t, lang) for t in _TOKEN.findall(text)]
+    # Strip combining marks BEFORE cutting words: a shadda is not \w, so «قسّم»
+    # used to become «قس» + «م» (7 Nov 2026, EP03/EP05 false warnings).
+    text = _HARAKAT.sub("", text)
+    if lang == "ar":
+        text = _TATWEEL_JOIN.sub("ـ", text)
+    out = []
+    for t in _TOKEN.findall(text):
+        parts = [p for p in t.split("ـ") if p] if lang == "ar" else [t]
+        out.append("".join(normalize(p, lang) for p in parts))
     return [t for t in out if t]
 
 

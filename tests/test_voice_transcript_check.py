@@ -93,3 +93,20 @@ def test_real_scripts_parse():
     scripts = vtc.spoken_scripts(md)
     assert len(vtc.tokens(scripts["ar"], "ar")) > 40
     assert "balcony" in vtc.tokens(scripts["en"], "en")
+
+
+def test_shadda_does_not_split_a_word():
+    # 7 Nov 2026: «قسّم» (EP03) and «فعّل» (EP05) became «قس» + «م» / «فع» + «ل»,
+    # because the shadda is a combining mark (not \w) and tokens were cut before
+    # diacritics were stripped — a false «listen at» on every doubled letter.
+    assert vtc.tokens("قسّم الطلب، ثم فعّل الخيار", "ar") == ["قسم", "الطلب", "ثم", "فعل", "الخيار"]
+    rep = vtc.check("قسّم الطلب. فعّل الخيار.", words("قسم الطلب فعل الخيار"), "ar")
+    assert rep.recall == 1.0 and rep.misses == []
+
+
+def test_tatweel_prefix_joins_next_word():
+    # «الـ Artifact» / «لـ Claude» are one spoken word: «الارتفاكت», «لكلود»
+    assert vtc.tokens("الـ Artifact", "ar") == ["الartifact"]
+    assert vtc.tokens("لـ Claude", "ar") == ["لكلود"]
+    rep = vtc.check("تعليمات لـ Claude", words("تعليمات لكلود"), "ar")
+    assert rep.recall == 1.0
