@@ -1,0 +1,69 @@
+id: ep09
+level: beginner
+status: verified
+title:
+  ar: ما هي المشاريع في Claude؟
+  en: What are Projects in Claude?
+sources:
+  - url: https://support.claude.com/en/articles/9517075-what-are-projects
+    claim: Projects are self-contained workspaces with their own chat histories and knowledge bases; you can add files to project knowledge and set project instructions; available on all plans, free users can create up to five.
+    checked: 2026-10-30
+scenes:
+  - role: hook
+    motion: KineticTitle
+    ar:
+      narration: هل تعيد شرح الموضوع نفسه لـ Claude في كل محادثة جديدة؟ هناك طريقة توفر عليك ذلك.
+      on_screen: توقف عن إعادة الشرح
+    en:
+      narration: Do you explain the same thing to Claude in every new chat? There is a way to skip that.
+      on_screen: Stop repeating yourself
+  - role: step
+    motion: BoxReveal
+    ar:
+      narration: المشروع في Claude مساحة مستقلة، لها محادثاتها الخاصة وقاعدة معرفة خاصة بها.
+      on_screen: المشروع = مساحة مستقلة
+      items: [محادثات المشروع, قاعدة المعرفة, تعليمات المشروع]
+    en:
+      narration: A Project in Claude is a self-contained workspace, with its own chats and its own knowledge base.
+      on_screen: Project = its own workspace
+      items: [Project chats, Knowledge base, Project instructions]
+  - role: step
+    motion: FlowDiagram
+    ar:
+      narration: أضف ملفاتك ونصوصك إلى قاعدة المعرفة، فيستخدمها Claude سياقاً في كل محادثة داخل المشروع.
+      on_screen: ملفاتك ← سياق دائم
+      items: [ملفاتك, قاعدة المعرفة, كل محادثة]
+    en:
+      narration: Add your files and text to the knowledge base, and Claude uses them as context in every chat inside the project.
+      on_screen: Your files → lasting context
+      items: [Your files, Knowledge base, Every chat]
+  - role: step
+    motion: ChatMock
+    ar:
+      narration: ثم اكتب تعليمات المشروع، مثل الأسلوب الذي تفضله. مثلاً مشروع لتعلم لغة جديدة بشرح بسيط وأمثلة قصيرة.
+      on_screen: تعليمات مرة واحدة
+      chat:
+        user: "تعليمات المشروع: اشرح لي قواعد اللغة بأمثلة قصيرة وبسيطة."
+        reply: حسناً، سأستخدم أمثلة قصيرة في كل شرح داخل هذا المشروع.
+    en:
+      narration: Then write project instructions, like the style you prefer. For example, a project for learning a new language with simple explanations and short examples.
+      on_screen: Instructions, set once
+      chat:
+        user: "Project instructions: explain grammar with short, simple examples."
+        reply: Got it. I'll use short examples in every explanation in this project.
+  - role: recap
+    motion: Arrow
+    ar:
+      narration: الخلاصة. أنشئ مشروعاً، أضف معرفتك، اكتب تعليماتك. والمشاريع متاحة في كل الخطط، ويمكن للخطة المجانية إنشاء خمسة.
+      on_screen: مشروع ← معرفة ← تعليمات
+    en:
+      narration: To recap. Create a project, add your knowledge, write your instructions. Projects are on every plan, and the free plan can create up to five.
+      on_screen: Project → knowledge → instructions
+  - role: cta
+    motion: KineticTitle
+    ar:
+      narration: أنشئ مشروعك الأول اليوم، وتابعنا لتتعلم المزيد عن Claude.
+      on_screen: أنشئ مشروعك الأول
+    en:
+      narration: Create your first project today, and follow us to learn more about Claude.
+      on_screen: Create your first project
