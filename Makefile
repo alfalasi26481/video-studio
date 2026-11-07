@@ -1,4 +1,4 @@
-.PHONY: setup backlog-check metrics-check clip-status calendar-check calendar-plan cue-check caption-check similarity-check style-check frozen-check frozen-render test validate engine-check glyph-check source-check script-length layout-check check episode episode-preflight episode-kit voice-level
+.PHONY: setup postiz-reconcile backlog-check metrics-check clip-status calendar-check calendar-plan cue-check caption-check similarity-check style-check frozen-check frozen-render test validate engine-check glyph-check source-check script-length layout-check check episode episode-preflight episode-kit voice-level
 setup:           ## install the Python tools' dependencies (a fresh container lacks brotli for glyph-check)
 	python3 -m pip install -q -r requirements-dev.txt $(if $(VIRTUAL_ENV),,--break-system-packages)
 test:            ## run all tests
@@ -39,6 +39,8 @@ metrics-check:   ## docs/metrics.csv: valid rows, style labels match the episode
 backlog-check:   ## episodes/backlog.yaml vs engine episodes: status matches epNN.md, every episode mapped, ≥3 ideas left (warnings, read-only)
 	python3 tools/backlog_check.py
 
+postiz-reconcile:  ## read-only: CALENDAR.md vs docs/publishing/postiz_snapshot.json (refresh it from the Postiz MCP read first) — replaced ids, moved posts, ERROR state, published but unmarked, untracked posts; not in make check
+	python3 tools/postiz_reconcile.py
 calendar-plan:  ## read-only: next N (default 3) episodes per account on free Sun/Tue/Thu slots, as rows for CALENDAR.md — schedules nothing
 	python3 tools/calendar_check.py --plan $(or $(N),3)
 check: validate backlog-check engine-check cue-check caption-check glyph-check source-check script-length style-check similarity-check calendar-check clip-status metrics-check frozen-check test
