@@ -109,13 +109,13 @@ EP07 معتمدة لكن لا يوجد ماستر مستضاف بعد — لم �
 | الموعد (UTC) | الحلقة | القناة | id جديد | id محذوف | الحالة |
 |---|---|---|---|---|---|
 | 11-08 16:00 | AR EP03 أربع عادات | إنستغرام AR | cmw1o81eu050zof06qu2qz9co | cmvxeecim037ltd1h56r717kc | منشور (Postiz PUBLISHED، قراءة 10 نوفمبر 12:35 UTC) |
-| 11-10 16:00 | AR EP04 المشاريع | إنستغرام AR | cmw1o81fi0510of063l9mqbuo | cmvxeecj2037mtd1hh71xt2gf |
+| 11-10 16:00 | AR EP04 المشاريع | إنستغرام AR | cmw1o81fi0510of063l9mqbuo | cmvxeecj2037mtd1hh71xt2gf | منشور (Postiz PUBLISHED، قراءة 10 نوفمبر 16:24 UTC) |
 | 11-12 16:00 | AR EP05 Artifact | إنستغرام AR | cmw1o81g50511of0621q3b9bu | cmvxe3y1g035xtd1h3tpvf0sd |
 | 11-15 16:00 | AR EP06 ارفع صورة | إنستغرام AR | cmw1o81gu0512of06p492mew2 | cmvxe3y1y035ytd1hpig4ccyn |
-| 11-10 16:00 | AR EP05 Artifact | تيك توك AR | cmw1o88n204z6qg07h4nsf56b | cmvyt8vfm0bz7qm08mififw1h |
+| 11-10 16:00 | AR EP05 Artifact | تيك توك AR | cmw1o88n204z6qg07h4nsf56b | cmvyt8vfm0bz7qm08mififw1h | منشور (Postiz PUBLISHED، قراءة 10 نوفمبر 16:24 UTC) |
 | 11-12 16:00 | AR EP06 ارفع صورة | تيك توك AR | cmw1o88nj04z7qg07t0dnip7o | cmvyt8vge0bz8qm08ucxkvj9e |
 | 11-08 16:00 | AR EP04 المشاريع | يوتيوب AR | cmw1o81hl0513of06h8lwg3yw | — | منشور (Postiz PUBLISHED، قراءة 10 نوفمبر 12:35 UTC) |
-| 11-10 16:00 | AR EP05 Artifact | يوتيوب AR | cmw1o81ib0514of065pblcj2e | — |
+| 11-10 16:00 | AR EP05 Artifact | يوتيوب AR | cmw1o81ib0514of065pblcj2e | — | منشور (Postiz PUBLISHED، قراءة 10 نوفمبر 16:24 UTC) |
 | 11-12 16:00 | AR EP06 ارفع صورة | يوتيوب AR | cmw1o81j00515of062p03x0ro | — |
 | 11-08 18:00 | EN EP03 Four habits | إنستغرام EN | cmw1o8on20516of06ti58hxqr | cmvyt9ena0bt7rr078tvuz07z (كان 16:00) | منشور (Postiz PUBLISHED، قراءة 10 نوفمبر 12:35 UTC) |
 | 11-10 18:00 | EN EP04 Projects | إنستغرام EN | cmw1o8onu0517of06zz1wjsrj | cmvyt9enu0bt8rr07k6im5yw3 (كان 11-08) |
