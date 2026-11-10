@@ -118,11 +118,11 @@ EP07 معتمدة لكن لا يوجد ماستر مستضاف بعد — لم �
 | 11-10 16:00 | AR EP05 Artifact | يوتيوب AR | cmw1o81ib0514of065pblcj2e | — | منشور (Postiz PUBLISHED، قراءة 10 نوفمبر 16:24 UTC) |
 | 11-12 16:00 | AR EP06 ارفع صورة | يوتيوب AR | cmw1o81j00515of062p03x0ro | — |
 | 11-08 18:00 | EN EP03 Four habits | إنستغرام EN | cmw1o8on20516of06ti58hxqr | cmvyt9ena0bt7rr078tvuz07z (كان 16:00) | منشور (Postiz PUBLISHED، قراءة 10 نوفمبر 12:35 UTC) |
-| 11-10 18:00 | EN EP04 Projects | إنستغرام EN | cmw1o8onu0517of06zz1wjsrj | cmvyt9enu0bt8rr07k6im5yw3 (كان 11-08) |
+| 11-10 18:00 | EN EP04 Projects | إنستغرام EN | cmw1o8onu0517of06zz1wjsrj | cmvyt9enu0bt8rr07k6im5yw3 (كان 11-08) | منشور (Postiz PUBLISHED، قراءة 10 نوفمبر 20:24 UTC) |
 | 11-12 18:00 | EN EP05 Artifacts | إنستغرام EN | cmw1o8ool0518of066sy98och | cmvyt9eoc0bt9rr07r8yzule8 (كان 11-10 16:00) |
 | 11-15 18:00 | EN EP06 Upload | إنستغرام EN | cmw1o8opa0519of06jpj6maxh | cmvyt9eou0btarr07wh5m7x95 (كان 11-10) |
 | 11-08 18:00 | EN EP03 Four habits | تيك توك EN | cmw1o8opy051aof068y6vqavk | cmvyt9epb0btbrr07zs29kp7y (كان 16:00) | منشور (Postiz PUBLISHED، قراءة 10 نوفمبر 12:35 UTC) |
-| 11-10 18:00 | EN EP04 Projects | تيك توك EN | cmw1o8oqn051bof06i19lxzb7 | cmvyt9epv0btcrr07uv7c0l56 (كان 11-08) |
+| 11-10 18:00 | EN EP04 Projects | تيك توك EN | cmw1o8oqn051bof06i19lxzb7 | cmvyt9epv0btcrr07uv7c0l56 (كان 11-08) | منشور (Postiz PUBLISHED، قراءة 10 نوفمبر 20:24 UTC) |
 | 11-12 18:00 | EN EP05 Artifacts | تيك توك EN | cmw1o8ore051cof063jij67s9 | cmvyt9eqc0btdrr076arguwz0 (كان 11-10 16:00) |
 | 11-15 18:00 | EN EP06 Upload | تيك توك EN | cmw1o8os4051dof06png7vv6x | cmvyt9eqv0bterr072756id30 (كان 11-10) |
 
