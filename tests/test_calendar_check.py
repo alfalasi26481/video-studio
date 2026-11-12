@@ -359,7 +359,7 @@ def test_decide_by_lead_days_and_empty():
 
 
 def test_plan_cli_prints_decide_by_and_flags_past(capsys):
-    rc = cc.main(["--plan", "1", "--today", "2026-11-16"])
+    rc = cc.main(["--plan", "1", "--today", "2026-11-18"])  # schedule runs to 17 Nov (12 Nov cycle)
     out = capsys.readouterr().out
     assert rc == 0
     line = [l for l in out.splitlines() if l.startswith("decide by")]

@@ -167,12 +167,12 @@ EP07 معتمدة لكن لا يوجد ماستر مستضاف بعد — لم �
 **ما وُجد في Postiz:** منشورات 12 نوفمبر المجدولة (AR EP05 إنستغرام cmw1o81g50511of0621q3b9bu، AR EP06 تيك توك cmw1o88nj04z7qg07t0dnip7o، AR EP06 يوتيوب cmw1o81j00515of062p03x0ro، EN EP05 إنستغرام cmw1o8ool0518of066sy98och، EN EP05 تيك توك cmw1o8ore051cof063jij67s9) **لم تعد موجودة**. حلّت محلها **مسودات (DRAFT)** لفيديو جديد «لا تكتب هذا لأي ذكاء اصطناعي ⛔» (خصوصية، ليس في `master-claude/episodes`) لم تنشئها هذه المهمة: AR 16:00 إنستغرام cmwc5ibod03u9nu0700oj1g83 · تيك توك cmwc5husw03u1nu07pslvzj25 · يوتيوب cmwc5iboq03uanu07bcgwgxlk؛ EN 18:00 إنستغرام cmwc5ibpg03ucnu07wq70y7m1 · تيك توك cmwc5ibp403ubnu07tg08a3p3. المسودة لا تُنشر وحدها، ولم تُلمس (قرار المالك).
 **ما فعلته:** أعدت جدولة الحلقات المُزاحة في أول موعد فارغ (الثلاثاء 17 نوفمبر). الملفات تُحقق منها بثلاثة إطارات لكل فيديو. مرّت بمراجعة «عين المشاهد» (جولتان، PASS).
 
-| الموعد (UTC) | الحلقة | القناة | id جديد | الملف |
-|---|---|---|---|---|
-| 11-17 16:00 | AR EP05 Artifact | إنستغرام AR | cmwd3ny3b004hmr07c3g3uejq | sC3T5xi5sS |
-| 11-17 16:00 | AR EP06 ارفع صورة | تيك توك AR | cmwd3ny3z004imr0703bziahg | I54Sg6unCO |
-| 11-17 16:00 | AR EP06 ارفع صورة | يوتيوب AR | cmwd3ny4l004jmr07ol0olzaq | I54Sg6unCO |
-| 11-17 18:00 | EN EP05 Artifacts | إنستغرام EN | cmwd3ny5b004kmr07780tdcfu | lw5zt4QTco |
-| 11-17 18:00 | EN EP05 Artifacts | تيك توك EN | cmwd3ny5y004lmr07qxsvoora | lw5zt4QTco |
+| الموعد (UTC) | الحلقة | القناة | id جديد | الملف | id محذوف |
+|---|---|---|---|---|---|
+| 11-17 16:00 | AR EP05 Artifact | إنستغرام AR | cmwd3ny3b004hmr07c3g3uejq | sC3T5xi5sS | cmw1o81g50511of0621q3b9bu (كان 11-12، اختفى من Postiz) |
+| 11-17 16:00 | AR EP06 ارفع صورة | تيك توك AR | cmwd3ny3z004imr0703bziahg | I54Sg6unCO | cmw1o88nj04z7qg07t0dnip7o (كان 11-12، اختفى من Postiz) |
+| 11-17 16:00 | AR EP06 ارفع صورة | يوتيوب AR | cmwd3ny4l004jmr07ol0olzaq | I54Sg6unCO | cmw1o81j00515of062p03x0ro (كان 11-12، اختفى من Postiz) |
+| 11-17 18:00 | EN EP05 Artifacts | إنستغرام EN | cmwd3ny5b004kmr07780tdcfu | lw5zt4QTco | cmw1o8ool0518of066sy98och (كان 11-12، اختفى من Postiz) |
+| 11-17 18:00 | EN EP05 Artifacts | تيك توك EN | cmwd3ny5y004lmr07qxsvoora | lw5zt4QTco | cmw1o8ore051cof063jij67s9 (كان 11-12، اختفى من Postiz) |
 
 بعد هذه الدورة: كل الحسابات الخمسة تنتهي في 17 نوفمبر. EP07+ بلا ماستر مستضاف — لم تُجدول.
