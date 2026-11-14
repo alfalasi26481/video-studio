@@ -1,0 +1,33 @@
+# قائمة الحلقات. status: idea → draft → verified → rendered → approved → handed_off (deferred = مؤجلة بقرار)
+# engine: N = master-claude/episodes/epNN.md (حلقة المحرك). الملاحظات تذكر الحالة يوم كتابتها؛ الحالة الحالية في epNN.md.
+# make backlog-check يقارن الحالة بسطر «الحالة» في epNN.md، ويحذّر حين تبقى أقل من 3 أفكار.
+# ep01–ep07 موجودة كـ JSON في فرع edu-channel-template (edu-channel/public/episodes/)
+# ولم تُنقل بعد إلى صيغة YAML هذه.
+episodes:
+  - {id: mc01, engine: 1, level: beginner, status: approved, topic: معادلة الطلب الاحترافي, note: حلقة المحرك 1 — بلا مسودة YAML}
+  - {id: mc02, engine: 2, level: beginner, status: approved, topic: الجملة السحرية, note: حلقة المحرك 2 — بلا مسودة YAML}
+  - {id: ep01, level: beginner, status: rendered_elsewhere, topic: ثلاث معلومات تجعل ردود Claude مفيدة, note: فرع edu-channel-template}
+  - {id: ep02, level: intermediate, status: rendered_elsewhere, topic: الفرق بين Skill و Agent و Workflow, note: فرع edu-channel-template}
+  - {id: ep03, level: beginner, status: rendered_elsewhere, topic: أول دقيقة لك مع Claude, note: فرع edu-channel-template}
+  - {id: ep04, level: beginner, status: rendered_elsewhere, topic: حدود الاستخدام, note: فرع edu-channel-template}
+  - {id: ep05, level: beginner, status: rendered_elsewhere, topic: خصوصيتك مع Claude, note: فرع edu-channel-template}
+  - {id: ep06, level: beginner, status: rendered_elsewhere, topic: حوّل ملاحظاتك إلى اختبار, note: فرع edu-channel-template}
+  - {id: ep07, level: beginner, status: rendered_elsewhere, topic: كيف تطلب نقداً صريحاً, note: فرع edu-channel-template}
+  - {id: ep08, engine: 3, level: beginner, status: approved, topic: خمس طرق تجعل طلبك أوضح, note: مسودة محرك master-claude/episodes/ep03.md بانتظار الموافقة}
+  - {id: ep09, engine: 4, level: beginner, status: approved, topic: المشاريع (Projects) في Claude}
+  - {id: ep10, engine: 5, level: beginner, status: approved, topic: الـ Artifacts في Claude}
+  - {id: ep11, engine: 6, level: beginner, status: approved, topic: رفع صورة أو ملف PDF وسؤال Claude عنه, note: أُنتجت كحلقة المحرك 06 (master-claude/episodes/ep06.md)}
+  - {id: ep12, engine: 7, level: beginner, status: approved, topic: البحث في الويب داخل Claude ومتى تستخدمه, note: أُنتجت كحلقة المحرك 07 (master-claude/episodes/ep07.md)}
+  - {id: ep13, engine: 8, level: intermediate, status: approved, topic: تعليمات Claude على مستوى الحساب (بدل Styles), note: 'Styles غير موجودة في صفحة التخصيص الرسمية الحالية (غير مؤكد) — مسودة المحرك 08 (master-claude/episodes/ep08.md)'}
+  - {id: ep14, engine: 9, level: intermediate, status: approved, topic: الذاكرة في Claude وكيف تتحكم بها, note: معاينة المحرك 09 (master-claude/episodes/ep09.md)}
+  - {id: ep15, engine: 10, level: intermediate, status: approved, topic: أعطِ Claude أمثلة ليقلّد الأسلوب, note: مسودة المحرك 10 (master-claude/episodes/ep10.md)}
+  - {id: ep16, engine: 11, level: pro, status: approved, topic: ما هي الـ Skills وكيف تصنع واحدة, note: مسودة المحرك 11 (master-claude/episodes/ep11.md)}
+  - {id: ep17, engine: 12, level: pro, status: approved, topic: Claude Code لأول مرة — بناء صفحة بسيطة, note: 'معاينة المحرك 12 (master-claude/episodes/ep12.md) — يحتاج اشتراكاً مدفوعاً (Pro فما فوق)'}
+  - {id: ep18, level: pro, status: deferred, topic: الموصلات (Connectors) وربط Claude بتطبيقاتك, note: 'مؤجلة — تحتاج أسماء تطبيقات/شركات لتُفهم (تعارض مع قاعدة لا جهات)؛ قرار المالك'}
+  - {id: ep19, engine: 13, level: beginner, status: approved, topic: الوضع الصوتي — كلّم Claude بصوتك, note: 'مسودة المحرك 13 (master-claude/episodes/ep13.md)؛ متاح مجاناً؛ اللغات غير الإنجليزية تجريبية'}
+  - {id: ep20, engine: 14, level: beginner, status: approved, topic: اطلب من Claude ملفاً حقيقياً (PDF) تنزّله وتطبعه, note: 'مسودة المحرك 14 (master-claude/episodes/ep14.md)؛ مجاني وعلى الجوال؛ تشابه فكرة محتمل مع EP05 (Artifact) — حكم المالك'}
+  - {id: ep21, engine: 15, level: beginner, status: approved, topic: شارك محادثتك مع Claude برابط واحد, note: 'مسودة المحرك 15 (master-claude/episodes/ep15.md)؛ مجاني، بلا حساب للمستلم، للقراءة فقط؛ الجوال غير مؤكد'}
+  - {id: ep22, engine: 16, level: intermediate, status: draft, topic: اختر النموذج ومستوى الجهد (Effort) والتفكير قبل الإرسال, note: 'مسودة المحرك 16 (master-claude/episodes/ep16.md)، الجهد فقط؛ رُوجعت 6 نوفمبر: support.claude.com/en/articles/8664678 — قائمة النموذج بجانب زر الإرسال ← Effort (Low…Max) ← مفتاح Thinking/Extended؛ الجهد الأعلى أدق لكنه أبطأ ويستهلك الحد أسرع؛ التفكير لا يُطفأ في بعض النماذج؛ المتاح في الخطة المجانية وخطوات الجوال غير مؤكدة'}
+  - {id: ep23, level: beginner, status: idea, topic: رد Claude قصير أو انقطع؟ اطلب منه أن يكمل من حيث توقف, note: 'رُوجعت 6 نوفمبر: support.claude.com/en/articles/8114518 — أعد صياغة الطلب، أو أعطه الطلب والرد السابقين ليكمل؛ الصفحة تحت «API prompt design» فتطبيقها في التطبيق غير مؤكد؛ تشابه محتمل مع EP03 (طلب أوضح) — فحص التشابه قبل المسودة'}
+  - {id: ep24, level: beginner, status: idea, topic: وفّر رسائلك — اجمع أسئلتك في رسالة واحدة وراقب حدّك, note: 'رُوجعت 6 نوفمبر: support.claude.com/en/articles/9797557 — Settings > Usage (Current session وWeekly limits)، اجمع الأسئلة المترابطة في رسالة، ارفع الملفات المرجعية في مشروع؛ الحد يتأثر بالجهد والأدوات والنموذج وطول الرسالة؛ تشابه محتمل مع ep04 القديمة (حدود الاستخدام) — حكم المالك'}
+  - {id: ep25, level: beginner, status: idea, topic: خذ استراحة — تذكير الاستراحة والساعات الهادئة في Claude, note: 'رُوجعت 7 نوفمبر: support.claude.com/en/articles/15672868 — تجريبية (beta) في Free وPro وMax؛ تُضبط من الويب أو تطبيق الكمبيوتر: Settings > Wellbeing (أو Settings > Time and focus في التخطيط القديم) ← Break reminders (بعد كم من الوقت اليومي) وQuiet hours (أيام + بداية ونهاية)؛ تسري على الويب والكمبيوتر والجوال؛ «Neither is a hard lock» — تكمل متى شئت؛ منفصلة عن حدود الخطة؛ الضبط من الجوال غير مذكور (غير مؤكد)؛ موضوع جديد بلا تشابه متوقع'}
