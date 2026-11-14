@@ -178,3 +178,8 @@ EP07 معتمدة لكن لا يوجد ماستر مستضاف بعد — لم �
 بعد هذه الدورة: كل الحسابات الخمسة تنتهي في 17 نوفمبر. EP07+ بلا ماستر مستضاف — لم تُجدول.
 
 **تأكيد 12 نوفمبر (قراءة Postiz 22:24 UTC):** فيديو الخصوصية «لا تكتب هذا لأي ذكاء اصطناعي ⛔» نشره المالك بنفسه بمعرّفات جديدة — كلها **PUBLISHED** بلا خطأ: AR 17:10 إنستغرام cmwdt0ea2029wm707m738p5fa · تيك توك cmwdt0e96029vm707xni4zwj8 · يوتيوب cmwdt0eav029xm707mg145czk؛ EN 18:00 إنستغرام cmwdt0ech029zm70790hp1pl4 · تيك توك cmwdt0ebm029ym707bjempbns. ليس حلقة من `master-claude/episodes` فلا يُضاف كصفوف. مسودات 16:00/18:00 القديمة (cmwc5ibod… / cmwc5iboq… / cmwc5ibp4…) ما زالت DRAFT في Postiz — لم تُلمس. منشوراتنا القادمة (15 و17 نوفمبر) كلها QUEUE بلا خطأ.
+
+## دورة 14 نوفمبر 2026 (المهمة الآلية، قراءة فقط)
+**ما وُجد في Postiz:** دفعة جديدة لم تنشئها هذه المهمة (ليست في `master-claude/episodes`)، كلها QUEUE: «صوّر ثلاجتك» 11-15 (AR 16:00 إنستغرام cmwejmjpf09htm7075i1meax9 · تيك توك cmwejmjop09hsm7074uybz1ct · يوتيوب cmwejmjq409hum707zmivqso9؛ EN 18:00 إنستغرام cmwejmjrm09hwm7074821vofh · تيك توك cmwejmjqw09hvm707uycbyxeo) و«اشرح لي كأنّي طفل» 11-17 (AR 16:00 إنستغرام cmwejmjt809hym70734ncq7fm · تيك توك cmwejmjse09hxm707ku3ryvc9 · يوتيوب cmwejmjty09hzm707iwxbgid3؛ EN 18:00 إنستغرام cmwejmjvl09i1m707yhz8v2b3 · تيك توك cmwejmjup09i0m707k5kqrukp).
+**اختفت من Postiz:** AR EP03 أربع عادات (تيك توك cmw33klul…، يوتيوب cmw33klv1…) و EN EP06 تيك توك cmw1o8os4… (11-15)، وكل منشورات 11-17 (cmwd3ny3b… / cmwd3ny3z… / cmwd3ny4l… / cmwd3ny5b… / cmwd3ny5y…).
+**تعارض:** 11-15 إنستغرام AR (cmw1o81gu0512of06p492mew2 EP06 + «صوّر ثلاجتك») وإنستغرام EN (cmw1o8opa0519of06jpj6maxh EP06 + «Snap your fridge») — منشوران في الموعد نفسه. لم يُحذف أو يُجدول شيء؛ سُئل المالك.
